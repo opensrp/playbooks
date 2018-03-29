@@ -3,4 +3,4 @@
 *.DS_Store
 .idea
 .sql*
-inventories/*
+inventories

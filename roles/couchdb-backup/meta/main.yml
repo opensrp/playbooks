@@ -1,10 +1,8 @@
 ---
 dependencies:
- - {
-  role: gpg-import,
-  gpg_user: "{{ couchdb_backup_system_user }}",
-  gpg_group: "{{ couchdb_backup_system_group }}",
-  gpg_private_key: "files/pgp/{{ couchdb_backup_gpg_key }}-priv.key",
-  gpg_public_key: "files/pgp/{{ couchdb_backup_gpg_key }}-pub.key",
-  gpg_trust_file: "files/pgp/{{ couchdb_backup_gpg_key }}-ultimate.trust"
- }
+- role: gpg-import
+  gpg_user: "{{ couchdb_backup_system_user }}"
+  gpg_group: "{{ couchdb_backup_system_group }}"
+  gpg_private_key: "{{ couchdb_backup_gpg_dir }}/{{ couchdb_backup_gpg_key }}-priv.key"
+  gpg_public_key: "{{ couchdb_backup_gpg_dir }}/{{ couchdb_backup_gpg_key }}-pub.key"
+  gpg_trust_file: "{{ couchdb_backup_gpg_dir }}/{{ couchdb_backup_gpg_key }}-ultimate.trust"

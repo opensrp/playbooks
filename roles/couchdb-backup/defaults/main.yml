@@ -12,3 +12,4 @@ couchdb_backup_gpg_key: "399FF952"
 couchdb_backup_pip_version: "8.1.1-2ubuntu0.4"
 couchdb_backup_boto_version: "2.46.1"
 couchdb_backup_duplicity_version: "0.7.*"
+couchdb_backup_gpg_dir: files/pgp
