@@ -26,6 +26,49 @@ you do this in a dedicated [Python virtual env][6]:
 pip install -r requirements.txt
 ```
 
+## Inventories
+
+Copy over your inventory files into a new directory called `inventories`. We recommend you track them in a seperate private git repository. Please do not make pull requests to this repository with inventory files that might expose aspects of your infrastructure that you don't want exposed.
+
+We recommend you use the following directory structure:
+
+Split your inventories based on DevOps clients, and their server environments.
+
+Example DevOps clients include:
+
+ - personal (for your personal inventories)
+ - tb-reach
+ - zeir
+
+And environments:
+
+ - production
+ - preview
+ - staging
+
+The inventory directory structure, hence, looks like:
+
+```
+inventories/
+│── [DevOps Client 1]
+│   │── [Environment 1]
+│   │   │── group_vars
+│   │   │── hosts
+│   │   └── host_vars
+│   .
+│   .
+│   .
+│   └── [Environment m]
+│       └ ...
+.
+.
+.
+└── [DevOps Client n]
+    └ ...
+```
+
+Each environment directory contains a `hosts` file that's used to group `host_vars` into `group_vars` and `group_vars` into other `group_vars`. Please avoid setting ansible variables in that file.
+
 ## Deploying from Ona's DevOps Host
 
 YOu can run these plays from Ona's DevOps host, if you have access to it. SSH in as the `devops`
