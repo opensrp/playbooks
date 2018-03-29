@@ -7,3 +7,6 @@
 [submodule "roles/hostname"]
 	path = roles/hostname
 	url = git@github.com:onaio/ansible-hostname.git
+[submodule "roles/certbot"]
+	path = roles/certbot
+	url = git@github.com:onaio/ansible-certbot.git
