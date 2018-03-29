@@ -1,0 +1,6 @@
+---
+dependencies:
+ - role: collectd
+   collectd_deployed_app_name: "java"
+   collectd_deployed_app_version: "{{ oracle_java8_set_default_version }}"
+   become: True

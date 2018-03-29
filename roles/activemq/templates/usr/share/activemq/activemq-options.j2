@@ -1,0 +1,14 @@
+# Time to wait for the server to start, in seconds
+STARTTIME=5
+
+# !!! Use a specific data directory for each instance
+ACTIVEMQ_BASE="/var/lib/activemq/$INSTANCE"
+
+# Use the default Java runtime
+JAVA_HOME="/usr/lib/jvm/default-java/"
+
+# Set some JVM memory options
+ACTIVEMQ_OPTS="{{ activemq_memory_opts }} -Dorg.apache.activemq.UseDedicatedTaskRunner=true"
+
+# Arguments to launch /usr/bin/activemq
+ACTIVEMQ_ARGS="start xbean:activemq.xml"

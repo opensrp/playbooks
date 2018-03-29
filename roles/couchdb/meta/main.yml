@@ -1,0 +1,18 @@
+---
+dependencies:
+ - role: couchdb-lucene
+   when: couchdb_lucene_support == True
+   tags:
+    - couchdb-lucene
+
+ - role: couchdb-backup
+   couchdb_backup_user: "{{ couchdb_admin_user }}"
+   couchdb_backup_password: "{{ couchdb_admin_password }}"
+   tags:
+    - backup
+    - couchdb-backup
+
+ - role: collectd
+   collectd_deployed_app_name: "couchdb"
+   collectd_deployed_app_version: "{{ couchdb_version }}"
+   become: True

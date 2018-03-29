@@ -1,0 +1,30 @@
+---
+# Required variables:
+#  openmrs_modules
+- name: Clean OpenMRS Modules Directory
+  become: yes
+  become_user: "root"
+  file:
+    state: absent
+    path: "/usr/share/tomcat7/.OpenMRS/modules"
+
+- name: Create OpenMRS Modules Directory
+  become: yes
+  become_user: "root"
+  file:
+    path: "/usr/share/tomcat7/.OpenMRS/modules"
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    state: directory
+    mode: 0755
+
+- name: Copy OpenMRS Modules
+  become: yes
+  become_user: "root"
+  copy:
+    src: "files/usr/share/tomcat7/.OpenMRS/modules/{{ item }}.omod"
+    dest: "/usr/share/tomcat7/.OpenMRS/modules/{{ item }}.omod"
+    mode: 0644
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+  with_items: "{{ openmrs_modules }}"

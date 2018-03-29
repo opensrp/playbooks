@@ -1,0 +1,59 @@
+---
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Copy Nginx Main Config File
+  become: yes
+  become_user: root
+  template:
+    src: "templates/etc/nginx/{{ item }}.conf.j2"
+    dest: "/etc/nginx/{{ item }}.conf"
+    mode: 0644
+    owner: "root"
+    group: "root"
+  with_items:
+    - nginx
+
+- include_tasks: ssl.yml
+  tags:
+    - ssl
+
+- name: Copy the Site File
+  become: yes
+  become_user: root
+  template:
+    src: "{{ site_file }}"
+    dest: "/etc/nginx/sites-available/{{ site_name }}"
+    mode: 0644
+    owner: "root"
+    group: "root"
+
+- name: Make sure site isn't in enabled list
+  become: yes
+  become_user: root
+  file:
+    path: "/etc/nginx/sites-enabled/{{ site_name }}"
+    state: absent
+
+- name: Enable site
+  become: yes
+  become_user: root
+  file:
+    src: "/etc/nginx/sites-available/{{ site_name }}"
+    dest: "/etc/nginx/sites-enabled/{{ site_name }}"
+    state: link
+
+- name: Enable Nginx
+  become: yes
+  become_user: root
+  service:
+    name: nginx
+    enabled: yes
+
+- name: Restart Nginx
+  when: restart_nginx
+  become: yes
+  become_user: root
+  service:
+    name: nginx
+    state: restarted

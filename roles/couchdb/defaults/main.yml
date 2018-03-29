@@ -1,0 +1,15 @@
+couchdb_version: 1.6.0
+couchdb_lucene_support: false
+couchdb_lucene_external_hook_path: /opt/couchdb-lucene/tools/couchdb-external-hook.py
+couchdb_port: 5984
+bind_address: 0.0.0.0
+http_secret: dc8916e13b11b8769a1c73f969a54804
+min_file_size: 131072
+compaction: true
+db_fragmentation: 70%
+view_fragmentation: 60%
+compaction_start: "21:00"
+compaction_stop: "23:59"
+couchdb_system_user: couchdb
+couchdb_system_group: couchdb
+couchdb_admin_user: root

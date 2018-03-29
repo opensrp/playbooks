@@ -1,0 +1,54 @@
+---
+- name: Copy the dump to the host
+  when: not gzipped
+  become: yes
+  become_user: "root"
+  copy:
+    src: "{{ dump_directory }}/{{ dump_file }}"
+    dest: "/tmp/{{ dump_file }}"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Copy the dump archive to the host
+  when: gzipped
+  become: yes
+  become_user: "root"
+  copy:
+    src: "{{ dump_directory }}/{{ dump_file }}.gz"
+    dest: "/tmp/{{ dump_file }}.gz"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Make sure the dump file doesn't exist before extracting the archive
+  when: gzipped
+  become: yes
+  become_user: "root"
+  file:
+    path: "/tmp/{{ dump_file }}"
+    state: absent
+
+- name: Extract the file
+  when: gzipped
+  become: yes
+  become_user: "root"
+  command: "gunzip /tmp/{{ dump_file }}.gz"
+
+- name: Dump the file in the database
+  become: yes
+  become_user: "root"
+  mysql_db:
+    name: "{{ database }}"
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_password }}"
+    login_host: "{{ mysql_host }}"
+    state: import
+    target: "/tmp/{{ dump_file }}"
+
+- name: Delete the dump file
+  become: yes
+  become_user: "root"
+  file:
+    path: "/tmp/{{ dump_file }}"
+    state: absent

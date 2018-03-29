@@ -1,0 +1,10 @@
+---
+dependencies:
+ - {
+  role: gpg-import,
+  gpg_user: "{{ mysql_backup_system_user }}",
+  gpg_group: "{{ mysql_backup_system_group }}",
+  gpg_private_key: "files/pgp/{{ mysql_backup_gpg_key }}-priv.key",
+  gpg_public_key: "files/pgp/{{ mysql_backup_gpg_key }}-pub.key",
+  gpg_trust_file: "files/pgp/{{ mysql_backup_gpg_key }}-ultimate.trust"
+ }

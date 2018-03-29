@@ -1,0 +1,16 @@
+org.quartz.scheduler.instanceName = MotechScheduler
+org.quartz.threadPool.class = org.quartz.simpl.SimpleThreadPool
+org.quartz.threadPool.threadCount = 3
+
+org.quartz.jobStore.class = org.quartz.impl.jdbcjobstore.JobStoreTX
+org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+org.quartz.jobStore.dataSource = motechDS
+org.quartz.jobStore.tablePrefix = QRTZ_
+
+org.quartz.dataSource.motechDS.driver = com.mysql.jdbc.Driver
+org.quartz.dataSource.motechDS.URL = jdbc:mysql://{{ opensrp_mysql_host }}:{{ opensrp_mysql_port }}/{{ opensrp_motech_database }}
+org.quartz.dataSource.motechDS.user = {{ opensrp_mysql_user }}
+org.quartz.dataSource.motechDS.password = {{ opensrp_mysql_password }}
+org.quartz.dataSource.motechDS.maxConnections = 30
+
+#org.quartz.jobStore.class = org.quartz.simpl.RAMJobStore

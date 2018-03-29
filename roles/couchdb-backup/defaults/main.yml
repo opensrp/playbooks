@@ -1,0 +1,14 @@
+couchdb_backup_install_location: "/opt/couchdb-backup"
+couchdb_backup_dir: "/backup/couchdb"
+couchdb_storage_dir: "/var/lib/couchdb"
+couchdb_max_backup_days: 7
+couchdb_backup_day: "*"
+couchdb_backup_hour: 0
+couchdb_backup_minute: 0
+couchdb_backups_to_s3: false
+couchdb_backup_system_user: "root"
+couchdb_backup_system_group: "root"
+couchdb_backup_gpg_key: "399FF952"
+couchdb_backup_pip_version: "8.1.1-2ubuntu0.4"
+couchdb_backup_boto_version: "2.46.1"
+couchdb_backup_duplicity_version: "0.7.*"

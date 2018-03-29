@@ -1,0 +1,127 @@
+---
+- name: Create DHIS System Group
+  become: yes
+  become_user: root
+  group:
+    name: "{{ dhis_system_group }}"
+    state: present
+
+- name: Create DHIS System User
+  become: yes
+  become_user: root
+  user:
+    name: "{{ dhis_system_user }}"
+    group: "{{ dhis_system_group }}"
+    groups: "sudo"
+    home: "{{ dhis_user_home }}"
+    shell: /bin/bash
+    state: present
+
+- name: Create DHIS Config Directory
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ dhis_user_home }}/config"
+    owner: "{{ dhis_system_user }}"
+    group: "{{ dhis_system_group }}"
+    state: directory
+    mode: 0644
+
+- name: Copy DHIS Config
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/dhis_user_home/config/dhis.conf.j2"
+    dest: "{{ dhis_user_home }}/config/dhis.conf"
+    owner: "{{ dhis_system_user }}"
+    group: "{{ dhis_system_group }}"
+    mode: 0600
+
+- name: Install Package Prerequisites
+  become: yes
+  become_user: "root"
+  apt:
+    name: "{{ item.name }}={{ item.version }}"
+    state: present
+  with_items:
+    - { name: libpq-dev, version: "{{ dhis_libpq_dev_version }}" }
+    - { name: python-psycopg2, version: "{{ dhis_python_psycopg2_version }}" }
+  tags:
+    - packages
+
+- name: Create DHIS Postgres User
+  become: yes
+  become_user: "root"
+  postgresql_user:
+    name: "{{ dhis_db_user }}"
+    password: "{{ dhis_db_pw }}"
+    role_attr_flags: SUPERUSER,NOCREATEDB,NOCREATEROLE,LOGIN
+    state: present
+
+- name: Create DHIS Postgres Database
+  become: yes
+  become_user: "root"
+  postgresql_db:
+    name: "{{ dhis_db_name }}"
+    owner: "{{ dhis_db_user }}"
+    state: present
+
+- name: Create DHIS Tomcat7 Instance
+  become: yes
+  become_user: "root"
+  command: "tomcat7-instance-create {{ dhis_tomcat_instance }}"
+  args:
+    chdir: "{{ dhis_user_home }}"
+    creates: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}"
+
+- name: Copy DHIS Tomcat setenv Script
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/dhis_user_home/dhis_tomcat_instance/bin/setenv.sh.j2"
+    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/bin/setenv.sh"
+    owner: "{{ dhis_system_user }}"
+    group: "{{ dhis_system_group }}"
+    mode: 0744
+
+- name: Copy DHIS Tomcat Configs
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/dhis_user_home/dhis_tomcat_instance/conf/{{ item }}.j2"
+    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/conf/{{ item }}"
+    owner: "{{ dhis_system_user }}"
+    group: "{{ dhis_system_group }}"
+    mode: 0744
+  with_items:
+    - server.xml
+    - web.xml
+
+- name: Download The DHIS2 War
+  become: yes
+  become_user: "root"
+  get_url:
+    url: https://www.dhis2.org/download/releases/{{ dhis_version }}/dhis.war
+    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/webapps/ROOT.war"
+
+- name: Change Tomcat7 Instance Ownership
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}"
+    owner: "{{ dhis_system_user }}"
+    group: "{{ dhis_system_group }}"
+    state: directory
+    mode: 0744
+
+- name: Stop DHIS2 Tomcat Instance
+  become: yes
+  become_user: "root"
+  command: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/bin/shutdown.sh"
+  changed_when: output.stdout != ""
+
+- name: Start DHIS2 Tomcat Instance
+  become: yes
+  become_user: "root"
+  command: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/bin/startup.sh"
+  changed_when: output.stdout != ""

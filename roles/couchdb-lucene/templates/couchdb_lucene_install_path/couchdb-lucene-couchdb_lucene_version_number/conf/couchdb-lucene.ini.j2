@@ -1,0 +1,26 @@
+[lucene]
+# The output directory for Lucene indexes.
+dir=indexes
+
+# The local host name that couchdb-lucene binds to
+host={{ couchdb_lucene_bind_host }}
+
+# The port that couchdb-lucene binds to.
+port={{ couchdb_lucene_bind_port }}
+
+# Timeout for requests in milliseconds.
+timeout=10000
+
+# Timeout for changes requests.
+# changes_timeout=60000
+
+# Default limit for search results
+limit=25
+
+# Allow leading wildcard?
+allowLeadingWildcard=false
+
+# couchdb server mappings
+
+[local]
+url = http://{{ couchdb_admin_user }}:{{ couchdb_admin_password }}@localhost:{{ couchdb_port }}/

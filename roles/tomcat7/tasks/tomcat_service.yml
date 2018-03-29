@@ -1,0 +1,34 @@
+---
+- include_tasks: tomcat_service_ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Copy Tomcat7 env File
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/usr/share/tomcat7/bin/setenv.sh.j2"
+    dest: "/usr/share/tomcat7/bin/setenv.sh"
+    owner: "root"
+    group: "root"
+    mode: 0755
+
+- name: Copy Tomcat7 Configs
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/var/lib/tomcat7/conf/{{ item }}.j2"
+    dest: "/var/lib/tomcat7/conf/{{ item }}"
+    owner: "root"
+    group: "{{ tomcat_group }}"
+    mode: 0644
+  with_items:
+    - "server.xml"
+    - "web.xml"
+
+- name: Start & Enable the Tomcat7 Service
+  become: yes
+  become_user: root
+  service:
+    name: tomcat7
+    state: started
+    enabled: true

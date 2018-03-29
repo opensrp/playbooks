@@ -1,0 +1,47 @@
+---
+- name: Ensure checkout directory is empty
+  file:
+    state: absent
+    path: "{{ opensrp_local_checkout_path }}"
+  delegate_to: 127.0.0.1
+
+- name: Checking out codebase
+  git:
+    repo: "{{ opensrp_git_url }}"
+    dest: "{{ opensrp_local_checkout_path }}"
+    version: "{{ opensrp_version }}"
+  delegate_to: 127.0.0.1
+
+- name: Copy the OpenSRP man config files
+  template:
+    src: "templates/opensrp_local_checkout_path/assets/config/{{ item }}.properties.j2"
+    dest: "{{ opensrp_local_checkout_path }}/assets/config/{{ item }}.properties"
+  delegate_to: 127.0.0.1
+  with_items:
+    - "opensrp"
+    - "couchdb"
+
+- name: Copy the OpenSRP resource config file
+  template:
+    src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/resources/{{ item }}.properties.j2"
+    dest: "{{ opensrp_local_checkout_path }}/opensrp-web/src/main/resources//{{ item }}.properties"
+  delegate_to: 127.0.0.1
+  with_items:
+    - "quartz"
+
+- name: Compile the OpenSRP WAR
+  shell: "cd {{ opensrp_local_checkout_path }} && mvn package -Dmaven.test.skip=true"
+  delegate_to: 127.0.0.1
+  changed_when: output.stdout != ""
+
+- name: Make sure the WAR directory exists
+  file:
+    path: "{{ opensrp_local_package_directory }}"
+    state: directory
+  delegate_to: 127.0.0.1
+
+- name: Copy the compiled WAR
+  copy:
+    src: "{{ opensrp_local_checkout_path }}/opensrp-web/target/opensrp.war"
+    dest: "{{ opensrp_local_package_directory }}/{{ opensrp_version }}.war"
+  delegate_to: 127.0.0.1

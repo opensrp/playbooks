@@ -1,0 +1,45 @@
+---
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Make sure the CouchDB user exists
+  become: yes
+  become_user: "root"
+  user:
+    name: "{{ couchdb_system_user }}"
+    group: "{{ couchdb_system_group }}"
+    state: present
+
+- name: Copy CouchDB's main config file
+  become: yes
+  become_user: "root"
+  template:
+    src: templates/etc/couchdb/local.ini.j2
+    dest: /etc/couchdb/local.ini
+    owner: "{{ couchdb_system_user }}"
+    group: "{{ couchdb_system_group }}"
+    mode: 0640
+
+- name: Enable and start CouchDB service
+  become: yes
+  become_user: "root"
+  service:
+    name: couchdb
+    enabled: true
+    state: restarted
+
+- name: Add CouchDB admin user
+  uri:
+    url: "http://127.0.0.1:{{ couchdb_port }}/_config/admins/{{ couchdb_admin_user }}"
+    method: PUT
+    body: "\"{{ couchdb_admin_password }}\""
+
+- name: Create the CouchDB databases
+  uri:
+    url: "http://127.0.0.1:{{ couchdb_port }}/{{ item }}"
+    method: PUT
+    user: "{{ couchdb_admin_user }}"
+    password: "{{ couchdb_admin_password }}"
+    force_basic_auth: yes
+    status_code: 200, 201, 412
+  with_items: "{{ couchdb_databases }}"

@@ -1,0 +1,5 @@
+---
+- name: letsencrypt installed
+  apt:
+    name: "letsencrypt={{ certbot_letsencrypt_version }}"
+    state: present

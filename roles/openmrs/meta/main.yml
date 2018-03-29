@@ -1,0 +1,23 @@
+---
+dependencies:
+- role: tomcat7
+  install_tomcat_service: true
+  tags:
+    - tomcat7
+
+- role: mysql-5.6
+  tags:
+    - mysql-5.6
+
+- role: nginx
+  site_name: "{{ openmrs_site_name }}"
+  site_file: "roles/openmrs/templates/etc/nginx/sites-enabled/openmrs_site_name.j2"
+  tags:
+    - nginx
+
+- role: collectd
+  collectd_deployed_app_name: "openmrs"
+  collectd_deployed_app_version: "{{ openmrs_version }}"
+  become: True
+  tags:
+    - collectd

@@ -1,0 +1,7 @@
+---
+- name: Install ActiveMQ from apt
+  become: yes
+  become_user: "root"
+  apt:
+    name: "activemq"
+    state: present

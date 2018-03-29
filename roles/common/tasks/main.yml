@@ -1,0 +1,6 @@
+---
+- name: Set timezone
+  become: yes
+  become_user: "root"
+  timezone:
+    name: "{{ timezone }}"

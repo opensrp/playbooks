@@ -1,0 +1,61 @@
+---
+- name: Find Distro Main Repository Name
+  command: "lsb_release -cs"
+  register: distro_release
+  changed_when: output.stdout != ""
+
+- name: Install add-apt-repostory
+  become: yes
+  become_user: root
+  apt:
+    name: "software-properties-common={{ postgresql_software_properties_common_version }}"
+    state: present
+
+- name: Add Postgres Repository for {{ distro_release.stdout }}
+  become: yes
+  become_user: root
+  apt_repository:
+    repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ distro_release.stdout }}-pgdg main"
+    state: present
+
+- name: Import Repository Keys
+  become: yes
+  become_user: root
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: Install PostgreSQL
+  become: yes
+  become_user: root
+  apt:
+    name: "postgresql-{{ pg_version }}"
+    state: present
+    update_cache: yes
+
+- name: Copy PostgreSQL Configs
+  become: yes
+  become_user: root
+  template:
+    src: "templates/etc/postgresql/pg_version/main/pg_hba.conf.j2"
+    dest: "/etc/postgresql/{{ pg_version }}/main/pg_hba.conf"
+    mode: 0644
+    owner: "root"
+    group: "root"
+
+- name: Install PostGIS Plugin
+  become: yes
+  become_user: root
+  when: postgis_version is defined
+  apt: name={{ item }} state=present
+  with_items:
+    - "postgresql-{{ pg_version }}-postgis-{{ postgis_version }}"
+    - "postgresql-contrib-{{ pg_version }}"
+
+- name: Enable and Restart PostgreSQL
+  become: yes
+  become_user: root
+  service:
+    name: postgresql
+    enabled: yes
+    state: restarted

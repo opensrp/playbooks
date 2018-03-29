@@ -1,0 +1,9 @@
+- hosts: dhis-servers
+  gather_facts: False
+  pre_tasks:
+    - include_tasks: tasks/python2-ubuntu.yml
+    - name: Setup Ansible
+      setup:
+  roles:
+    - common
+    - dhis2

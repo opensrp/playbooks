@@ -1,0 +1,4 @@
+mysql_install_server: false
+mysql_databases:
+ - "{{ opensrp_mysql_database }}"
+ - "{{ opensrp_motech_database }}"

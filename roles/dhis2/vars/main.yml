@@ -1,0 +1,4 @@
+dhis_system_user: "dhis"
+dhis_system_group: "dhis"
+dhis_tomcat_instance: "tomcat-dhis"
+dhis_user_home: "/home/{{ dhis_system_user }}"

@@ -1,0 +1,14 @@
+#! /bin/bash
+
+mkdir -p {{ couchdb_backup_dir }}/{{ couchdb_backup_database }}
+find {{ couchdb_backup_dir }}/{{ couchdb_backup_database }} -mtime +{{ couchdb_max_backup_days }} -exec rm {} \;
+tar -czvf {{ couchdb_backup_dir }}/{{ couchdb_backup_database }}/`date +"%Y-%m-%d_%H%M%S"`-{{ couchdb_backup_database }}.tar.gz {{couchdb_storage_dir}}/{{ couchdb_backup_database }}.couch
+
+{% if couchdb_backups_to_s3 %}
+export AWS_ACCESS_KEY_ID={{ couchdb_s3_backup_access_key }}
+export AWS_SECRET_ACCESS_KEY={{ couchdb_s3_backup_secret_key }}
+/usr/bin/duplicity --s3-use-new-style --encrypt-key {{ couchdb_backup_gpg_key }} {{ couchdb_backup_dir }} {{ couchdb_s3_backup_location }}
+
+unset AWS_ACCESS_KEY_ID
+unset AWS_SECRET_ACCESS_KEY
+{% endif %}

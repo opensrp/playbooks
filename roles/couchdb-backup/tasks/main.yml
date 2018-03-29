@@ -1,0 +1,57 @@
+---
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Make sure boto is installed
+  when: couchdb_backups_to_s3
+  become: true
+  become_user: root
+  pip:
+    name: "boto"
+    version: "{{ couchdb_backup_boto_version }}"
+
+- name: Make sure the CouchDB group exists
+  become: yes
+  become_user: "root"
+  group:
+    name: "{{ couchdb_system_group }}"
+    state: present
+
+- name: Make sure the CouchDB user exists
+  become: yes
+  become_user: "root"
+  user:
+    name: "{{ couchdb_system_user }}"
+    group: "{{ couchdb_system_group }}"
+    state: present
+
+- name: Make sure the couchdb-backup install location exists
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ couchdb_backup_install_location }}"
+    state: directory
+    owner: "{{ couchdb_backup_system_user }}"
+    group: "{{ couchdb_backup_system_group }}"
+    mode: "0751"
+
+- name: Copy over the CouchDB backup script
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/couchdb_backup_install_location/backup-couchdb_backup_database.sh.j2"
+    dest: "{{ couchdb_backup_install_location }}/backup-{{ couchdb_backup_database }}.sh"
+    owner: "{{ couchdb_backup_system_user }}"
+    group: "{{ couchdb_backup_system_group }}"
+    mode: 0750
+
+- name: Make sure the backup cronjob is installed
+  become: yes
+  become_user: "{{ couchdb_backup_system_user }}"
+  cron:
+    name: "CouchDB Backup {{ couchdb_backup_database }}"
+    job: "{{ couchdb_backup_install_location }}/backup-{{ couchdb_backup_database }}.sh"
+    state: present
+    day: "{{ couchdb_backup_day }}"
+    hour: "{{ couchdb_backup_hour }}"
+    minute: "{{ couchdb_backup_minute }}"

@@ -1,0 +1,7 @@
+---
+- name: Install Tomcat 7
+  become: yes
+  become_user: root
+  apt:
+    name: "tomcat7={{ tomcat_service_version }}"
+    state: present

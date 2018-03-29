@@ -1,0 +1,7 @@
+restart_nginx: true
+ssl_file_dir: /etc/nginx/ssl
+webserver_admin_email: "techops@ona.io"
+certs_from_letsencrypt: false
+ssl_chain: "{{ ssl_cert }}"
+ssl_playbooks_dir: "files/tls/"
+nginx_version: "1.10.3*"

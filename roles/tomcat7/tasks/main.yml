@@ -1,0 +1,8 @@
+---
+# Required variables:
+#  install_tomcat_service
+- include_tasks: tomcat_user.yml
+  when: not install_tomcat_service
+
+- include_tasks: tomcat_service.yml
+  when: install_tomcat_service

@@ -1,0 +1,53 @@
+---
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Make sure the activemq group exists
+  become: yes
+  become_user: "root"
+  group:
+    name: "{{ activemq_system_group }}"
+    state: present
+
+- name: Make sure the activemq user exists
+  become: yes
+  become_user: "root"
+  user:
+    name: "{{ activemq_system_user }}"
+    group: "{{ activemq_system_group }}"
+    state: present
+
+- name: Copy the main ActiveMQ config file
+  template:
+    src: "templates/etc/activemq/instances-available/main/activemq.xml.j2"
+    dest: "/etc/activemq/instances-available/main/activemq.xml"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy the activemq-options config
+  template:
+    src: "templates/usr/share/activemq/activemq-options.j2"
+    dest: "/usr/share/activemq/activemq-options"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create a symbolic link for instances availble to enabled main
+  become: yes
+  become_user: "root"
+  file:
+    src: "/etc/activemq/instances-available/main"
+    dest: "/etc/activemq/instances-enabled/main"
+    state: link
+    owner: "{{ activemq_system_user }}"
+    group: "{{ activemq_system_group }}"
+    mode: 0640
+
+- name: Enable and start ActiveMQ service
+  become: yes
+  become_user: "root"
+  service:
+    name: activemq
+    enabled: true
+    state: restarted

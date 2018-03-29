@@ -1,0 +1,30 @@
+---
+- name: Ensure checkout directory is empty
+  file:
+    state: absent
+    path: "{{ couchdb_lucene_local_checkout_path }}"
+  delegate_to: 127.0.0.1
+
+- name: Checking out codebase
+  git:
+    repo: "{{ couchdb_lucene_git_url }}"
+    dest: "{{ couchdb_lucene_local_checkout_path }}"
+    version: "{{ couchdb_lucene_version_name }}"
+  delegate_to: 127.0.0.1
+
+- name: Compile and package couchdb-lucene
+  shell: "cd {{ couchdb_lucene_local_checkout_path }} && mvn"
+  delegate_to: 127.0.0.1
+  changed_when: output.stdout != ""
+
+- name: Make sure the package directory exists
+  file:
+    path: "{{ couchdb_lucene_local_package_directory }}"
+    state: directory
+  delegate_to: 127.0.0.1
+
+- name: Copy the packaged couchdb-lucene
+  copy:
+    src: "{{ couchdb_lucene_local_checkout_path }}/target/couchdb-lucene-{{ couchdb_lucene_version_number }}-dist.tar.gz"
+    dest: "{{ couchdb_lucene_local_package_directory }}/{{ couchdb_lucene_version_name }}.tar.gz"
+  delegate_to: 127.0.0.1

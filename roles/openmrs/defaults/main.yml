@@ -1,0 +1,23 @@
+mysql_backups_to_s3: false
+tomcat_user: "tomcat7"
+tomcat_group: "tomcat7"
+tomcat_http_port: 8080
+tomcat_https_port: 8443
+tomcat_max_filesize: "52428800"
+tomcat_fsize_threshold: "10485760"
+catalina_ops: "-Xms1500M -Xmx1500M"
+openmrs_version: "1.11.5"
+openmrs_nginx_max_filesize: "50M"
+openmrs_install_name: "openmrs"
+openmrs_mysql_user: "openmrs"
+openmrs_mysql_database: "openmrs"
+openmrs_mysql_host: "localhost"
+openmrs_mysql_app_host: "localhost"
+openmrs_mysql_port: 3306
+mysql_root_password: "root"
+openmrs_mysql_password: "openmrs"
+openmrs_dumps_gzipped: true
+openmrs_modules: []
+openmrs_dump_files: []
+ssl_key: "{{ openmrs_site_name }}-key.pem"
+ssl_cert: "{{ openmrs_site_name }}-fullchain.pem"

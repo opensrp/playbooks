@@ -1,0 +1,8 @@
+couchdb_lucene_git_url: "https://github.com/rnewson/couchdb-lucene.git"
+couchdb_lucene_system_user: "root"
+couchdb_lucene_system_group: "root"
+couchdb_lucene_bind_host: "localhost"
+couchdb_lucene_bind_port: 5985
+couchdb_lucene_java_opts: "-server -Xmx1g -XX:OnOutOfMemoryError=bin/kill_ppid"
+couchdb_lucene_local_checkout_path: "/mnt/vol1/couchdb-lucene"
+couchdb_lucene_local_package_directory: "/mnt/vol1/couchdb-lucene-tars"

@@ -1,0 +1,16 @@
+---
+- name: Make sure pip is installed
+  when: mysql_backups_to_s3
+  become: true
+  become_user: root
+  apt:
+    name: "python-pip={{ mysql_backup_pip_version }}"
+    state: present
+
+- name: Make sure duplicity is installed
+  when: mysql_backups_to_s3
+  become: true
+  become_user: root
+  apt:
+    name: "duplicity={{ mysql_backup_duplicity_version }}"
+    state: present

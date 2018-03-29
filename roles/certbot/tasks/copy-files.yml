@@ -1,0 +1,75 @@
+---
+- name: Get SSL certificate directory name
+  command: "dirname {{ certbot_dest_cert_file }}"
+  register: dest_cert_dir
+  when: certbot_dest_cert_file is defined
+
+- debug:
+    msg: "Dest directory {{ dest_cert_dir }}"
+
+- name: Make sure the SSL certificate directory exists
+  file:
+    path: "{{ dest_cert_dir }}"
+    state: directory
+  when: certbot_dest_cert_file is defined
+
+- name: Copy SSL certificate file
+  copy:
+    remote_src: yes
+    src: "{{ certbot_crt }}"
+    dest: "{{ certbot_dest_cert_file }}"
+  when: certbot_dest_cert_file is defined
+
+- name: Get SSL fullchain directory name
+  command: "dirname {{ certbot_dest_fullchain_file }}"
+  register: dest_fullchain_dir
+  when: certbot_dest_fullchain_file is defined
+
+- name: Make sure the SSL fullchain directory exists
+  file:
+    path: "{{ dest_fullchain_dir }}"
+    state: directory
+  when: certbot_dest_fullchain_file is defined
+
+- name: Copy SSL fullchain file
+  copy:
+    remote_src: yes
+    src: "{{ certbot_fullchain }}"
+    dest: "{{ certbot_dest_fullchain_file }}"
+  when: certbot_dest_fullchain_file is defined
+
+- name: Get SSL key directory name
+  command: "dirname {{ certbot_dest_key_file }}"
+  register: dest_key_dir
+  when: certbot_dest_key_file is defined
+
+- name: Make sure the SSL key directory exists
+  file:
+    path: "{{ dest_key_dir }}"
+    state: directory
+  when: certbot_dest_key_file is defined
+
+- name: Copy SSL key file
+  copy:
+    remote_src: yes
+    src: "{{ certbot_key }}"
+    dest: "{{ certbot_dest_key_file }}"
+  when: certbot_dest_key_file is defined
+
+- name: Get SSL chain directory name
+  command: "dirname {{ certbot_dest_chain_file }}"
+  register: dest_chain_dir
+  when: certbot_dest_chain_file is defined
+
+- name: Make sure the SSL chain directory exists
+  file:
+    path: "{{ dest_chain_dir }}"
+    state: directory
+  when: certbot_dest_chain_file is defined
+
+- name: Copy SSL chain file
+  copy:
+    remote_src: yes
+    src: "{{ certbot_chain }}"
+    dest: "{{ certbot_dest_chain_file }}"
+  when: certbot_dest_chain_file is defined

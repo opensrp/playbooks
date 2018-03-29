@@ -1,0 +1,1 @@
+server_uuid: "{{ '{{ ansible_eth0.ipv4.address }}'|hash('sha1') }}"

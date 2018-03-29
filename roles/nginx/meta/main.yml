@@ -1,0 +1,7 @@
+---
+dependencies:
+ - role: collectd
+   collectd_deployed_app_name: "nginx"
+   collectd_deployed_app_version: "{{ nginx_version }}"
+   collectd_scripts: ["nginx"]
+   become: True

@@ -1,0 +1,45 @@
+---
+- name: Create Nginx SSL Directory
+  become: yes
+  become_user: root
+  file:
+    path: "{{ ssl_file_dir }}"
+    owner: "root"
+    group: "root"
+    state: directory
+    mode: 0644
+
+- name: Create Ephemeral Diffie-Hellman Param File
+  become: yes
+  become_user: root
+  command: "openssl dhparam -out {{ ssl_file_dir }}/dhparam.pem 2048 creates={{ ssl_file_dir }}/dhparam.pem"
+
+- name: Install Let's Encrypt and Generate certs
+  include_role:
+    name: certbot
+  when: certs_from_letsencrypt == True
+  become: yes
+
+- name: Copy SSL Cert and Key
+  when: not certs_from_letsencrypt
+  become: yes
+  become_user: root
+  copy:
+    src: "{{ ssl_playbooks_dir }}/{{ item }}"
+    dest: "{{ ssl_file_dir }}/{{ item }}"
+    mode: 0600
+    owner: "root"
+    group: "root"
+  with_items:
+    - "{{ ssl_key }}"
+    - "{{ ssl_cert }}"
+
+- name: Copy Nginx SSL Config File
+  become: yes
+  become_user: root
+  template:
+    src: "templates/etc/nginx/ssl-site_name.conf.j2"
+    dest: "/etc/nginx/ssl-{{ site_name }}.conf"
+    mode: 0644
+    owner: "root"
+    group: "root"

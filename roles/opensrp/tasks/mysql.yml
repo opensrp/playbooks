@@ -1,0 +1,43 @@
+---
+- name: Create the OpenSRP MySQL databases
+  mysql_db:
+    login_host: "{{ opensrp_mysql_host }}"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ opensrp_mysql_database }}"
+    - "{{ opensrp_motech_database }}"
+
+- name: Copy the Motech Quartz schema .sql file
+  become: yes
+  become_user: "root"
+  copy:
+    src: "tmp/opensrp_motech_database.sql"
+    dest: "/tmp/{{ opensrp_motech_database }}.sql"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Dump the Motech Quarts schema .sql file
+  become: yes
+  become_user: "root"
+  mysql_db:
+    name: "{{ opensrp_motech_database }}"
+    login_user: "root"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ opensrp_mysql_host }}"
+    state: import
+    target: "/tmp/{{ opensrp_motech_database }}.sql"
+
+- name: Create the OpenSRP MySQL user
+  mysql_user:
+    login_host: "{{ opensrp_mysql_host }}"
+    login_user: "root"
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ opensrp_mysql_user }}"
+    password: "{{ opensrp_mysql_password }}"
+    host: "{{ opensrp_mysql_app_host }}"
+    priv: "{{ \".*:ALL/\".join(mysql_databases) }}.*:ALL"
+    state: present

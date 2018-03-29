@@ -1,0 +1,4 @@
+mysql_install_server: true
+mysql_client_version: "5.6.16*"
+mysql_server_version: "5.6.16*"
+mysql_python_mysqldb_version: "1.3.7*"

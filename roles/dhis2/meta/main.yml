@@ -1,0 +1,27 @@
+---
+dependencies:
+- role: postgresql
+  tags:
+    - postgresql
+
+- role: oracle-java8
+  tags:
+    - oracle-java8
+
+- role: tomcat7
+  install_tomcat_service: false
+  tags:
+    - tomcat7
+
+- role: nginx
+  site_file: "roles/dhis2/templates/etc/nginx/sites-enabled/site_name.j2"
+  certs_from_letsencrypt: false
+  tags:
+    - nginx
+
+- role: collectd
+  collectd_deployed_app_name: "dhis2"
+  collectd_deployed_app_version: "{{ dhis_version }}"
+  become: True
+  tags:
+   - collectd

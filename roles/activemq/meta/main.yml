@@ -1,0 +1,6 @@
+---
+dependencies:
+ - role: collectd
+   collectd_deployed_app_name: "activemq"
+   collectd_deployed_app_version: "{{ activemq_version }}"
+   become: True

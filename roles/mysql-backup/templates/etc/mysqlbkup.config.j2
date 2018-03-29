@@ -1,0 +1,20 @@
+##########
+# Configuration file for mysqlbkup
+# https://github.com/quickshiftin/mysqlbkup
+##########
+
+DEFAULTS_FILE={{ mysqlbkup_install_location }}/mysqlbkup.cnf
+
+BACKUP_DIR={{ mysql_backup_dir }}
+
+MAX_BACKUPS={{ mysql_max_backups }}
+
+# Databases to ignore
+# This is a space separated list.
+# Each entry supports bash pattern matching by default.
+# You may use POSIX regular expressions for a given entry by prefixing it with a tilde.
+DB_EXCLUDE_FILTER={{ mysql_backup_excluded_dbs }}
+
+# Compression library
+BKUP_BIN=gzip # Change this to xz if you wish, for tighter compression
+BKUP_EXT=gz   # Change this to xz if you wish, for tighter compression

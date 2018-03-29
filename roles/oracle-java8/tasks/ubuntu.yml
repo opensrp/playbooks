@@ -1,0 +1,34 @@
+---
+- name: Install add-apt-repostory
+  become: yes
+  become_user: root
+  apt:
+    name: "software-properties-common={{ oracle_java8_software_properties_common_version }}"
+    state: present
+
+- name: Add Oracle Java Repository
+  become: yes
+  become_user: root
+  apt_repository:
+    repo: 'ppa:webupd8team/java'
+    state: present
+
+- name: Accept Java 8 License
+  become: yes
+  become_user: root
+  debconf:
+    name: 'oracle-java8-installer'
+    question: 'shared/accepted-oracle-license-v1-1'
+    value: 'true'
+    vtype: 'select'
+
+- name: Install Oracle Java 8
+  become: yes
+  become_user: root
+  apt:
+    name: "{{ item.name }}={{ item.version }}"
+    state: present
+  with_items:
+    - { name: oracle-java8-installer, version: "{{ oracle_java8_installer_version }}" }
+    - { name: ca-certificates, version: "{{ oracle_java8_ca_certificates_version }}" }
+    - { name: oracle-java8-set-default, version: "{{ oracle_java8_set_default_version }}" }

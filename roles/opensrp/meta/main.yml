@@ -1,0 +1,30 @@
+---
+dependencies:
+- role: tomcat7
+  install_tomcat_service: true
+  tags:
+    - tomcat7
+
+- role: activemq
+  become: yes
+  tags:
+    - activemq
+
+- role: nginx
+  site_name: "{{ opensrp_site_name }}"
+  site_file: "roles/opensrp/templates/etc/nginx/sites-enabled/opensrp_site_name.j2"
+  tags:
+    - nginx
+
+- role: mysql-5.6
+  when: opensrp_mysql_database is defined
+  mysql_port: "{{ opensrp_mysql_port }}"
+  tags:
+    - mysql-5.6
+
+- role: collectd
+  collectd_deployed_app_name: "opensrp"
+  collectd_deployed_app_version: "{{ opensrp_version }}"
+  become: True
+  tags:
+    - collectd

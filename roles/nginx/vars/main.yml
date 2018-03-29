@@ -1,0 +1,3 @@
+certbot_mail_address: "{{ webserver_admin_email }}"
+certbot_dest_key_file: "{{ ssl_file_dir }}/{{ ssl_key }}"
+certbot_dest_fullchain_file: "{{ ssl_file_dir }}/{{ ssl_cert }}"

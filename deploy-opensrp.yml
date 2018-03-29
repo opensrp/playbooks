@@ -1,0 +1,28 @@
+- hosts: opensrp-app-servers, opensrp-couchdb-servers, opensrp-mysql-servers
+  gather_facts: False
+  pre_tasks:
+    - include_tasks: tasks/python2-ubuntu.yml
+    - name: Setup Ansible
+      setup:
+  roles:
+    - common
+  always_run: true
+
+- hosts: opensrp-couchdb-servers
+  roles:
+    - couchdb
+  tags:
+    - opensrp-couchdb
+
+- hosts: opensrp-mysql-servers
+  roles:
+    - mysql-5.6
+  tags:
+    - opensrp-mysql
+
+- hosts: opensrp-app-servers
+  roles:
+    - opensrp
+  tags:
+    - opensrp-app
+

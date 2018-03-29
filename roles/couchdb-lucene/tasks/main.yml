@@ -1,0 +1,73 @@
+---
+- name: Check if couchdb-lucene already packaged
+  stat: "path={{ couchdb_lucene_local_package_directory }}/{{ couchdb_lucene_version_name }}.tar.gz"
+  register: couchdb_lucene_package
+  delegate_to: 127.0.0.1
+
+- include_tasks: compile.yml
+  when: not couchdb_lucene_package.stat.exists
+
+- name: Make sure the couchdb-lucene install location exists
+  become: true
+  become_user: root
+  file:
+    path: "{{ couchdb_lucene_install_path }}"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: "0751"
+
+- name: Copy and uncompress the couchdb_lucene archive
+  become: true
+  become_user: root
+  unarchive:
+    copy: yes
+    src: "{{ couchdb_lucene_local_package_directory }}/{{ couchdb_lucene_version_name }}.tar.gz"
+    dest: "{{ couchdb_lucene_install_path }}"
+    owner: "root"
+    group: "root"
+    mode: "0751"
+
+- name: Copy the couchdb-lucene config file
+  become: true
+  become_user: root
+  template:
+    src: "templates/couchdb_lucene_install_path/couchdb-lucene-couchdb_lucene_version_number/conf/couchdb-lucene.ini.j2"
+    dest: "{{ couchdb_lucene_install_path }}/couchdb-lucene-{{ couchdb_lucene_version_number }}/conf/couchdb-lucene.ini"
+    owner: "root"
+    group: "root"
+    mode: "0640"
+
+- name: Copy the couchdb-lucene binary
+  become: true
+  become_user: root
+  template:
+    src: "templates/couchdb_lucene_install_path/couchdb-lucene-couchdb_lucene_version_number/bin/run.j2"
+    dest: "{{ couchdb_lucene_install_path }}/couchdb-lucene-{{ couchdb_lucene_version_number }}/bin/run"
+    owner: "root"
+    group: "root"
+    mode: "0751"
+
+- name: Copy the couchdb-lucene init script
+  become: true
+  become_user: root
+  template:
+    src: "templates/etc/init.d/couchdb-lucene.j2"
+    dest: "/etc/init.d/couchdb-lucene"
+    owner: "root"
+    group: "root"
+    mode: "0751"
+
+- name: Enable the couchdb-lucene service
+  become: yes
+  become_user: root
+  service:
+    name: couchdb-lucene
+    enabled: yes
+
+- name: Restart couchdb-lucene
+  become: yes
+  become_user: root
+  service:
+    name: couchdb-lucene
+    state: restarted

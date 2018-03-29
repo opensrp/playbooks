@@ -1,0 +1,15 @@
+mysqlbkup_version: "1.5"
+mysqlbkup_install_location: "/opt/mysqlbkup"
+mysql_backup_dir: "/backup/mysql"
+mysql_max_backups: 7
+mysql_backup_excluded_dbs: "information_schema performance_schema"
+mysql_backup_system_user: "root"
+mysql_backup_system_group: "root"
+mysql_backups_to_s3: false
+mysql_backup_day: "*"
+mysql_backup_hour: 0
+mysql_backup_minute: 0
+mysql_backup_gpg_key: "399FF952"
+mysql_backup_duplicity_version: "0.7.*"
+mysql_backup_pip_version: "8.1.1-2ubuntu0.4"
+mysql_backup_boto_version: "2.46.1"

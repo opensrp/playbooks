@@ -1,0 +1,1 @@
+gpg_trustdb_file: "{{ mysql_backup_gpg_key }}-trustdb.gpg"

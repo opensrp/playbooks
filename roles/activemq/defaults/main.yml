@@ -1,0 +1,5 @@
+activemq_version: 5.12
+activemq_system_user: activemq
+activemq_system_group: activemq
+activemq_port: 61616
+activemq_memory_opts: "-Xms512M -Xmx512M"

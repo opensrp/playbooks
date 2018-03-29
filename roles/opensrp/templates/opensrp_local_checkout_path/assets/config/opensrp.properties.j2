@@ -1,0 +1,85 @@
+sms.can.be.sent=false
+number.of.audit.messages=1000
+
+form.poll.time.interval=2
+mcts.phone.number=8762963816
+js.directory.name=/ziggy
+form.directory.name=/form
+form.download.files=form.xml, model.xml, form_definition.json
+multimedia.directory.name=/usr/share/tomcat7/.OpenMRS/
+qrcodes.directory.name={{ opensrp_resource_dir }}/qr-codes/
+
+schedule.config.path=/schedules/schedule-config.xls
+schedule.config.json.path=/schedules/schedule-config.json
+schedules.config.files.dir=/schedules/schedule-configs
+
+report-fields-definition-path=/report-fields-definition.json
+report-definition-path=/report-definition.json
+mcts-report-definition-path=/mcts-report-definition.json
+mcts-report-delay-in-days=10
+mcts.poll.time.interval.in.minutes=10
+
+# OpenMRS configuration
+openmrs.url={{ opensrp_openmrs_url }}
+openmrs.username={{ opensrp_openmrs_user }}
+openmrs.password={{ opensrp_openmrs_password }}
+openmrs.idgen.url=/module/idgen/exportIdentifiers.form
+openmrs.idgen.initial.batchsize=300000
+openmrs.idgen.batchsize=100
+openmrs.idgen.idsource=1
+
+dhis2.url={{ opensrp_dhis_url }}
+dhis2.username={{ opensrp_dhis_user }}
+dhis2.password={{ opensrp_dhis_password }}
+# make REST calls and push data while testing on the server specified above
+openmrs.test.make-rest-call=false
+
+openmrs.scheduletracker.syncer.interval-min=2
+
+#database configuration that is not likely to change unless massive refactoring are in build/maven.properties
+
+#couchdb properties
+couchdb.server={{ opensrp_couchdb_server }}
+couchdb.port={{ opensrp_couchdb_port }}
+couchdb.username={{ opensrp_couchdb_user }}
+couchdb.password={{ opensrp_couchdb_password }}
+
+couchdb.atomfeed-db.revision-limit=2
+
+# properties for postgres db in opensrp-web and opensrp-reporting modules
+jdbc.backend=MYSQL
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.username={{ opensrp_mysql_user }}
+jdbc.password={{ opensrp_mysql_password }}
+jdbc.url=jdbc:mysql://{{ opensrp_mysql_host }}:{{ opensrp_mysql_port }}/{{ opensrp_mysql_database }}?createDatabaseIfNotExist=true
+##jdbc url with server and port but without database
+jdbc.url-wo-db=jdbc:mysql://{{ opensrp_mysql_host }}:{{ opensrp_mysql_port }}
+
+# Hibernate properties for Reporting DB
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.show_sql=false
+# hibernate.hbm2ddl.auto=update
+hibernate.show_sql=true
+hibernate.format_sql=false
+hibernate.auto_commit=false
+
+hibernate.c3p0.max_size=15
+hibernate.c3p0.min_size=3
+hibernate.c3p0.timeout=60000
+hibernate.c3p0.max_statements=20
+hibernate.c3p0.idle_test_period=300
+hibernate.c3p0.acquire_increment=3
+
+preferred.time=7
+aggregator.dataset.url=http://bamboo.io/datasets/55a9e822cf46480eb1f24970741ceb15
+aggregated.dataset.url=http://bamboo.io/datasets/5d0734ccf76c4153a9db750b86ca49b9
+number.of.reports.sent.in.a.batch=100
+batch.update.time.interval=5
+drishti.site.url=http://localhost:9000
+application.context=org.springframework.web.context.WebApplicationContext:/opensrp
+
+#RapidPro settings
+rapidpro.url={{ opensrp_rapidpro_url }}
+rapidpro.token={{ opensrp_rapidpro_token }}
+#files upload
+file.maxUploadSize=20971520

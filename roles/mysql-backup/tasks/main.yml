@@ -1,0 +1,79 @@
+---
+- include_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Make sure boto is installed
+  when: mysql_backups_to_s3
+  become: true
+  become_user: root
+  pip:
+    name: "boto"
+    version: "{{ mysql_backup_boto_version }}"
+
+- name: Install the mysqlbkup project from GitHub
+  become: yes
+  become_user: "root"
+  git:
+    repo: https://github.com/quickshiftin/mysqlbkup.git
+    dest: "{{ mysqlbkup_install_location }}"
+    version: "{{ mysqlbkup_version }}"
+
+- name: Set the right permissions for the mysqlbkup project
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ mysqlbkup_install_location }}"
+    owner: "{{ mysql_backup_system_user }}"
+    group: "{{ mysql_backup_system_group }}"
+    mode: 0755
+
+- name: Copy over the mysqlbkup config files
+  become: yes
+  become_user: "root"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ mysql_backup_system_user }}"
+    group: "{{ mysql_backup_system_group }}"
+    mode: 0600
+  with_items:
+    - { src: "templates/mysqlbkup_install_location/mysqlbkup.cnf.j2", dest: "{{ mysqlbkup_install_location }}/mysqlbkup.cnf" }
+    - { src: "templates/etc/mysqlbkup.config.j2", dest: "/etc/mysqlbkup.config" }
+
+- name: Make sure the backup directory exists
+  file:
+    path: "{{ mysql_backup_dir }}"
+    state: directory
+    owner: "{{ mysql_backup_system_user }}"
+    group: "{{ mysql_backup_system_group }}"
+    mode: 0750
+
+- name: Copy over the mysql backup script
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/mysqlbkup_install_location/perform_mysql_backup.sh.j2"
+    dest: "{{ mysqlbkup_install_location }}/perform_mysql_backup.sh"
+    owner: "{{ mysql_backup_system_user }}"
+    group: "{{ mysql_backup_system_group }}"
+    mode: 0750
+
+- name: Make sure the main backup script is executable
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ mysqlbkup_install_location }}/mysqlbkup.sh"
+    owner: "{{ mysql_backup_system_user }}"
+    group: "{{ mysql_backup_system_group }}"
+    mode: 0750
+
+- name: Make sure the backup cronjob is installed
+  become: yes
+  become_user: "{{ mysql_backup_system_user }}"
+  cron:
+    name: "MySQL Backups"
+    job: "{{ mysqlbkup_install_location }}/perform_mysql_backup.sh"
+    state: present
+    day: "{{ mysql_backup_day }}"
+    hour: "{{ mysql_backup_hour }}"
+    minute: "{{ mysql_backup_minute }}"

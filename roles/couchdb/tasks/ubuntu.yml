@@ -1,0 +1,23 @@
+---
+- name: Install CouchDB prerequisites
+  become: yes
+  become_user: "root"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - erlang
+    - libicu-dev
+    - libcurl4-openssl-dev
+    - erlang-nox
+    - libicu55
+    - libmozjs185-1.0
+    - libnspr4
+    - libnspr4-0d
+
+- name: Install CouchDB from apt
+  become: yes
+  become_user: "root"
+  apt:
+    name: "couchdb={{ couchdb_version }}"
+    state: present

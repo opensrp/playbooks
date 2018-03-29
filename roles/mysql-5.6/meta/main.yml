@@ -1,0 +1,16 @@
+---
+dependencies:
+ - role: mysql-backup
+   when: mysql_install_server == True
+   mysql_host: "{{ openmrs_mysql_host }}"
+   mysql_backup_user: "root"
+   mysql_backup_password: "{{ mysql_root_password }}"
+   tags:
+    - mysql-backup
+    - backup
+
+ - role: collectd
+   collectd_deployed_app_name: "mysql"
+   collectd_deployed_app_version: "{{ mysql_server_version }}"
+   become: True
+   when: mysql_install_server

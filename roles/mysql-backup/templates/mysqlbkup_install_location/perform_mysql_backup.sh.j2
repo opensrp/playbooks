@@ -1,0 +1,13 @@
+#! /bin/bash
+
+{{ mysqlbkup_install_location }}/mysqlbkup.sh
+
+{% if mysql_backups_to_s3 %}
+export AWS_ACCESS_KEY_ID={{ mysql_s3_backup_access_key }}
+export AWS_SECRET_ACCESS_KEY={{ mysql_s3_backup_secret_key }}
+
+/usr/bin/duplicity --s3-use-new-style --encrypt-key {{ mysql_backup_gpg_key }} {{ mysql_backup_dir }} {{ mysql_s3_backup_location }}
+
+unset AWS_ACCESS_KEY_ID
+unset AWS_SECRET_ACCESS_KEY
+{% endif %}
