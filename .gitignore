@@ -3,5 +3,5 @@
 *.DS_Store
 .idea
 .sql*
-inventories/*
-!inventories/README.md
+inventories/personal/*
+!inventories/personal/README.md
