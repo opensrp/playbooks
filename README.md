@@ -79,11 +79,6 @@ workon playbooks
 cd ~/opensrp-playbooks
 ```
 
-## Temporary Personal Inventory
-
-Create a local inventory, that won't be shared with others on Git, by adding the inventory and vars
-files in [inventories/personal](./inventories/personal).
-
 [1]: https://www.ansible.com
 [2]: https://pypi.python.org/pypi/pycrypto
 [3]: https://www.virtualbox.org
