@@ -16,7 +16,7 @@ used to encrypt sensitive info in this repo.
 Clone this repository with its Git submodules:
 
 ```sh
-git clone --recursive git@github.com:onaio/playbooks-opensrp.git && cd playbooks-opensrp
+git clone --recursive git@github.com:opensrp/playbooks.git && cd playbooks
 ```
 
 Make sure all [pip][5] requirements are installed by running the following command. We recommend
@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ## Inventories
 
-Copy over your inventory files into a new directory called `inventories`. We recommend you track them in a seperate private git repository. Please do not make pull requests to this repository with inventory files that might expose aspects of your infrastructure that you don't want exposed.
+Copy over your inventory files into a new directory called `inventories`. Note that we have `inventories` in the .gitignore file. We recommend you track them in a seperate private git repository. Please do not make pull requests to this repository with inventory files that might expose aspects of your infrastructure that you don't want exposed.
 
 We recommend you use the following directory structure:
 
@@ -68,16 +68,6 @@ inventories/
 ```
 
 Each environment directory contains a `hosts` file that's used to group `host_vars` into `group_vars` and `group_vars` into other `group_vars`. Please avoid setting ansible variables in that file.
-
-## Deploying from Ona's DevOps Host
-
-YOu can run these plays from Ona's DevOps host, if you have access to it. SSH in as the `devops`
-user then run:
-
-```sh
-workon playbooks
-cd ~/opensrp-playbooks
-```
 
 [1]: https://www.ansible.com
 [2]: https://pypi.python.org/pypi/pycrypto
