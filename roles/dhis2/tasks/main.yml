@@ -101,7 +101,7 @@
   become: yes
   become_user: "root"
   get_url:
-    url: https://www.dhis2.org/download/releases/{{ dhis_version }}/dhis.war
+    url: http://s3-eu-west-1.amazonaws.com/releases.dhis2.org/{{ dhis_version }}/dhis.war
     dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/webapps/ROOT.war"
 
 - name: Change Tomcat7 Instance Ownership
