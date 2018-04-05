@@ -1,0 +1,14 @@
+[Unit]
+Description=DHIS2 Tomcat7 Service
+After=network.target
+
+[Service]
+Type=forking
+WorkingDirectory={{ dhis_user_home }}/{{ dhis_tomcat_instance }}
+User=root
+Group=root
+ExecStart={{ dhis_user_home }}/{{ dhis_tomcat_instance }}/bin/startup.sh
+ExecStop={{ dhis_user_home }}/{{ dhis_tomcat_instance }}/bin/shutdown.sh
+
+[Install]
+WantedBy=multi-user.target

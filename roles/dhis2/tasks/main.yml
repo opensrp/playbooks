@@ -83,6 +83,8 @@
     owner: "{{ dhis_system_user }}"
     group: "{{ dhis_system_group }}"
     mode: 0744
+  notify:
+    - "restart {{ dhis_tomcat_instance }}"
 
 - name: Copy DHIS Tomcat Configs
   become: yes
@@ -96,13 +98,17 @@
   with_items:
     - server.xml
     - web.xml
+  notify:
+    - "restart {{ dhis_tomcat_instance }}"
 
 - name: Download The DHIS2 War
   become: yes
   become_user: "root"
   get_url:
-    url: https://www.dhis2.org/download/releases/{{ dhis_version }}/dhis.war
+    url: http://s3-eu-west-1.amazonaws.com/releases.dhis2.org/{{ dhis_version }}/dhis.war
     dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/webapps/ROOT.war"
+  notify:
+    - "restart {{ dhis_tomcat_instance }}"
 
 - name: Change Tomcat7 Instance Ownership
   become: yes
@@ -113,15 +119,21 @@
     group: "{{ dhis_system_group }}"
     state: directory
     mode: 0744
+    recurse: yes
 
-- name: Stop DHIS2 Tomcat Instance
+- name: Copy the SystemD unit file for DHIS2
   become: yes
   become_user: "root"
-  command: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/bin/shutdown.sh"
-  changed_when: output.stdout != ""
+  template:
+    src: "etc/systemd/system/dhis_tomcat_instance.service.j2"
+    dest: "/etc/systemd/system/{{ dhis_tomcat_instance }}.service"
+  notify:
+    - "restart {{ dhis_tomcat_instance }}"
 
-- name: Start DHIS2 Tomcat Instance
+- name: Enable the SystemD service
   become: yes
   become_user: "root"
-  command: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/bin/startup.sh"
-  changed_when: output.stdout != ""
+  systemd:
+    name: "{{ dhis_tomcat_instance }}"
+    daemon_reload: yes
+    enabled: yes
