@@ -15,7 +15,8 @@ dependencies:
 
 - role: nginx
   site_file: "roles/dhis2/templates/etc/nginx/sites-enabled/site_name.j2"
-  certs_from_letsencrypt: false
+  site_name: "{{ dhis_site_name }}"
+  certs_from_letsencrypt: "{{ dhis_certs_from_letsencrypt }}"
   tags:
     - nginx
 
