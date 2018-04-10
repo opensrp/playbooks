@@ -41,6 +41,8 @@
     - { src: "templates/etc/mysqlbkup.config.j2", dest: "/etc/mysqlbkup.config" }
 
 - name: Make sure the backup directory exists
+  become: yes
+  become_user: "root"
   file:
     path: "{{ mysql_backup_dir }}"
     state: directory
