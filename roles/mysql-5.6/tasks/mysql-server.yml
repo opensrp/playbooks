@@ -30,6 +30,7 @@
     priv: "*.*:ALL,GRANT"
   with_items:
     - "{{ ansible_hostname }}"
+    - "{{ openmrs_mysql_app_host }}"
     - 127.0.0.1
     - ::1
     - localhost
