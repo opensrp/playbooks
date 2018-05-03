@@ -11,6 +11,7 @@ openmrs_nginx_max_filesize: "50M"
 openmrs_install_name: "openmrs"
 openmrs_mysql_user: "openmrs"
 openmrs_mysql_database: "openmrs"
+openmrs_mysql_database_trigger: "openmrs_user_property"
 openmrs_mysql_host: "localhost"
 openmrs_mysql_app_host: "localhost"
 openmrs_mysql_port: 3306
