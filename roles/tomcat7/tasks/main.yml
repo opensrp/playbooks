@@ -6,3 +6,6 @@
 
 - include_tasks: tomcat_service.yml
   when: install_tomcat_service
+
+- include_tasks: tomcat_shared_folder_user.yml
+  when: install_tomcat_service

@@ -1,0 +1,10 @@
+---
+- name: Update Owner Permission For Shared Tomcat Folder
+  become: yes
+  become_user: root
+  file:
+    path: "/usr/share/tomcat7"
+    state: directory
+    recurse: yes
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
