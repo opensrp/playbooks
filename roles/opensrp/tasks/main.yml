@@ -5,7 +5,6 @@
   delegate_to: 127.0.0.1
 
 - include_tasks: compile.yml
-  when: not opensrp_package.stat.exists
 
 - include_tasks: mysql.yml
   when: opensrp_mysql_database is defined
