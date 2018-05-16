@@ -28,17 +28,6 @@
     group: root
     mode: 0700
 
-- name: Import the OpenMRS trigger .sql file
-  become: yes
-  become_user: "root"
-  mysql_db:
-    name: "{{ openmrs_mysql_database }}"
-    login_user: "root"
-    login_password: "{{ mysql_root_password }}"
-    login_host: "{{ openmrs_mysql_host }}"
-    state: import
-    target: "/tmp/{{ openmrs_mysql_database_trigger }}.sql"
-
 - name: Create OpenMRS Config Directory
   become: yes
   become_user: root

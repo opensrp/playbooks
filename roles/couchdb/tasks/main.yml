@@ -30,13 +30,13 @@
 
 - name: Add CouchDB admin user
   uri:
-    url: "http://127.0.0.1:{{ couchdb_port }}/_config/admins/{{ couchdb_admin_user }}"
+    url: "http://{{ couchdb_host }}:{{ couchdb_port }}/_config/admins/{{ couchdb_admin_user }}"
     method: PUT
     body: "\"{{ couchdb_admin_password }}\""
 
 - name: Create the CouchDB databases
   uri:
-    url: "http://127.0.0.1:{{ couchdb_port }}/{{ item }}"
+    url: "http://{{ couchdb_host }}:{{ couchdb_port }}/{{ item }}"
     method: PUT
     user: "{{ couchdb_admin_user }}"
     password: "{{ couchdb_admin_password }}"
