@@ -1,0 +1,14 @@
+[Unit]
+Description=OpenMRS Tomcat7 Service
+After=network.target
+
+[Service]
+Type=forking
+WorkingDirectory={{ openmrs_user_home }}/{{ openmrs_tomcat_instance }}
+User=root
+Group=root
+ExecStart={{ openmrs_user_home }}/{{ openmrs_tomcat_instance }}/bin/startup.sh
+ExecStop={{ openmrs_user_home }}/{{ openmrs_tomcat_instance }}/bin/shutdown.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -22,3 +22,6 @@ openmrs_modules: []
 openmrs_dump_files: []
 ssl_key: "{{ openmrs_site_name }}-key.pem"
 ssl_cert: "{{ openmrs_site_name }}-fullchain.pem"
+openmrs_system_user: "openmrs"
+openmrs_tomcat_instance: "tomcat-openmrs"
+openmrs_user_home: "/home/{{ openmrs_system_user }}"

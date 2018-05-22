@@ -39,15 +39,9 @@
     state: import
     target: "/tmp/{{ openmrs_mysql_database_trigger }}.sql"
 
-- name: Create OpenMRS Config Directory
-  become: yes
-  become_user: root
-  file:
-    path: "/usr/share/tomcat7/.OpenMRS"
-    owner: "{{ tomcat_user }}"
-    group: "{{ tomcat_group }}"
-    state: directory
-    mode: 0755
+- include_tasks: openmrs-tomcat-instance.yml
+  tags:
+    - openmrs-tomcat-user
 
 - name: Copy the OpenMRS Runtime Template
   become: yes
@@ -80,15 +74,15 @@
     path: "{{ item }}"
     state: absent
   with_items:
-    - "/var/lib/tomcat7/webapps/{{ openmrs_install_name }}.war"
-    - "/var/lib/tomcat7/webapps/{{ openmrs_install_name }}"
+    - "{{ openmrs_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
+    - "{{ openmrs_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}"
 
 - name: Install the OpenMRS Binary
   become: yes
   become_user: root
   get_url:
     url: "https://netcologne.dl.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version }}/openmrs.war"
-    dest: "/var/lib/tomcat7/webapps/{{ openmrs_install_name }}.war"
+    dest: "{{ openmrs_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
     owner: "{{ tomcat_user }}"
     group: "{{ tomcat_group }}"
 
@@ -96,5 +90,5 @@
   become: yes
   become_user: root
   service:
-    name: tomcat7
+    name: "{{openmrs_tomcat_instance}}"
     state: restarted
