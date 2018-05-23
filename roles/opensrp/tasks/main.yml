@@ -14,7 +14,7 @@
   become_user: root
   file:
     path: "{{ opensrp_resource_dir }}"
-    owner: "{{ tomcat_user }}"
+    owner: "{{ opensrp_system_user }}"
     group: "{{ tomcat_group }}"
     state: directory
     mode: 0755
@@ -24,11 +24,15 @@
   become_user: root
   file:
     path: "{{ opensrp_resource_dir }}/{{ item }}"
-    owner: "{{ tomcat_user }}"
+    owner: "{{ opensrp_system_user }}"
     group: "{{ tomcat_group }}"
     state: directory
     mode: 0755
   with_items: "{{ opensrp_resource_sub_dirs }}"
+
+- include_tasks: opensrp-tomcat-instance.yml
+  tags:
+   - opensrp-tomcat-user
 
 - name: Make sure the OpenSRP directory is absent in Tomcat's app directory
   become: yes
@@ -37,21 +41,21 @@
     path: "{{ item }}"
     state: absent
   with_items:
-    - "/var/lib/tomcat7/webapps/{{ opensrp_install_name }}.war"
-    - "/var/lib/tomcat7/webapps/{{ opensrp_install_name }}"
+    - "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/{{ opensrp_install_name }}.war"
+    - "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/{{ opensrp_install_name }}"
 
 - name: Copy the OpenSRP package
   become: yes
   become_user: root
   copy:
     src: "{{ opensrp_local_package_directory }}/{{ opensrp_version }}.war"
-    dest: "/var/lib/tomcat7/webapps/{{ opensrp_install_name }}.war"
-    owner: "{{ tomcat_user }}"
+    dest: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/{{ opensrp_install_name }}.war"
+    owner: "{{ opensrp_system_user }}"
     group: "{{ tomcat_group }}"
 
 - name: Restart the Tomcat7 Service
   become: yes
   become_user: root
   service:
-    name: tomcat7
+    name: "{{opensrp_tomcat_instance}}"
     state: restarted

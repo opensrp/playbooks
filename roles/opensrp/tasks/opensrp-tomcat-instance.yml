@@ -1,0 +1,85 @@
+---
+- name: Create OpenSRP System User
+  become: yes
+  become_user: root
+  user:
+    name: "{{ opensrp_system_user }}"
+    group: "{{ tomcat_group }}"
+    groups: "sudo"
+    home: "{{ opensrp_user_home }}"
+    shell: /bin/bash
+    state: present
+  tags:
+   - opensrp-tomcat-user
+
+- name: Create OpenSRP qr-codes Directory
+  become: yes
+  become_user: root
+  file:
+    path: "{{ opensrp_user_home }}/qr-codes"
+    owner: "{{ opensrp_system_user }}"
+    group: "{{ tomcat_group }}"
+    state: directory
+    mode: 0644
+  tags:
+   - opensrp-tomcat-user
+
+- name: Create OpenSRP Tomcat7 Instance
+  become: yes
+  become_user: "root"
+  command: "tomcat7-instance-create {{ opensrp_tomcat_instance }}"
+  args:
+    chdir: "{{ opensrp_user_home }}"
+    creates: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}"
+  tags:
+   - opensrp-tomcat-user
+
+- name: Copy OpenSRP Tomcat setenv Script
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/opensrp_user_home/opensrp_tomcat_instance/bin/setenv.sh.j2"
+    dest: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/bin/setenv.sh"
+    owner: "{{ opensrp_system_user }}"
+    group: "{{ tomcat_group }}"
+    mode: 0744
+  notify:
+    - "restart {{ opensrp_tomcat_instance }}"
+  tags:
+   - opensrp-tomcat-user
+
+- name: Change Tomcat7 OpenSRP Instance Ownership
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}"
+    owner: "{{ opensrp_system_user }}"
+    group: "{{ tomcat_group }}"
+    state: directory
+    mode: 0744
+    recurse: yes
+  tags:
+   - opensrp-tomcat-user
+
+- name: Copy the SystemD unit file for OpenSRP
+  become: yes
+  become_user: "root"
+  template:
+    src: "etc/systemd/system/opensrp_tomcat_instance.service.j2"
+    dest: "/etc/systemd/system/{{ opensrp_tomcat_instance }}.service"
+  notify:
+    - "restart {{ opensrp_tomcat_instance }}"
+
+  tags:
+   - opensrp-tomcat-user
+
+- name: Enable the SystemD service for OpenSRP
+  become: yes
+  become_user: "root"
+  systemd:
+    name: "{{ opensrp_tomcat_instance }}"
+    daemon_reload: yes
+    enabled: yes
+
+  tags:
+   - opensrp-tomcat-user
