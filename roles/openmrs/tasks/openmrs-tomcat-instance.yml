@@ -12,19 +12,6 @@
   tags:
    - openmrs-tomcat-user
 
-
-- name: Create OpenMRS Config Directory
-  become: yes
-  become_user: root
-  file:
-    path: "/usr/share/tomcat7/.OpenMRS"
-    owner: "{{ openmrs_system_user }}"
-    group: "{{ tomcat_group }}"
-    state: directory
-    mode: g+rw
-  tags:
-   - openmrs-tomcat-user
-
 - name: Create OpenMRS Tomcat7 Instance
   become: yes
   become_user: "root"
@@ -82,5 +69,18 @@
     daemon_reload: yes
     enabled: yes
 
+  tags:
+   - openmrs-tomcat-user
+
+
+- name: Create OpenMRS Config Directory
+  become: yes
+  become_user: root
+  file:
+    path: "{{openmrs_home_directory}}"
+    owner: "{{ openmrs_system_user }}"
+    group: "{{ tomcat_group }}"
+    state: directory
+    mode: g+rw
   tags:
    - openmrs-tomcat-user

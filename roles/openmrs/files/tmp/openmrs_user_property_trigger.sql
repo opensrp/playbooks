@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS user_property (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Create the trigger
-DELIMITER $$
 DROP TRIGGER IF EXISTS user_property_before_update;
+DELIMITER $$
 CREATE TRIGGER user_property_before_update BEFORE UPDATE ON user_property
   FOR EACH ROW
   BEGIN

@@ -48,7 +48,7 @@
   become_user: root
   template:
     src: "templates/usr/share/tomcat7/.OpenMRS/openmrs-runtime.properties.j2"
-    dest: "/usr/share/tomcat7/.OpenMRS/openmrs-runtime.properties"
+    dest: "{{ openmrs_user_home }}/{{ openmrs_tomcat_instance }}/.OpenMRS/openmrs-runtime.properties"
     owner: "{{ tomcat_user }}"
     group: "{{ tomcat_group }}"
     mode: 0640
