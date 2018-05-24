@@ -1,0 +1,73 @@
+---
+- name: Create Tomctat System User
+  become: yes
+  become_user: root
+  user:
+    name: "{{ tomcat_system_user }}"
+    group: "{{ tomcat_system_group }}"
+    home: "{{ tomcat_user_home }}"
+    shell: /bin/bash
+    state: present
+  tags:
+   - tomcat-user-instance
+
+- name: Create Tomcat7 User Instance
+  become: yes
+  become_user: "root"
+  command: "tomcat7-instance-create {{ tomcat_instance }}"
+  args:
+    chdir: "{{ tomcat_user_home }}"
+    creates: "{{ tomcat_user_home }}/{{ tomcat_instance }}"
+  tags:
+   - tomcat-user-instance
+
+- name: Copy Tomcat7 setenv Script
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/tomcat_user_instance_home/bin/setenv.sh.j2"
+    dest: "{{ tomcat_user_home }}/{{ tomcat_instance }}/bin/setenv.sh"
+    owner: "{{ tomcat_system_user }}"
+    group: "{{ tomcat_system_group }}"
+    mode: 0744
+  notify:
+    - "restart {{ tomcat_instance }}"
+  tags:
+   - tomcat-user-instance
+
+- name: Change Tomcat7 User Instance Ownership
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ tomcat_user_home }}/{{ tomcat_instance }}"
+    owner: "{{ tomcat_system_user }}"
+    group: "{{ tomcat_system_group }}"
+    state: directory
+    mode: 0744
+    recurse: yes
+  tags:
+   - omcat-user-instance
+
+- name: Copy the SystemD unit file for omcat7 User Instance
+  become: yes
+  become_user: "root"
+  template:
+    src: "etc/systemd/system/openmrs_tomcat_instance.service.j2"
+    dest: "/etc/systemd/system/{{ openmrs_tomcat_instance }}.service"
+  notify:
+    - "restart {{ openmrs_tomcat_instance }}"
+
+  tags:
+   - openmrs-tomcat-user
+
+- name: Enable the SystemD service for OpenMRS
+  become: yes
+  become_user: "root"
+  systemd:
+    name: "{{ openmrs_tomcat_instance }}"
+    daemon_reload: yes
+    enabled: yes
+
+  tags:
+   - openmrs-tomcat-user
+

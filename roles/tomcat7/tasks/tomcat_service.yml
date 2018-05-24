@@ -24,3 +24,11 @@
   with_items:
     - "server.xml"
     - "web.xml"
+
+- name: Stop & Enable the Tomcat7 Service
+  become: yes
+  become_user: root
+  service:
+    name: tomcat7
+    state: stopped
+    enabled: true
