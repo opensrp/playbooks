@@ -25,7 +25,7 @@ server {
 
     location /{{ opensrp_install_name }} {
         # backend
-        proxy_pass         http://localhost:{{ tomcat_http_port }}/{{ opensrp_install_name }};
+        proxy_pass         http://localhost:{{ opensrp_tomcat_http_port }}/{{ opensrp_install_name }};
         proxy_read_timeout 86400s;
 
         # headers

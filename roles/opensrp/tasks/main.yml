@@ -53,7 +53,7 @@
     owner: "{{ opensrp_system_user }}"
     group: "{{ tomcat_group }}"
 
-- name: Restart the Tomcat7 Service
+- name: Restart OpenSRP Tomcat Instance
   become: yes
   become_user: root
   service:
