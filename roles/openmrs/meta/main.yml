@@ -10,8 +10,8 @@ dependencies:
   tomcat_http_port: "{{ openmrs_tomcat_http_port }}"
   tomcat_shutdown_port: "{{ openmrs_tomcat_shutdown_port }}"
   tomcat_max_filesize: "{{ openmrs_tomcat_max_filesize }}"
-  tomcat_max_filesize: "{{ openmrs_tomcat_max_filesize }}"
   tomcat_fsize_threshold: "{{ openmrs_tomcat_fsize_threshold }}"
+  tomcat_ajp_port: "{{ openmrs_tomcat_ajp_port }}"
   tags:
     - tomcat7
 

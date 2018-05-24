@@ -2,6 +2,16 @@
 dependencies:
 - role: tomcat7
   install_tomcat_service: true
+  tomcat_system_user: "{{ opensrp_system_user }}"
+  tomcat_system_group: "{{ tomcat_group }}"
+  tomcat_user_home: "{{ opensrp_user_home }}"
+  tomcat_instance: "{{ opensrp_tomcat_instance }}"
+  tomcat_Working_directory: "{{ tomcat_user_home }}/{{ tomcat_instance }}"
+  tomcat_http_port: "{{ opensrp_tomcat_http_port }}"
+  tomcat_shutdown_port: "{{ opensrp_tomcat_shutdown_port }}"
+  tomcat_max_filesize: "{{ opensrp_tomcat_max_filesize }}"
+  tomcat_fsize_threshold: "{{ opensrp_tomcat_fsize_threshold }}"
+  tomcat_ajp_port: "{{ opensrp_tomcat_ajp_port }}"
   tags:
     - tomcat7
 

@@ -30,10 +30,6 @@
     mode: 0755
   with_items: "{{ opensrp_resource_sub_dirs }}"
 
-- include_tasks: opensrp-tomcat-instance.yml
-  tags:
-   - opensrp-tomcat-user
-
 - name: Make sure the OpenSRP directory is absent in Tomcat's app directory
   become: yes
   become_user: root

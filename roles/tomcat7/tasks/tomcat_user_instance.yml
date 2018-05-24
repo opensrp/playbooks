@@ -35,6 +35,21 @@
   tags:
    - tomcat-user-instance
 
+- name: Copy Tomcat7 Configs
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/var/lib/tomcat7/conf/{{ item }}.j2"
+    dest: "{{ tomcat_user_home }}/{{ tomcat_instance }}/conf/{{ item }}"
+    owner: "{{ tomcat_system_user }}"
+    group: "{{ tomcat_system_group }}"
+    mode: 0644
+  with_items:
+    - "server.xml"
+    - "web.xml"
+  tags:
+     - tomcat-user-instance
+
 - name: Change Tomcat7 User Instance Ownership
   become: yes
   become_user: "root"
@@ -46,16 +61,16 @@
     mode: 0744
     recurse: yes
   tags:
-   - omcat-user-instance
+   - tomcat-user-instance
 
 - name: Copy the SystemD unit file for omcat7 User Instance
   become: yes
   become_user: "root"
   template:
-    src: "etc/systemd/system/openmrs_tomcat_instance.service.j2"
-    dest: "/etc/systemd/system/{{ openmrs_tomcat_instance }}.service"
+    src: "etc/systemd/system/tomcat_user_instance.service.j2"
+    dest: "/etc/systemd/system/{{ tomcat_instance }}.service"
   notify:
-    - "restart {{ openmrs_tomcat_instance }}"
+    - "restart {{ tomcat_instance }}"
 
   tags:
    - openmrs-tomcat-user
@@ -64,7 +79,7 @@
   become: yes
   become_user: "root"
   systemd:
-    name: "{{ openmrs_tomcat_instance }}"
+    name: "{{ tomcat_instance }}"
     daemon_reload: yes
     enabled: yes
 

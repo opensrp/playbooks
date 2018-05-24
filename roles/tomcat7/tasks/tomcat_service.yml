@@ -12,19 +12,6 @@
     group: "root"
     mode: 0755
 
-- name: Copy Tomcat7 Configs
-  become: yes
-  become_user: "root"
-  template:
-    src: "templates/var/lib/tomcat7/conf/{{ item }}.j2"
-    dest: "/var/lib/tomcat7/conf/{{ item }}"
-    owner: "root"
-    group: "{{ tomcat_group }}"
-    mode: 0644
-  with_items:
-    - "server.xml"
-    - "web.xml"
-
 - name: Stop & Enable the Tomcat7 Service
   become: yes
   become_user: root
