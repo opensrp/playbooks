@@ -1,7 +1,7 @@
 ---
 dependencies:
 - role: tomcat7
-  install_tomcat_service: true
+  install_tomcat_service: false
   tomcat_system_user: "{{ openmrs_system_user }}"
   tomcat_system_group: "{{ tomcat_group }}"
   tomcat_user_home: "{{ openmrs_tomcat_user_home }}"

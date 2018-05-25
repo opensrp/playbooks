@@ -10,12 +10,12 @@
     dest: "/usr/share/tomcat7/bin/setenv.sh"
     owner: "root"
     group: "root"
-    mode: 0755
+    mode: 0775
 
 - name: Stop & Enable the Tomcat7 Service
   become: yes
   become_user: root
   service:
     name: tomcat7
-    state: stopped
+    state: started
     enabled: true

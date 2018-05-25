@@ -47,6 +47,8 @@
   with_items:
     - "server.xml"
     - "web.xml"
+  notify:
+      - "restart {{ tomcat_instance }}"
   tags:
      - tomcat-user-instance
 

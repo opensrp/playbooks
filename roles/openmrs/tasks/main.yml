@@ -43,11 +43,11 @@
   become: yes
   become_user: root
   file:
-    path: "{{openmrs_home_directory}}"
+    path: "{{ openmrs_home_directory }}"
     owner: "{{ openmrs_system_user }}"
     group: "{{ tomcat_group }}"
     state: directory
-    mode: g+rw
+    mode: 0775
 
 - name: Copy the OpenMRS Runtime Template
   become: yes
@@ -55,7 +55,7 @@
   template:
     src: "templates/usr/share/tomcat7/.OpenMRS/openmrs-runtime.properties.j2"
     dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/.OpenMRS/openmrs-runtime.properties"
-    owner: "{{ tomcat_user }}"
+    owner: "{{ openmrs_system_user }}"
     group: "{{ tomcat_group }}"
     mode: 0640
 
@@ -65,7 +65,7 @@
   file:
     src: "{{openmrs_home_directory}}"
     dest: "/var/lib/OpenMRS"
-    owner: "{{ tomcat_user }}"
+    owner: "{{ openmrs_system_user }}"
     group: "{{ tomcat_group }}"
     state: link
     mode: 0777
@@ -89,7 +89,7 @@
   get_url:
     url: "https://netcologne.dl.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version }}/openmrs.war"
     dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
-    owner: "{{ tomcat_user }}"
+    owner: "{{ openmrs_system_user }}"
     group: "{{ tomcat_group }}"
 
 - name: Restart the Tomcat7 Service
