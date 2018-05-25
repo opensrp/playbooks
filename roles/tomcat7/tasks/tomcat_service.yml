@@ -1,7 +1,4 @@
 ---
-- include_tasks: tomcat_service_ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
-
 - name: Copy Tomcat7 env File
   become: yes
   become_user: "root"
@@ -12,7 +9,7 @@
     group: "root"
     mode: 0775
 
-- name: Stop & Enable the Tomcat7 Service
+- name: Start & Enable the Tomcat7 Service
   become: yes
   become_user: root
   service:
