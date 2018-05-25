@@ -1,5 +1,13 @@
 ---
 dependencies:
+- role: DavidWittman.redis
+  become: true
+  become_user: "root"
+  redis_bind: 127.0.0.1
+  redis_password: "{{ opensrp_redis_password }}"
+  tags:
+   - opensrp-redis
+
 - role: tomcat7
   install_tomcat_service: true
   tags:
