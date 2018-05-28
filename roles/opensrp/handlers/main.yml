@@ -1,0 +1,6 @@
+---
+- name: restart {{ opensrp_tomcat_instance }}
+  systemd:
+    name: "{{ opensrp_tomcat_instance }}"
+    state: restarted
+  become: yes

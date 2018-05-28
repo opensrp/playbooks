@@ -24,8 +24,8 @@ opensrp_couchdb_user: "root"
 opensrp_couchdb_password: "root"
 opensrp_rapidpro_token: ""
 opensrp_nginx_max_filesize: "50M"
-opensrp_local_checkout_path: "/mnt/vol1/opensrp"
-opensrp_local_package_directory: "/mnt/vol1/opensrp-wars"
+opensrp_local_checkout_path: "/tmp/opensrp"
+opensrp_local_package_directory: "/tmp/opensrp-wars"
 activemq_version: "5.12"
 couchdb_databases:
   - "opensrp"
@@ -43,10 +43,15 @@ activemq_memory_opts: "-Xms2048M -Xmx2048M"
 mysql_backups_to_s3: false
 tomcat_user: "tomcat7"
 tomcat_group: "tomcat7"
-tomcat_http_port: 8080
+opensrp_tomcat_http_port: 8082
+opensrp_tomcat_shutdown_port: 8007
+opensrp_tomcat_ajp_port: 8012
 tomcat_https_port: 8443
-tomcat_max_filesize: "52428800"
-tomcat_fsize_threshold: "10485760"
+opensrp_tomcat_max_filesize: "52428800"
+opensrp_tomcat_fsize_threshold: "10485760"
 catalina_ops: "-Xms1500M -Xmx1500M"
 ssl_key: "{{ opensrp_site_name }}-key.pem"
 ssl_cert: "{{ opensrp_site_name }}-fullchain.pem"
+opensrp_system_user: "opensrp"
+opensrp_tomcat_instance: "tomcat-opensrp"
+opensrp_user_home: "/home/{{ opensrp_system_user }}"

@@ -1,4 +1,4 @@
 oracle_java8_software_properties_common_version: "0.96.20*"
-oracle_java8_installer_version: "8u121-1~webupd8~2"
-oracle_java8_set_default_version: "8u121-1~webupd8~2"
+oracle_java8_installer_version: "8u171-1~webupd8~0"
+oracle_java8_set_default_version: "8u171-1~webupd8~0"
 oracle_java8_ca_certificates_version: "20170717~16.04.1"

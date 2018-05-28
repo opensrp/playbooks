@@ -1,2 +1,7 @@
 tomcat_service_version: "7.0.*"
 tomcat_user_version: "7.0.*"
+tomcat_http_port: "8080"
+tomcat_ajp_port: "8009"
+tomcat_shutdown_port: "8005"
+tomcat_max_filesize: "52428800"
+tomcat_fsize_threshold: "10485760"
