@@ -10,3 +10,6 @@
 [submodule "roles/certbot"]
 	path = roles/certbot
 	url = git@github.com:onaio/ansible-certbot.git
+[submodule "roles/ssh"]
+	path = roles/ssh
+	url = git@github.com:onaio/ansible-ssh.git

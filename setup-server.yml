@@ -1,8 +1,14 @@
 - hosts: monitored-servers
   gather_facts: False
+  become: yes
   pre_tasks:
     - include_tasks: tasks/python2-ubuntu.yml
     - name: Setup Ansible
       setup:
   roles:
-    - server-monitoring
+    - role: ssh
+      tags:
+        - ssh
+    - role: server-monitoring
+      tags:
+        - monitoring
