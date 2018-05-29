@@ -25,7 +25,7 @@ server {
 
     location /{{ openmrs_install_name }} {
         # backend
-        proxy_pass         http://localhost:{{ tomcat_http_port }}/{{ openmrs_install_name }};
+        proxy_pass         http://localhost:{{ openmrs_tomcat_http_port }}/{{ openmrs_install_name }};
         proxy_read_timeout 86400s;
 
         # headers

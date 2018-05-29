@@ -1,7 +1,17 @@
 ---
 dependencies:
 - role: tomcat7
-  install_tomcat_service: true
+  install_tomcat_service: false
+  tomcat_system_user: "{{ openmrs_system_user }}"
+  tomcat_system_group: "{{ tomcat_group }}"
+  tomcat_user_home: "{{ openmrs_tomcat_user_home }}"
+  tomcat_instance: "{{ openmrs_tomcat_instance }}"
+  tomcat_Working_directory: "{{ tomcat_user_home }}/{{ tomcat_instance }}/.OpenMRS"
+  tomcat_http_port: "{{ openmrs_tomcat_http_port }}"
+  tomcat_shutdown_port: "{{ openmrs_tomcat_shutdown_port }}"
+  tomcat_max_filesize: "{{ openmrs_tomcat_max_filesize }}"
+  tomcat_fsize_threshold: "{{ openmrs_tomcat_fsize_threshold }}"
+  tomcat_ajp_port: "{{ openmrs_tomcat_ajp_port }}"
   tags:
     - tomcat7
 
@@ -21,3 +31,7 @@ dependencies:
   become: True
   tags:
     - collectd
+
+- role: oracle-java8
+  tags:
+   - oracle-java8
