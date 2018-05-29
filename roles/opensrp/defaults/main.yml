@@ -4,6 +4,7 @@ opensrp_resource_sub_dirs:
   - "multimedia"
   - "qr-codes"
 opensrp_mysql_port: 3306
+opensrp_redis_version: 4.0.9
 opensrp_mysql_host: "localhost"
 opensrp_mysql_database: "opensrp"
 opensrp_motech_database: "motechquartz"

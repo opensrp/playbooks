@@ -4,6 +4,7 @@ dependencies:
   become: true
   become_user: "root"
   redis_bind: 127.0.0.1
+  redis_version: "{{ opensrp_redis_version }}"
   redis_password: "{{ opensrp_redis_password }}"
   tags:
    - opensrp-redis
