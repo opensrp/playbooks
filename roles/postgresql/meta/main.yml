@@ -4,3 +4,11 @@ dependencies:
    collectd_deployed_app_name: "postgresql"
    collectd_deployed_app_version: "-"
    become: True
+
+ - role: ANXS.postgresql
+   become: true
+   become_user: "root"
+   postgresql_version: "{{ pg_version }}"
+   postgresql_ext_postgis_version: "{{ postgis_version }}"
+   tags:
+    - install-postgresql
