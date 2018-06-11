@@ -16,3 +16,15 @@ dhis_python_psycopg2_version: "2.6.1*"
 dhis_certs_from_letsencrypt: True
 ssl_key: "{{ dhis_site_name }}-key.pem"
 ssl_cert: "{{ dhis_site_name }}-fullchain.pem"
+tomcat_user: "tomcat7"
+tomcat_group: "tomcat7"
+opensrp_tomcat_http_port: 8082
+opensrp_tomcat_shutdown_port: 8007
+opensrp_tomcat_ajp_port: 8012
+tomcat_https_port: 8443
+opensrp_tomcat_max_filesize: "52428800"
+opensrp_tomcat_fsize_threshold: "10485760"
+opensrp_system_user: "opensrp"
+opensrp_tomcat_instance: "tomcat-opensrp"
+opensrp_user_home: "/home/{{ opensrp_system_user }}"
+
