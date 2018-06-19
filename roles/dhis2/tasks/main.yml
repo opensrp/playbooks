@@ -85,20 +85,3 @@
     state: directory
     mode: 0744
     recurse: yes
-
-- name: Copy the SystemD unit file for DHIS2
-  become: yes
-  become_user: "root"
-  template:
-    src: "etc/systemd/system/dhis_tomcat_instance.service.j2"
-    dest: "/etc/systemd/system/{{ dhis_tomcat_instance }}.service"
-  notify:
-    - "restart {{ dhis_tomcat_instance }}"
-
-- name: Enable the SystemD service
-  become: yes
-  become_user: "root"
-  systemd:
-    name: "{{ dhis_tomcat_instance }}"
-    daemon_reload: yes
-    enabled: yes
