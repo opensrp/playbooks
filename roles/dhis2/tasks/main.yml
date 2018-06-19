@@ -66,41 +66,6 @@
     owner: "{{ dhis_db_user }}"
     state: present
 
-- name: Create DHIS Tomcat7 Instance
-  become: yes
-  become_user: "root"
-  command: "tomcat7-instance-create {{ dhis_tomcat_instance }}"
-  args:
-    chdir: "{{ dhis_user_home }}"
-    creates: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}"
-
-- name: Copy DHIS Tomcat setenv Script
-  become: yes
-  become_user: "root"
-  template:
-    src: "templates/dhis_user_home/dhis_tomcat_instance/bin/setenv.sh.j2"
-    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/bin/setenv.sh"
-    owner: "{{ dhis_system_user }}"
-    group: "{{ dhis_system_group }}"
-    mode: 0744
-  notify:
-    - "restart {{ dhis_tomcat_instance }}"
-
-- name: Copy DHIS Tomcat Configs
-  become: yes
-  become_user: "root"
-  template:
-    src: "templates/dhis_user_home/dhis_tomcat_instance/conf/{{ item }}.j2"
-    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/conf/{{ item }}"
-    owner: "{{ dhis_system_user }}"
-    group: "{{ dhis_system_group }}"
-    mode: 0744
-  with_items:
-    - server.xml
-    - web.xml
-  notify:
-    - "restart {{ dhis_tomcat_instance }}"
-
 - name: Download The DHIS2 War
   become: yes
   become_user: "root"
