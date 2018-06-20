@@ -2,7 +2,7 @@
 - name: Find Distro Main Repository Name
   command: "lsb_release -cs"
   register: distro_release
-  changed_when: output.stdout != ""
+  changed_when: distro_release.stdout != ""
 
 - name: Install add-apt-repostory
   become: yes
