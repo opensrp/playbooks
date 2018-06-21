@@ -32,10 +32,30 @@
   become_user: "root"
   template:
     src: "templates/dhis_user_home/config/dhis.conf.j2"
-    dest: "{{ dhis_user_home }}/config/dhis.conf"
+    dest: "/opt/{{ dhis_system_user }}/dhis.conf"
     owner: "{{ dhis_system_user }}"
     group: "{{ dhis_system_group }}"
     mode: 0600
+
+- name: Add Postgres Repository
+  become: yes
+  become_user: root
+  apt_repository:
+    repo: "deb http://ftp.de.debian.org/debian sid main"
+    state: present
+  
+- name: Update Packages
+  become: yes
+  become_user: "root"
+  apt:
+    update_cache: yes
+
+- name: Install libpq5
+  become: yes
+  become_user: "root"
+  apt:
+    name: libpq5={{ dhis_libpq5_version }}
+    state: present
 
 - name: Install Package Prerequisites
   become: yes
@@ -66,74 +86,11 @@
     owner: "{{ dhis_db_user }}"
     state: present
 
-- name: Create DHIS Tomcat7 Instance
-  become: yes
-  become_user: "root"
-  command: "tomcat7-instance-create {{ dhis_tomcat_instance }}"
-  args:
-    chdir: "{{ dhis_user_home }}"
-    creates: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}"
-
-- name: Copy DHIS Tomcat setenv Script
-  become: yes
-  become_user: "root"
-  template:
-    src: "templates/dhis_user_home/dhis_tomcat_instance/bin/setenv.sh.j2"
-    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/bin/setenv.sh"
-    owner: "{{ dhis_system_user }}"
-    group: "{{ dhis_system_group }}"
-    mode: 0744
-  notify:
-    - "restart {{ dhis_tomcat_instance }}"
-
-- name: Copy DHIS Tomcat Configs
-  become: yes
-  become_user: "root"
-  template:
-    src: "templates/dhis_user_home/dhis_tomcat_instance/conf/{{ item }}.j2"
-    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/conf/{{ item }}"
-    owner: "{{ dhis_system_user }}"
-    group: "{{ dhis_system_group }}"
-    mode: 0744
-  with_items:
-    - server.xml
-    - web.xml
-  notify:
-    - "restart {{ dhis_tomcat_instance }}"
-
 - name: Download The DHIS2 War
   become: yes
   become_user: "root"
   get_url:
     url: http://s3-eu-west-1.amazonaws.com/releases.dhis2.org/{{ dhis_version }}/dhis.war
-    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/webapps/ROOT.war"
+    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/webapps/dhis.war"
   notify:
     - "restart {{ dhis_tomcat_instance }}"
-
-- name: Change Tomcat7 Instance Ownership
-  become: yes
-  become_user: "root"
-  file:
-    path: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}"
-    owner: "{{ dhis_system_user }}"
-    group: "{{ dhis_system_group }}"
-    state: directory
-    mode: 0744
-    recurse: yes
-
-- name: Copy the SystemD unit file for DHIS2
-  become: yes
-  become_user: "root"
-  template:
-    src: "etc/systemd/system/dhis_tomcat_instance.service.j2"
-    dest: "/etc/systemd/system/{{ dhis_tomcat_instance }}.service"
-  notify:
-    - "restart {{ dhis_tomcat_instance }}"
-
-- name: Enable the SystemD service
-  become: yes
-  become_user: "root"
-  systemd:
-    name: "{{ dhis_tomcat_instance }}"
-    daemon_reload: yes
-    enabled: yes
