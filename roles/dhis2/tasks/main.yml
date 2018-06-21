@@ -37,6 +37,19 @@
     group: "{{ dhis_system_group }}"
     mode: 0600
 
+- name: Update Packages
+  become: yes
+  become_user: "root"
+  apt:
+    update_cache: yes
+
+- name: Uninstall libpq5
+  become: yes
+  become_user: "root"
+  apt:
+    name: libpq5
+    state: absent
+
 - name: Install Package Prerequisites
   become: yes
   become_user: "root"
