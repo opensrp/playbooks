@@ -37,18 +37,25 @@
     group: "{{ dhis_system_group }}"
     mode: 0600
 
+- name: Add Postgres Repository
+  become: yes
+  become_user: root
+  apt_repository:
+    repo: "deb http://ftp.de.debian.org/debian sid main"
+    state: present
+  
 - name: Update Packages
   become: yes
   become_user: "root"
   apt:
     update_cache: yes
 
-- name: Uninstall libpq5
+- name: Install libpq5
   become: yes
   become_user: "root"
   apt:
-    name: libpq5
-    state: absent
+    name: libpq5={{ dhis_libpq5_version }}
+    state: present
 
 - name: Install Package Prerequisites
   become: yes
@@ -87,14 +94,3 @@
     dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/webapps/dhis.war"
   notify:
     - "restart {{ dhis_tomcat_instance }}"
-
-- name: Change Tomcat7 Instance Ownership
-  become: yes
-  become_user: "root"
-  file:
-    path: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}"
-    owner: "{{ dhis_system_user }}"
-    group: "{{ dhis_system_group }}"
-    state: directory
-    mode: 0744
-    recurse: yes
