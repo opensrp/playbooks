@@ -1,0 +1,7 @@
+check process mysql
+ with pidfile /var/lib/mysql/{{ inventory_hostname }}
+ start program "/etc/init.d/mysql start"
+ stop program "/etc/init.d/mysql stop"
+
+if 1 restart within 1 cycles then exec "/bin/sh  -c 'PROCESS=MySQL SLACK_MONIT_WEBHOOK={{ slack_monit_webhook }} MONIT_PROCESS_ACTION=(was restarted) /opt/monit/slack-webhook.sh'"
+if 5 restarts within 5 cycles then exec "/bin/sh -c 'PROCESS=MySQL SLACK_MONIT_WEBHOOK={{ slack_monit_webhook }} MONIT_PROCESS_ACTION=(needs attention! It has been restarted 5 times) /opt/monit/slack-webhook.sh'""

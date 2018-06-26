@@ -1,0 +1,99 @@
+---
+
+- name: Install Monit
+  become: yes
+  become_user: "root"
+  apt:
+    name: monit
+    state: present
+
+- name: Change Monit Configuration - Time between checks
+  lineinfile:
+    backup: yes
+    line: " set daemon {{ monit_time_check }}"
+    state: present
+    regexp: ' set daemon [0-9]*'
+    path: /etc/monit/monitrc
+
+- name: Comment out conf-enabled folder for program specific monit configurations line from /etc/monit/monitrc
+  become: yes
+  become_user: "root"
+  lineinfile:
+    backup: yes
+    line: '#  include /etc/monit/conf.d/*'
+    state: preset
+    regexp: 'include /etc/monit/conf.d/'
+    path: /etc/monit/monitrc
+
+# I should reload monit after this by -> monit reload
+- name: Monit dependencies - Add slack notifications bash script. Copy the file to /opt/monit
+  become: yes
+  become_user: "root"
+  copy:
+    dest: /opt/monit/
+    src: roles/monit/files/slack-webhook.sh
+    mode: 0755
+
+- name: Copy nginx checks to monit configuration folder /etc/monit/conf.d
+  become: yes
+  become_user: "root"
+  copy:
+    src: roles/monit/templates/etc/monit/conf.d/nginx.j2
+    dest: /etc/monit/conf.d/nginx
+
+- name: Add tomcat checks to monit configuration folder /etc/monit/conf.d
+  become: yes
+  become_user: "root"
+  copy:
+    src: roles/monit/templates/etc/monit/conf.d/tomcat.j2
+    dest: /etc/monit/conf.d/tomcat
+
+- name: Check if CouchDB is installed
+  command: apt-cache policy couchdb
+  register: couchdb_apt_check
+
+- name: Add CouchDB checks to monit configuration folder /etc/monit/conf.d
+  become: yes
+  become_user: "root"
+  when: couchdb_apt_check.stdout_lines.find('Installed: (none)') == -1
+  copy:
+    src: roles/monit/templates/etc/monit/conf.d/couchdb.j2
+    dest: /etc/monit/conf.d/couchdb
+
+- name: Check if CouchDB-Lucene is installed
+  command: apt-cache policy couchdb-lucene
+  register: couchdb_lucene_apt_check
+
+- name: Add CouchDB-Lucene checks to monit configuration folder /etc/monit/conf.d
+  become: yes
+  become_user: "root"
+  when: couchdb_lucene_apt_check.stdout_lines.find('Installed: (none)') == -1
+  copy:
+    src: roles/monit/templates/etc/monit/conf.d/couchdb-lucene.j2
+    dest: /etc/monit/conf.d/couchdb-lucene
+
+# Will always be installed
+- name: Add MySQL checks to monit configuration folder /etc/monit/conf.d
+  become: yes
+  become_user: "root"
+  copy:
+    src: roles/monit/templates/etc/monit/conf.d/mysql.j2
+    dest: /etc/monit/conf.d/mysql
+
+- name: Check if PostgreSQL is installed
+  command: apt-cache policy postgresql
+  register: postgresql_check
+
+- name: Add PostgreSQL checks to monit configuration folder /etc/monit/conf.d
+  become: yes
+  become_user: "root"
+  when: postgresql_check.stdout_lines.find("Installed: (none)") == -1
+  copy:
+    src: roles/monit/templates/etc/monit/conf.d/postgresql.j2
+    dest: /etc/monit/conf.d/postgresql
+
+- name: Reload Monit
+  become: yes
+  become_user: "root"
+  command: monit reload
+

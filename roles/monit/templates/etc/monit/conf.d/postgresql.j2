@@ -1,0 +1,7 @@
+check process postgresql
+ with pidfile /var/run/postgresql/10-main.pid
+ start program "/etc/init.d/postgresql start"
+ stop program "/etc/init.d/postgresql stop"
+
+if 1 restart within 1 cycles then exec "/bin/sh  -c 'PROCESS=PostgreSQL SLACK_MONIT_WEBHOOK={{ slack_monit_webhook }} MONIT_PROCESS_ACTION=(was restarted) /opt/monit/slack-webhook.sh'"
+if 5 restarts within 5 cycles then exec "/bin/sh -c 'PROCESS=PostgreSQL SLACK_MONIT_WEBHOOK={{ slack_monit_webhook }} MONIT_PROCESS_ACTION=(needs attention! It has been restarted 5 times) /opt/monit/slack-webhook.sh'""
