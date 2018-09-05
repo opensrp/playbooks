@@ -56,3 +56,8 @@ ssl_cert: "{{ opensrp_site_name }}-fullchain.pem"
 opensrp_system_user: "opensrp"
 opensrp_tomcat_instance: "tomcat-opensrp"
 opensrp_user_home: "/home/{{ opensrp_system_user }}"
+psql_as_primary_database: true
+opensrp_psql_table_space_dir: "/opt/postgres"
+opensrp_psql_admin_user: "postgres"
+opensrp_postgresql_user: "opensrp_admin"
+opensrp_postgresql_database: "opensrp"

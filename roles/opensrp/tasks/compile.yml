@@ -29,6 +29,15 @@
   with_items:
     - "quartz"
 
+- name: Replace OpenSRP Context configs
+  when: psql_as_primary_database
+  template:
+    src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/META-INF/{{ item }}.xml.j2"
+    dest: "{{ opensrp_local_checkout_path }}/opensrp-web/src/main/webapp/META-INF/{{ item }}.xml"
+  delegate_to: 127.0.0.1
+  with_items:
+  - "context"
+
 - name: Compile the OpenSRP WAR
   shell: "cd {{ opensrp_local_checkout_path }} && mvn package -Dmaven.test.skip=true"
   delegate_to: 127.0.0.1

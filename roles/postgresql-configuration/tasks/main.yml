@@ -4,4 +4,4 @@
 #  postgis_version - Optional. The postgis version to install
 
 - include_tasks: ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_distribution == 'Ubuntu' and opensrp_mysql_database
