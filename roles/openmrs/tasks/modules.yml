@@ -28,3 +28,25 @@
     owner: "{{ tomcat_user }}"
     group: "{{ tomcat_group }}"
   with_items: "{{ openmrs_modules }}"
+
+
+- name: Clean open-web-apps files
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{openmrs_home_directory}}/owa"
+    state: absent
+
+- name: Install Unarchive prerequisites
+  become: yes
+  become_user: "root"
+  apt:
+   name: "unzip"
+   state: present
+
+- name: Unarchive open-web-apps files
+  become: yes
+  become_user: "root"
+  unarchive:
+   src: "files/usr/share/tomcat7/.OpenMRS/owa.zip"
+   dest: "{{openmrs_home_directory}}"
