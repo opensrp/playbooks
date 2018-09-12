@@ -30,7 +30,7 @@
     - "quartz"
 
 - name: Replace OpenSRP Context configs
-  when: psql_as_primary_database
+  when: opensrp_psql_as_primary_database
   template:
     src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/META-INF/{{ item }}.xml.j2"
     dest: "{{ opensrp_local_checkout_path }}/opensrp-web/src/main/webapp/META-INF/{{ item }}.xml"

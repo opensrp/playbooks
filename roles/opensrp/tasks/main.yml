@@ -50,7 +50,7 @@
     group: "{{ tomcat_group }}"
 
 - include_tasks: psql_table_spaces.yml
-  when: psql_as_primary_database
+  when: opensrp_psql_as_primary_database
   tags:
   - psql-table-space
 

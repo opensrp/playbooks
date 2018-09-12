@@ -56,8 +56,13 @@ ssl_cert: "{{ opensrp_site_name }}-fullchain.pem"
 opensrp_system_user: "opensrp"
 opensrp_tomcat_instance: "tomcat-opensrp"
 opensrp_user_home: "/home/{{ opensrp_system_user }}"
-psql_as_primary_database: true
+opensrp_psql_as_primary_database: true
 opensrp_psql_table_space_dir: "/opt/postgres"
 opensrp_psql_admin_user: "postgres"
 opensrp_postgresql_user: "opensrp_admin"
 opensrp_postgresql_database: "opensrp"
+opensrp_redis_host: "localhost"
+opensrp_redis_port: 6379
+opensrp_redis_max_connections: 25
+opensrp_authencation_cache_ttl: 600
+opensrp_postgres_hba_config_host: "127.0.0.1/32"
