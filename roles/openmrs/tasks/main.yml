@@ -71,7 +71,7 @@
     mode: 0777
 
 - set_fact:
-    openmrs_modules: "{{ openmrs_modules_v1 if (openmrs_version == '1') else openmrs_modules_v2 }}"
+    openmrs_modules: "{{ openmrs_modules_v1 if (openmrs_version < 2) else openmrs_modules_v2 }}"
     openmrs_version_tag: "{{ '1.11.5' if (openmrs_version == '1') else '2.1.3' }}"
     template:
      "templates/conditionals/openmrs_version_template.j2"
