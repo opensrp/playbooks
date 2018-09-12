@@ -72,7 +72,6 @@
 
 - set_fact:
     openmrs_modules: "{{ openmrs_modules_v1 if (openmrs_version < 2) else openmrs_modules_v2 }}"
-    openmrs_version_tag: "{{ '1.11.5' if (openmrs_version == '1') else '2.1.3' }}"
     template:
      "templates/conditionals/openmrs_version_template.j2"
 
@@ -93,7 +92,7 @@
   become: yes
   become_user: root
   get_url:
-    url: "https://netcologne.dl.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version_tag }}/openmrs.war"
+    url: "https://netcologne.dl.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version }}/openmrs.war"
     dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
     owner: "{{ openmrs_system_user }}"
     group: "{{ tomcat_group }}"

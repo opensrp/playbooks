@@ -29,7 +29,6 @@
     group: "{{ tomcat_group }}"
   with_items: "{{ openmrs_modules }}"
 
-
 - name: Clean open-web-apps files
   become: yes
   become_user: "root"
