@@ -70,6 +70,11 @@
     state: link
     mode: 0777
 
+- set_fact:
+    openmrs_modules: "{{ openmrs_modules_v1 if (openmrs_version < 2) else openmrs_modules_v2 }}"
+    template:
+     "templates/conditionals/openmrs_version_template.j2"
+
 - include_tasks: modules.yml
   when: openmrs_modules|length > 0
 
