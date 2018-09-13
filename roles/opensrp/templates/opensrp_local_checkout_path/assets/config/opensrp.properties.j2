@@ -6,7 +6,7 @@ mcts.phone.number=8762963816
 js.directory.name=/ziggy
 form.directory.name=/form
 form.download.files=form.xml, model.xml, form_definition.json
-multimedia.directory.name=/usr/share/tomcat7/.OpenMRS/
+multimedia.directory.name={{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/.OpenMRS/
 qrcodes.directory.name={{ opensrp_resource_dir }}/qr-codes/
 
 schedule.config.path=/schedules/schedule-config.xls
@@ -27,6 +27,7 @@ openmrs.idgen.url=/module/idgen/exportIdentifiers.form
 openmrs.idgen.initial.batchsize=300000
 openmrs.idgen.batchsize=100
 openmrs.idgen.idsource=1
+openmrs.version={{ openmrs_version }}
 
 dhis2.url={{ opensrp_dhis_url }}
 dhis2.username={{ opensrp_dhis_user }}
@@ -83,3 +84,12 @@ rapidpro.url={{ opensrp_rapidpro_url }}
 rapidpro.token={{ opensrp_rapidpro_token }}
 #files upload
 file.maxUploadSize=20971520
+
+#search for missing clients
+opensrp.sync.search.missing.client=false
+
+opensrp.authencation.cache.ttl={{ opensrp_authencation_cache_ttl }}
+redis.host={{ opensrp_redis_host }}
+redis.port={{ opensrp_redis_port }}
+redis.password={{ opensrp_redis_password }}
+redis.pool.max.connections={{ opensrp_redis_max_connections }}

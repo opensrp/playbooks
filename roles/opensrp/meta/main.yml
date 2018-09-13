@@ -51,3 +51,7 @@ dependencies:
 - role: oracle-java8
   tags:
    - oracle-java8
+
+- role: postgresql-configuration
+  tags:
+  - psql-table-space

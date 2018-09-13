@@ -1,0 +1,66 @@
+---
+- name: Copy the OpenSRP migrations environment configs
+  template:
+    src: "templates/opensrp_local_checkout_path/assets/migrations/environments/{{ item }}.properties.j2"
+    dest: "{{ opensrp_local_checkout_path }}/assets/migrations/environments/{{ item }}.properties"
+  delegate_to: 127.0.0.1
+  with_items:
+  - "development"
+  tags:
+  - psql-table-space
+
+- name: Replace OpenSRP migrations scripts
+  template:
+    src: "templates/opensrp_local_checkout_path/assets/migrations/{{ item }}.sh.j2"
+    dest: "{{ opensrp_local_checkout_path }}/assets/migrations/{{ item }}.sh"
+  delegate_to: 127.0.0.1
+  with_items:
+  - "run_mybatis_migrations"
+  tags:
+  - psql-table-space
+
+- name: Replace OpenSRP migrations shell scripts
+  template:
+    src: "templates/opensrp_local_checkout_path/assets/migrations/{{ item }}.sh.j2"
+    dest: "{{ opensrp_local_checkout_path }}/assets/migrations/{{ item }}.sh"
+  delegate_to: 127.0.0.1
+  with_items:
+  - "run_mybatis_migrations"
+  tags:
+  - psql-table-space
+
+- name: Copy psql migration scripts
+  copy:
+    src: "{{ opensrp_local_checkout_path }}/assets/migrations"
+    dest: "{{ opensrp_local_checkout_path }}/assets"
+  tags:
+  - psql-table-space
+
+- name: Install migration prerequisites
+  become: yes
+  become_user: "root"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - unzip
+  - python-migrate
+  tags:
+  - psql-table-space
+
+- name: Execute migration script
+  become: yes
+  command: bash -lc "cd {{ opensrp_local_checkout_path }} && sh assets/migrations/run_mybatis_migrations.sh"
+  tags:
+  - psql-table-space
+
+- name: Ensure OpenSRP psql user has the right access level
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ opensrp_postgresql_user }}"
+    role_attr_flags: CREATEDB,NOSUPERUSER
+  tags:
+  - psql-table-space
+
+
