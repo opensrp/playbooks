@@ -10,12 +10,13 @@
     repo: "{{ opensrp_git_url }}"
     dest: "{{ opensrp_local_checkout_path }}"
     version: "{{ opensrp_version }}"
+    recursive: yes
   delegate_to: 127.0.0.1
 
 - name: Copy the OpenSRP man config files
   template:
-    src: "templates/opensrp_local_checkout_path/assets/config/{{ item }}.properties.j2"
-    dest: "{{ opensrp_local_checkout_path }}/assets/config/{{ item }}.properties"
+    src: "templates/opensrp_local_checkout_path/configs/assets/config/{{ item }}.properties.j2"
+    dest: "{{ opensrp_local_checkout_path }}/configs/assets/config/{{ item }}.properties"
   delegate_to: 127.0.0.1
   with_items:
     - "opensrp"
@@ -24,7 +25,7 @@
 - name: Copy the OpenSRP resource config file
   template:
     src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/resources/{{ item }}.properties.j2"
-    dest: "{{ opensrp_local_checkout_path }}/opensrp-web/src/main/resources//{{ item }}.properties"
+    dest: "{{ opensrp_local_checkout_path }}/src/main/resources//{{ item }}.properties"
   delegate_to: 127.0.0.1
   with_items:
     - "quartz"
@@ -33,7 +34,7 @@
   when: opensrp_psql_as_primary_database
   template:
     src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/META-INF/{{ item }}.xml.j2"
-    dest: "{{ opensrp_local_checkout_path }}/opensrp-web/src/main/webapp/META-INF/{{ item }}.xml"
+    dest: "{{ opensrp_local_checkout_path }}/src/main/webapp/META-INF/{{ item }}.xml"
   delegate_to: 127.0.0.1
   with_items:
   - "context"
@@ -51,6 +52,6 @@
 
 - name: Copy the compiled WAR
   copy:
-    src: "{{ opensrp_local_checkout_path }}/opensrp-web/target/opensrp.war"
+    src: "{{ opensrp_local_checkout_path }}/target/opensrp.war"
     dest: "{{ opensrp_local_package_directory }}/{{ opensrp_version }}.war"
   delegate_to: 127.0.0.1
