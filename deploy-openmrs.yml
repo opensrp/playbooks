@@ -10,7 +10,7 @@
 
 - hosts: openmrs-mysql-servers
   roles:
-    - mysql-5.6
+    - mysql-5.7
   tags:
     - openmrs-mysql
 

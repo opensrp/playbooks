@@ -9,7 +9,7 @@
     repo: deb http://archive.ubuntu.com/ubuntu trusty universe
     state: present
 
-- name: Install MySQL 5.6 Client
+- name: Install MySQL 5.7 Client
   become: yes
   become_user: root
   apt:
@@ -17,14 +17,14 @@
     state: present
     update_cache: yes
   with_items:
-    - { name: mysql-client-5.6, version: "{{ mysql_client_version }}" }
+    - { name: mysql-client-5.7, version: "{{ mysql_client_version }}" }
     - { name: python-mysqldb, version: "{{ mysql_python_mysqldb_version }}" }
 
-- name: Install MySQL 5.6 Server
+- name: Install MySQL 5.7 Server
   become: yes
   become_user: root
   apt:
-    name: "mysql-server-5.6={{ mysql_server_version }}"
+    name: "mysql-server-5.7={{ mysql_server_version }}"
     state: present
     update_cache: yes
   when: mysql_install_server

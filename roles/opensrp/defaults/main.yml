@@ -1,4 +1,4 @@
-opensrp_git_url: "https://github.com/OpenSRP/opensrp-server.git"
+opensrp_git_url: "https://github.com/OpenSRP/opensrp-server-web.git"
 opensrp_resource_sub_dirs:
   - "images"
   - "multimedia"

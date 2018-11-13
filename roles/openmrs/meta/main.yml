@@ -15,9 +15,9 @@ dependencies:
   tags:
     - tomcat7
 
-- role: mysql-5.6
+- role: mysql-5.7
   tags:
-    - mysql-5.6
+    - mysql-5.7
 
 - role: nginx
   site_name: "{{ openmrs_site_name }}"

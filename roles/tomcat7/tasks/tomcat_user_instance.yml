@@ -77,7 +77,7 @@
   tags:
    - openmrs-tomcat-user
 
-- name: Enable the SystemD service for OpenMRS
+- name: Enable the SystemD service for Tomcat instance
   become: yes
   become_user: "root"
   systemd:

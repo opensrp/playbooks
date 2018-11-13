@@ -1,8 +1,8 @@
 ---
 - name: Copy the OpenSRP migrations environment configs
   template:
-    src: "templates/opensrp_local_checkout_path/assets/migrations/environments/{{ item }}.properties.j2"
-    dest: "{{ opensrp_local_checkout_path }}/assets/migrations/environments/{{ item }}.properties"
+    src: "templates/opensrp_local_checkout_path/configs/assets/migrations/environments/{{ item }}.properties.j2"
+    dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/environments/{{ item }}.properties"
   delegate_to: 127.0.0.1
   with_items:
   - "development"
@@ -11,8 +11,8 @@
 
 - name: Replace OpenSRP migrations scripts
   template:
-    src: "templates/opensrp_local_checkout_path/assets/migrations/{{ item }}.sh.j2"
-    dest: "{{ opensrp_local_checkout_path }}/assets/migrations/{{ item }}.sh"
+    src: "templates/opensrp_local_checkout_path/configs/assets/migrations/{{ item }}.sh.j2"
+    dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/{{ item }}.sh"
   delegate_to: 127.0.0.1
   with_items:
   - "run_mybatis_migrations"
@@ -21,8 +21,8 @@
 
 - name: Replace OpenSRP migrations shell scripts
   template:
-    src: "templates/opensrp_local_checkout_path/assets/migrations/{{ item }}.sh.j2"
-    dest: "{{ opensrp_local_checkout_path }}/assets/migrations/{{ item }}.sh"
+    src: "templates/opensrp_local_checkout_path/configs/assets/migrations/{{ item }}.sh.j2"
+    dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/{{ item }}.sh"
   delegate_to: 127.0.0.1
   with_items:
   - "run_mybatis_migrations"
@@ -31,8 +31,8 @@
 
 - name: Copy psql migration scripts
   copy:
-    src: "{{ opensrp_local_checkout_path }}/assets/migrations"
-    dest: "{{ opensrp_local_checkout_path }}/assets"
+    src: "{{ opensrp_local_checkout_path }}/configs/assets/migrations"
+    dest: "{{ opensrp_local_checkout_path }}/configs/assets"
   tags:
   - psql-table-space
 
@@ -50,7 +50,7 @@
 
 - name: Execute migration script
   become: yes
-  command: bash -lc "cd {{ opensrp_local_checkout_path }} && sh assets/migrations/run_mybatis_migrations.sh"
+  command: bash -lc "cd {{ opensrp_local_checkout_path }} && sh configs/assets/migrations/run_mybatis_migrations.sh"
   tags:
   - psql-table-space
 
