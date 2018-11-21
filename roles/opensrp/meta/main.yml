@@ -53,5 +53,6 @@ dependencies:
    - oracle-java8
 
 - role: postgresql-configuration
+  when: opensrp_install_postgres
   tags:
   - psql-table-space

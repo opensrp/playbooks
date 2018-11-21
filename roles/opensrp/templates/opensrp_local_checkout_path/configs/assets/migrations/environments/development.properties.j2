@@ -22,7 +22,7 @@ time_zone=GMT+0:00
 
 ## JDBC connection properties.
 driver=org.postgresql.Driver
-url=jdbc:postgresql://localhost:5432/{{ opensrp_postgresql_database }}
+url=jdbc:postgresql://{{ opensrp_postgres_host }}:5432/{{ opensrp_postgresql_database }}
 username={{ opensrp_postgresql_user }}
 password={{ opensrp_postgresql_password }}
 
