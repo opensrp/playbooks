@@ -1,7 +1,7 @@
 #!/bin/bash
 databaseMigration() {
   curl -L  "https://github.com/mybatis/migrations/releases/download/mybatis-migrations-3.3.1/mybatis-migrations-3.3.1-bundle.zip" > /tmp/mybatis-migrations-3.3.1-bundle.zip
-  if ! $1
+  if $1
   then
       mkdir -p {{opensrp_psql_table_space_dir}}/core
       mkdir -p {{opensrp_psql_table_space_dir}}/error

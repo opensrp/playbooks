@@ -50,7 +50,7 @@
 
 - name: Execute migration script
   become: yes
-  command: bash -lc "cd {{ opensrp_local_checkout_path }} && sh configs/assets/migrations/run_mybatis_migrations.sh {{ opensrp_postgres_rds_deployment }}"
+  command: bash -lc "cd {{ opensrp_local_checkout_path }} && sh configs/assets/migrations/run_mybatis_migrations.sh {{ opensrp_install_postgres|lower }}"
   tags:
   - psql-table-space
 
