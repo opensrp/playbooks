@@ -16,10 +16,6 @@
     owner: "{{ gpg_user }}"
     group: "{{ gpg_group }}"
 
-- name: Check gpg keys exist
-  local_action: stat path="{{ gpg_private_key }}"
-  register: result
-
 - name: copy gpg keys
   copy:
     src: "{{ item.src }}"
@@ -33,7 +29,7 @@
     - { name: public.key, src: "{{ gpg_private_key }}" }
     - { name: private.key, src: "{{ gpg_public_key }}" }
     - { name: trust, src: "{{ gpg_trust_file }}" }
-  when: result.stat.exists == True
+  when: gpg_import_public_key
 
 - name: Make sure the GPG config exists
   become: yes
@@ -41,6 +37,7 @@
   command: "gpg --list-keys"
   args:
     creates: "{{ gpg_home }}/.gnupg"
+  when: gpg_import_public_key
 
 - name: import public key
   become: yes
