@@ -131,7 +131,7 @@ activemq_memory_opts: "-Xms2048M -Xmx2048M"
 compacted_dbs: ["atomfeed", "motech-scheduletracking-api", "opensrp", "opensrp-errortrace", "opensrp-form", "_replicator", "rules", "_users"]
 couchdb_backup_gpg_dir: inventories/zeir-sample/staging/files/pgp
 mysql_backup_gpg_dir: inventories/zeir-sample/staging/files/pgp
-gpg_import_public_key: false
+gpg_import_keys: true
 opensrp_redis_password: "{{ vault_opensrp_redis_password }}"
 openmrs_system_user: "openmrs"
 openmrs_tomcat_instance: "tomcat-openmrs"
