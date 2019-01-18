@@ -29,7 +29,6 @@
     - { name: public.key, src: "{{ gpg_private_key }}" }
     - { name: private.key, src: "{{ gpg_public_key }}" }
     - { name: trust, src: "{{ gpg_trust_file }}" }
-  when: gpg_import_keys
 
 - name: Make sure the GPG config exists
   become: yes
@@ -37,7 +36,6 @@
   command: "gpg --list-keys"
   args:
     creates: "{{ gpg_home }}/.gnupg"
-  when: gpg_import_keys
 
 - name: import public key
   become: yes
@@ -45,21 +43,18 @@
   command: "gpg --trustdb-name {{ gpg_trustdb_file }} --import {{ import_directory }}/public.key"
   args:
     creates: "{{ gpg_home }}/.gnupg/{{ gpg_trustdb_file }}"
-  when: gpg_import_keys
 
 - name: import private key
   become: yes
   become_user: "{{ gpg_user }}"
   command: "gpg --allow-secret-key-import {{ import_directory }}/private.key"
   changed_when: output is defined and output.stdout != ""
-  when: gpg_import_keys
 
 - name: Add trust
   become: yes
   become_user: "{{ gpg_user }}"
   command: "gpg --import-ownertrust {{ import_directory }}/trust"
   changed_when: output is defined and output.stdout != ""
-  when: gpg_import_keys
 
 - name: delete temporary files
   become: yes
