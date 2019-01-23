@@ -18,3 +18,6 @@ host1
 
 [openmrs-mysql-servers]
 host1
+
+[monitored-servers]
+host1

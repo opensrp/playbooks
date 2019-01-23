@@ -13,3 +13,4 @@ compaction_stop: "23:59"
 couchdb_system_user: couchdb
 couchdb_system_group: couchdb
 couchdb_admin_user: root
+couchdb_setup_database_backups: true

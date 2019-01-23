@@ -30,7 +30,6 @@
     - { name: private.key, src: "{{ gpg_public_key }}" }
     - { name: trust, src: "{{ gpg_trust_file }}" }
 
-
 - name: Make sure the GPG config exists
   become: yes
   become_user: "{{ gpg_user }}"
