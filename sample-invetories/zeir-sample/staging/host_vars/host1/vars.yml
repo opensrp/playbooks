@@ -1,6 +1,6 @@
 timezone: "Africa/Nairobi"
 ansible_ssh_user: "ubuntu"
-ansible_ssh_host: "10.20.25.61"
+ansible_ssh_host: "<<host_ip_address>>"
 mysql_s3_backup_location: "<<mysql_s3_backup_location_url>>`cat /etc/hostname`/mysql"
 mysql_backups_to_s3: true
 mysql_backup_hour: 1
