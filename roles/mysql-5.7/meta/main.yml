@@ -1,7 +1,7 @@
 ---
 dependencies:
  - role: mysql-backup
-   when: mysql_install_server == True and setup_database_backups
+   when: mysql_install_server == True and mysql_setup_database_backups
    mysql_host: "{{ openmrs_mysql_host }}"
    mysql_backup_user: "root"
    mysql_backup_password: "{{ mysql_root_password }}"

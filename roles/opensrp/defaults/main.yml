@@ -68,4 +68,5 @@ opensrp_authencation_cache_ttl: 600
 opensrp_postgres_hba_config_host: "127.0.0.1/32"
 opensrp_install_postgres: yes
 opensrp_postgres_host: "localhost"
-setup_database_backups: yes
+mysql_setup_database_backups: true
+couchdb_setup_database_backups: true

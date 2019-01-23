@@ -6,7 +6,7 @@ dependencies:
     - couchdb-lucene
 
  - role: couchdb-backup
-   when: setup_database_backups
+   when: couchdb_setup_database_backups
    couchdb_backup_user: "{{ couchdb_admin_user }}"
    couchdb_backup_password: "{{ couchdb_admin_password }}"
    tags:
