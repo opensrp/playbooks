@@ -93,4 +93,4 @@
     url: http://s3-eu-west-1.amazonaws.com/releases.dhis2.org/{{ dhis_version }}/dhis.war
     dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/webapps/dhis.war"
   notify:
-    - "restart {{ dhis_tomcat_instance }}"
+    - "restart tomcat instance"
