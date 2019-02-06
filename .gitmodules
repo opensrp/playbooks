@@ -13,3 +13,9 @@
 [submodule "roles/ssh"]
 	path = roles/ssh
 	url = https://github.com/onaio/ansible-ssh.git
+[submodule "roles/linux-config"]
+	path = roles/linux-config
+	url = https://github.com/onaio/ansible-linux-config.git
+[submodule "roles/monit"]
+	path = roles/monit
+	url = https://github.com/onaio/ansible-monit.git
