@@ -31,7 +31,7 @@
     group: "{{ tomcat_system_group }}"
     mode: 0744
   notify:
-    - "restart tomcat instance"
+    - "restart tomcat7 instance"
   tags:
    - tomcat-user-instance
 
@@ -48,7 +48,7 @@
     - "server.xml"
     - "web.xml"
   notify:
-      - "restart tomcat instance"
+      - "restart tomcat7 instance"
   tags:
      - tomcat-user-instance
 
@@ -72,7 +72,7 @@
     src: "etc/systemd/system/tomcat_user_instance.service.j2"
     dest: "/etc/systemd/system/{{ tomcat_instance }}.service"
   notify:
-    - "restart tomcat instance"
+    - "restart tomcat7 instance"
 
   tags:
    - openmrs-tomcat-user

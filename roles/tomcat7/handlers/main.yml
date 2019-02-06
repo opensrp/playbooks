@@ -1,4 +1,4 @@
-- name: restart tomcat instance
+- name: restart tomcat7 instance
   systemd:
     name: "{{ tomcat_instance }}"
     state: restarted
