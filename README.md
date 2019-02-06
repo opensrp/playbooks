@@ -26,6 +26,13 @@ you do this in a dedicated [Python virtual env][6]:
 pip install -r requirements.txt
 ```
 
+Install the [Ansible Galaxy](https://docs.ansible.com/ansible/latest/reference_appendices/galaxy.html) requirements using these commands:
+
+```sh
+mkdir -p ~/.ansible/roles/opensrp
+ansible-galaxy install -r requirements.yml -p ~/.ansible/roles/opensrp
+```
+
 ## Inventories
 
 Copy over your inventory files into a new directory called `inventories`. Note that we have `inventories` in the .gitignore file. We recommend you track them in a seperate private git repository. Please do not make pull requests to this repository with inventory files that might expose aspects of your infrastructure that you don't want exposed.
