@@ -1,6 +1,0 @@
----
-- name: restart {{ openmrs_tomcat_instance }}
-  systemd:
-    name: "{{ openmrs_tomcat_instance }}"
-    state: restarted
-  become: yes

@@ -1,6 +1,0 @@
----
-- name: restart {{ dhis_tomcat_instance }}
-  systemd:
-    name: "{{ dhis_tomcat_instance }}"
-    state: restarted
-  become: yes
