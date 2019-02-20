@@ -1,6 +1,6 @@
 connection.username={{ openmrs_mysql_user }}
 connection.password={{ openmrs_mysql_password }}
-connection.url=jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/openmrs?autoReconnect=true&sessionVariables=storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+connection.url=jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/openmrs?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
 module.allow_web_admin=true
 auto_update_database=false
 sync.mandatory=false
