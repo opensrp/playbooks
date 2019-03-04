@@ -1,15 +1,21 @@
 [submodule "roles/server-monitoring"]
 	path = roles/server-monitoring
-	url = git@github.com:onaio/ansible-server-monitoring.git
+	url = https://github.com/onaio/ansible-server-monitoring.git
 [submodule "roles/collectd"]
 	path = roles/collectd
-	url = git@github.com:onaio/ansible-collectd.git
+	url = https://github.com/onaio/ansible-collectd.git
 [submodule "roles/hostname"]
 	path = roles/hostname
-	url = git@github.com:onaio/ansible-hostname.git
+	url = https://github.com/onaio/ansible-hostname.git
 [submodule "roles/certbot"]
 	path = roles/certbot
-	url = git@github.com:onaio/ansible-certbot.git
+	url = https://github.com/onaio/ansible-certbot.git
 [submodule "roles/ssh"]
 	path = roles/ssh
-	url = git@github.com:onaio/ansible-ssh.git
+	url = https://github.com/onaio/ansible-ssh.git
+[submodule "roles/linux-config"]
+	path = roles/linux-config
+	url = https://github.com/onaio/ansible-linux-config.git
+[submodule "roles/monit"]
+	path = roles/monit
+	url = https://github.com/onaio/ansible-monit.git

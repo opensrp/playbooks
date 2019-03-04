@@ -1,0 +1,3 @@
+---
+server_monitoring_collectd_scripts: ["graphite", "cpu", "disk", "load", "memory"]
+server_monitoring_monit_scripts: ["monit", "system", "openssh-server"]

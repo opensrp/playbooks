@@ -1,6 +1,8 @@
 - hosts: monitored-servers
   gather_facts: False
   become: yes
+  vars_files:
+    - vars/setup-server.yml
   pre_tasks:
     - include_tasks: tasks/python2-ubuntu.yml
     - name: Setup Ansible
@@ -9,6 +11,31 @@
     - role: ssh
       tags:
         - ssh
-    - role: server-monitoring
+    - role: linux-config
+      tags:
+        - linux-config
+    - role: hostname
+      server_hostname: "{{ server_monitoring_hostname }}"
+      hostname_from_ec2_Name_tag: "{{ server_monitoring_hostname_from_ec2_Name_tag }}"
+      when: server_monitoring_set_hostname == true
       tags:
         - monitoring
+        - hostname
+    - role: collectd
+      collectd_scripts: "{{ server_monitoring_collectd_scripts }}"
+      collectd_graphite_server_ip: "{{ server_monitoring_graphite_server_ip }}"
+      collectd_graphite_server_port: "{{ server_monitoring_graphite_server_port }}"
+      collectd_graphite_server_protocol: "{{ server_monitoring_graphite_server_protocol }}"
+      collectd_server_mode: true
+      collectd_server_hostname: "{{ _hostname_to_use if server_monitoring_set_hostname else server_monitoring_hostname }}"
+      collectd_server_type: "{{ server_monitoring_server_type }}"
+      collectd_server_owner: "{{ server_monitoring_owner }}"
+      tags:
+        - monitoring
+        - collectd
+    - role: monit
+      monit_setup_mode: True
+      monit_scripts: "{{ server_monitoring_monit_scripts }}"
+      tags:
+        - monitoring
+        - monit
