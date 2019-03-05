@@ -5,16 +5,16 @@ connection.dialect = org.hibernate.dialect.PostgreSQLDialect
 connection.driver_class = org.postgresql.Driver
 
 # Database connection URL
-connection.url = jdbc:postgresql:{{ dhis_db_name }}
+connection.url = {{ dhis_postgresql_connection_url }}
 
 # Database username
-connection.username = {{ dhis_db_user }}
+connection.username = {{ dhis_postgresql_user }}
 
 # Database password
-connection.password = {{ dhis_db_pw }}
+connection.password = {{ dhis_postgresql_password }}
 
 # Database schema behavior, can be validate, update, create, create-drop
 connection.schema = update
 
 # Encryption password (sensitive)
-encryption.password = {{ dhis_db_encryption_pw }}
+encryption.password = {{ dhis_postgresql_encryption_password }}
