@@ -55,8 +55,8 @@
     login_host: "{{ opensrp_postgres_host }}"
     login_user: "{{ opensrp_postgres_superuser }}"
     login_password: "{{ opensrp_postgres_superuser_password }}"
-    name: "{{ opensrp_postgres_user }}"
-    password: "{{ opensrp_postgres_password }}"
+    name: "{{ opensrp_postgresql_user }}"
+    password: "{{ opensrp_postgresql_password }}"
     role_attr_flags: CREATEDB,NOSUPERUSER
   tags:
     - psql-table-space
