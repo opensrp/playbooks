@@ -2,7 +2,7 @@
 - name: Create the OpenSRP MySQL databases
   mysql_db:
     login_host: "{{ opensrp_mysql_host }}"
-    login_user: root
+    login_user: "{{ opensrp_mysql_root_user }}
     login_password: "{{ mysql_root_password }}"
     name: "{{ item }}"
     state: present
