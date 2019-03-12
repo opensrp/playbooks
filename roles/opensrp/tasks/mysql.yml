@@ -41,3 +41,4 @@
     host: "{{ opensrp_mysql_host }}"
     priv: "{{ \".*:ALL/\".join(mysql_databases) }}.*:ALL"
     state: present
+  ignore_errors: true
