@@ -5,9 +5,9 @@
     dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/environments/{{ item }}.properties"
   delegate_to: 127.0.0.1
   with_items:
-  - "development"
+    - "development"
   tags:
-  - psql-table-space
+    - psql-table-space
 
 - name: Replace OpenSRP migrations scripts
   template:
@@ -15,9 +15,9 @@
     dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/{{ item }}.sh"
   delegate_to: 127.0.0.1
   with_items:
-  - "run_mybatis_migrations"
+    - "run_mybatis_migrations"
   tags:
-  - psql-table-space
+    - psql-table-space
 
 - name: Replace OpenSRP migrations shell scripts
   template:
@@ -25,16 +25,16 @@
     dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/{{ item }}.sh"
   delegate_to: 127.0.0.1
   with_items:
-  - "run_mybatis_migrations"
+    - "run_mybatis_migrations"
   tags:
-  - psql-table-space
+    - psql-table-space
 
 - name: Copy psql migration scripts
   copy:
     src: "{{ opensrp_local_checkout_path }}/configs/assets/migrations"
     dest: "{{ opensrp_local_checkout_path }}/configs/assets"
   tags:
-  - psql-table-space
+    - psql-table-space
 
 - name: Install migration prerequisites
   become: yes
@@ -43,14 +43,15 @@
     name: "{{ item }}"
     state: present
   with_items:
-  - unzip
-  - python-migrate
+    - unzip
+    - python-migrate
   tags:
-  - psql-table-space
+    - psql-table-space
 
 
 - name: Ensure OpenSRP psql user has the right access level
   postgresql_user:
+    db: "{{ opensrp_postgresql_database }}"
     login_host: "{{ opensrp_postgres_host }}"
     login_user: "{{ opensrp_postgres_superuser }}"
     login_password: "{{ opensrp_postgres_superuser_password }}"
