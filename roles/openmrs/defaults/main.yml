@@ -29,4 +29,64 @@ openmrs_tomcat_instance: "tomcat-openmrs"
 openmrs_tomcat_user_home: "/home/{{ openmrs_system_user }}"
 openmrs_home_directory: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/.OpenMRS"
 openmrs_mysql_connection_url: "jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/{{ openmrs_mysql_database }}?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull"
+openmrs_install_mysql: yes
 
+
+
+# SSL
+openmrs_ssl_src_dir: "/etc/letsencrypt/live/{{ openmrs_site_name }}"
+openmrs_ssl_cert_file: "cert.pem"
+openmrs_ssl_key_file: "privkey.pem"
+opensrp_certs_from_letsencrypt: true
+
+openmrs_http_site: "{{ openmrs_site_name }}-http"
+openmrs_https_site: "{{ openmrs_site_name }}-https"
+
+# Certbot
+openmrs_certbot_site_names: ["{{ openmrs_site_name }}"]
+openmrs_certbot_mail_address: ""
+
+# NGINX
+openmrs_nginx_sites:
+  - server:
+      name: "{{ openmrs_http_site }}"
+      __listen: "80;\n  listen [::]:80;\n"
+      server_name: "{{ openmrs_site_name }}"
+      return: "301 https://$server_name$request_uri"
+      ssl:
+        enabled: false
+
+  - server:
+      name:  "{{ openmrs_https_site }}"
+      __listen: "443;\n  listen [::]:443;\n"
+      server_name: "{{ openmrs_site_name }}"
+      client_max_body_size: "{{ openmrs_nginx_max_filesize }}"
+      ssl:
+        enabled: true
+        cert: "{{ openmrs_ssl_cert_file }}"
+        key:  "{{ openmrs_ssl_key_file }}"
+        src_dir: "{{ openmrs_ssl_src_dir }}"
+        conf: "{{ openmrs_site_name }}-ssl.conf"
+        remote_src: "{{ openmrs_certs_from_letsencrypt }}"
+        create_symlink: "{{ openmrs_certs_from_letsencrypt }}"
+
+      location1:
+        name: /
+        return: "301 https://$host/{{ openmrs_install_name }}"
+
+      location2:
+        name: "/{{ openmrs_install_name }}"
+        proxy_pass: "http://localhost:{{ openmrs_tomcat_http_port }}/{{ openmrs_install_name }}"
+        proxy_read_timeout: "86400s"
+        proxy_redirect: "off"
+        proxy_next_upstream: "error timeout invalid_header http_502 http_503 http_504"
+        proxy_set_header:
+          - Host $host
+          - X-Real-IP $remote_addr
+          - X-Forwarded-For $proxy_add_x_forwarded_for
+          - X-Forwarded-Host $server_name
+          - X-Forwarded-Proto https
+
+openmrs_nginx_enabled_sites:
+  - "{{ openmrs_http_site }}"
+  - "{{ openmrs_https_site }}"

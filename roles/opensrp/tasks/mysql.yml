@@ -38,6 +38,6 @@
     login_password: "{{ mysql_root_password }}"
     name: "{{ opensrp_mysql_user }}"
     password: "{{ opensrp_mysql_password }}"
-    host: "{{ opensrp_mysql_app_host }}"
+    host: "{{ opensrp_mysql_host }}"
     priv: "{{ \".*:ALL/\".join(mysql_databases) }}.*:ALL"
     state: present
