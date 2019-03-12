@@ -13,3 +13,8 @@
   name: onaio.redis
   version: 8dfde8fbda8d72b0899f4d38e60f80dd7360ac2b
   scm: git
+
+- src: https://github.com/onaio/ansible-certbot.git
+  name: onaio.certbot
+  version: a19117aa21a497e9c33e06e52902910f4e26fb1e
+  scm: git
