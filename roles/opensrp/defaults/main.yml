@@ -73,7 +73,7 @@ opensrp_install_mysql: yes
 # SSL
 opensrp_ssl_src_dir: "/etc/letsencrypt/live/{{ opensrp_site_name }}"
 opensrp_ssl_cert_file: "cert.pem"
-opensrp_ssl_key_file: "key.pem"
+opensrp_ssl_key_file: "privkey.pem"
 opensrp_certs_from_letsencrypt: true
 
 opensrp_http_site: "{{ opensrp_site_name }}-http"

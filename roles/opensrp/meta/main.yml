@@ -30,6 +30,8 @@ dependencies:
     - activemq
 
 - role: onaio.certbot
+  become: true
+  become_user: "root"
   certbot_create_certs: true
   certbot_site_names: "{{ opensrp_certbot_site_names }}"
   certbot_mail_address: "{{ opensrp_certbot_mail_address }}"
