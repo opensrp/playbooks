@@ -34,7 +34,7 @@
 - name: Create the OpenSRP MySQL user
   mysql_user:
     login_host: "{{ opensrp_mysql_host }}"
-    login_user: "root"
+    login_user: "{{ opensrp_mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
     name: "{{ opensrp_mysql_user }}"
     password: "{{ opensrp_mysql_password }}"

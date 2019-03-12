@@ -55,10 +55,12 @@
   - psql-table-space
 
 - name: Ensure OpenSRP psql user has the right access level
-  become: yes
-  become_user: postgres
   postgresql_user:
-    name: "{{ opensrp_postgresql_user }}"
+    login_host: "{{ opensrp_postgres_host }}"
+    login_user: "{{ opensrp_postgres_superuser }}"
+    login_password: "{{ opensrp_postgres_superuser_password }}"
+    name: "{{ opensrp_postgres_user }}"
+    password: "{{ opensrp_postgres_password }}"
     role_attr_flags: CREATEDB,NOSUPERUSER
   tags:
   - psql-table-space
