@@ -1,6 +1,6 @@
 ---
 dependencies:
-- role: DavidWittman.redis
+- role: onaio.redis
   become: true
   become_user: "root"
   redis_bind: 127.0.0.1

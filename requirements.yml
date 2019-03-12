@@ -11,3 +11,8 @@
 
 - src: geerlingguy.java
   version: 1.9.5 
+
+- src: https://github.com/onaio/ansible-redis.git
+  name: onaio.redis
+  version: 8dfde8fbda8d72b0899f4d38e60f80dd7360ac2b
+  scm: git
