@@ -1,21 +1,76 @@
-pg_version: "9.6"
-postgis_version: "2.3"
-dhis_nginx_http_port: "80"
-dhis_nginx_https_port: "443"
-dhis_nginx_max_filesize: "50M"
+---
 dhis_version: "2.26"
-dhis_libpq_dev_version: "10.4*"
-dhis_libpq5_version: "10.4*"
-dhis_python_psycopg2_version: "2.6.1*"
+dhis_java_ops: "-Xmx2048m -Xms2048m"
+dhis_java_packages:
+  - openjdk-8-jre
+dhis_user_home: "/home/{{ dhis_system_user }}"
+dhis_system_user: dhis2
+dhis_system_group: dhis2
 dhis_certs_from_letsencrypt: True
-dhis_site_name: "dhis-stage.ona.io"
-ssl_key: "{{ dhis_site_name }}-key.pem"
-ssl_cert: "{{ dhis_site_name }}-fullchain.pem"
-tomcat_user: "tomcat7"
-tomcat_group: "tomcat7"
+dhis_site_name: "dhis.smartregister.org"
+
+# Tomcat
+dhis_tomcat_instance: "tomcat-dhis"
 dhis_tomcat_http_port: 8082
 dhis_tomcat_shutdown_port: 8007
 dhis_tomcat_ajp_port: 8012
-tomcat_https_port: 8443
+dhis_tomcat_https_port: 8443
 dhis_tomcat_max_filesize: "52428800"
 dhis_tomcat_fsize_threshold: "10485760"
+
+# PostgreSQL
+dhis_postgresql_user: dhis
+dhis_postgresql_database: dhis2
+dhis_postgresql_password: ""
+dhis_postgresql_connection_url: "jdbc:postgresql:{{ dhis_postgresql_database }}"
+
+# Certbot
+dhis_certbot_create_certs: true
+dhis_certbot_mail_address: ""
+dhis_certbot_site_names:
+  - "{{ dhis_site_name }}"
+
+# NGINX
+dhis_nginx_proxy_read_timeout: "60s"
+dhis_nginx_max_filesize: "50M"
+dhis_nginx_ssl_cert: "fullchain.pem"
+dhis_nginx_ssl_key: "privkey.pem"
+dhis_nginx_ssl_src_dir: "/etc/letsencrypt/live/{{ dhis_site_name }}"
+dhis_nginx_http_site_name: "{{ dhis_site_name }}-http"
+dhis_nginx_https_site_name: "{{ dhis_site_name }}-https"
+dhis_nginx_enabled_sites:
+  - "{{ dhis_nginx_http_site_name }}"
+  - "{{ dhis_nginx_https_site_name }}"
+dhis_nginx_sites:
+  - server:
+      name: "{{ dhis_nginx_http_site_name }}"
+      __listen: "80;\n  listen [::]:80;\n"
+      server_name: "{{ dhis_site_name }}"
+      return: "301 https://$server_name$request_uri"
+      ssl:
+        enabled: false
+  - server:
+      name: "{{ dhis_nginx_https_site_name }}"
+      __listen: "443;\n  listen [::]:443;\n"
+      server_name: "{{ dhis_site_name }}"
+      client_max_body_size: "{{ dhis_nginx_max_filesize }}"
+      ssl:
+        enabled: true
+        cert: "{{ dhis_nginx_ssl_cert }}"
+        key: "{{ dhis_nginx_ssl_key }}"
+        src_dir: "{{ dhis_nginx_ssl_src_dir }}"
+        conf: "{{ dhis_site_name }}-ssl.conf"
+        remote_src: "{{ dhis_certs_from_letsencrypt }}"
+        create_symlink: "{{ dhis_certs_from_letsencrypt }}"
+      location1:
+        name: /
+        proxy_pass: "http://localhost:{{ dhis_tomcat_http_port }}"
+        proxy_set_header:
+        - Host $host
+        - X-Real-IP $remote_addr
+        - X-Forwarded-For $proxy_add_x_forwarded_for
+        - X-Forwarded-Host $server_name
+        - X-Forwarded-Proto https
+        proxy_read_timeout: "{{ dhis_nginx_proxy_read_timeout }}"
+        proxy_redirect: "off"
+        proxy_next_upstream: "error timeout invalid_header http_500 http_502 http_503 http_504"

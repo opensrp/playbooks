@@ -1,17 +1,16 @@
 ---
 dependencies:
-- role: postgresql
+- role: geerlingguy.java
+  java_packages: "{{ dhis_java_packages }}"
+  become: true
+  become_user: "root"
   tags:
-    - postgresql
-
-- role: oracle-java8
-  tags:
-    - oracle-java8
+    - java
 
 - role: tomcat7
   install_tomcat_service: false
   tomcat_system_user: "{{ dhis_system_user }}"
-  tomcat_system_group: "{{ tomcat_group }}"
+  tomcat_system_group: "{{ dhis_system_group }}"
   tomcat_user_home: "{{ dhis_user_home }}"
   tomcat_instance: "{{ dhis_tomcat_instance }}"
   tomcat_Working_directory: "{{ tomcat_user_home }}/{{ tomcat_instance }}"
@@ -20,13 +19,28 @@ dependencies:
   tomcat_max_filesize: "{{ dhis_tomcat_max_filesize }}"
   tomcat_fsize_threshold: "{{ dhis_tomcat_fsize_threshold }}"
   tomcat_ajp_port: "{{ dhis_tomcat_ajp_port }}"
+  tomcat_https_port: "{{ dhis_tomcat_https_port }}"
+  catalina_ops: "{{ dhis_java_ops }}"
   tags:
     - tomcat7
 
-- role: nginx
-  site_file: "roles/dhis2/templates/etc/nginx/sites-enabled/site_name.j2"
-  site_name: "{{ dhis_site_name }}"
-  certs_from_letsencrypt: "{{ dhis_certs_from_letsencrypt }}"
+- role: certbot
+  certbot_create_certs: "{{ dhis_certbot_create_certs }}"
+  certbot_site_names: "{{ dhis_certbot_site_names }}"
+  certbot_mail_address: "{{ dhis_certbot_mail_address }}"
+  become: true
+  become_user: "root"
+  when: dhis_certs_from_letsencrypt
+  tags:
+    - certbot
+
+- role: onaio.nginx
+  nginx_install_method: "package"
+  nginx_sites: "{{ dhis_nginx_sites }}"
+  nginx_enabled_sites: "{{ dhis_nginx_enabled_sites }}"
+  nginx_ssl_dir: "{{ nginx_dir }}/ssl/{{ site.server.server_name }}"
+  become: true
+  become_user: "root"
   tags:
     - nginx
 

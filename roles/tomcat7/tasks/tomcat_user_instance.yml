@@ -1,4 +1,13 @@
 ---
+- name: Make sure the Tomcat system group exists
+  become: yes
+  become_user: root
+  group:
+    name: "{{ tomcat_system_group }}"
+    state: present
+  tags:
+    - tomcat-user-instance
+
 - name: Create Tomctat System User
   become: yes
   become_user: root

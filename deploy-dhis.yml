@@ -1,4 +1,4 @@
-- hosts: dhis-servers
+- hosts: dhis-app-servers, dhis-postgresql-servers
   gather_facts: False
   pre_tasks:
     - include_tasks: tasks/python2-ubuntu.yml
@@ -6,4 +6,13 @@
       setup:
   roles:
     - common
+
+- hosts: dhis-postgresql-servers
+  become: true
+  become_user: "root"
+  roles:
+    - ANXS.postgresql
+
+- hosts: dhis-app-servers
+  roles:
     - dhis2

@@ -32,65 +32,30 @@
   become_user: "root"
   template:
     src: "templates/dhis_user_home/config/dhis.conf.j2"
-    dest: "/opt/{{ dhis_system_user }}/dhis.conf"
+    dest: "{{ dhis_user_home }}/config/dhis.conf"
     owner: "{{ dhis_system_user }}"
     group: "{{ dhis_system_group }}"
     mode: 0600
-
-- name: Add Postgres Repository
-  become: yes
-  become_user: root
-  apt_repository:
-    repo: "deb http://ftp.de.debian.org/debian sid main"
-    state: present
-  
-- name: Update Packages
-  become: yes
-  become_user: "root"
-  apt:
-    update_cache: yes
-
-- name: Install libpq5
-  become: yes
-  become_user: "root"
-  apt:
-    name: libpq5={{ dhis_libpq5_version }}
-    state: present
-
-- name: Install Package Prerequisites
-  become: yes
-  become_user: "root"
-  apt:
-    name: "{{ item.name }}={{ item.version }}"
-    state: present
-  with_items:
-    - { name: libpq-dev, version: "{{ dhis_libpq_dev_version }}" }
-    - { name: python-psycopg2, version: "{{ dhis_python_psycopg2_version }}" }
-  tags:
-    - packages
-
-- name: Create DHIS Postgres User
-  become: yes
-  become_user: "root"
-  postgresql_user:
-    name: "{{ dhis_db_user }}"
-    password: "{{ dhis_db_pw }}"
-    role_attr_flags: SUPERUSER,NOCREATEDB,NOCREATEROLE,LOGIN
-    state: present
-
-- name: Create DHIS Postgres Database
-  become: yes
-  become_user: "root"
-  postgresql_db:
-    name: "{{ dhis_db_name }}"
-    owner: "{{ dhis_db_user }}"
-    state: present
 
 - name: Download The DHIS2 War
   become: yes
   become_user: "root"
   get_url:
     url: http://s3-eu-west-1.amazonaws.com/releases.dhis2.org/{{ dhis_version }}/dhis.war
-    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/webapps/dhis.war"
+    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/webapps/ROOT.war"
+    owner: "{{ dhis_system_user }}"
+    group: "{{ dhis_system_group }}"
+  notify:
+    - "restart tomcat7 instance"
+
+- name: Copy DHIS Tomcat setenv Script
+  become: yes
+  become_user: "root"
+  template:
+    src: "templates/dhis_user_home/dhis_tomcat_instance/bin/setenv.sh.j2"
+    dest: "{{ dhis_user_home }}/{{ dhis_tomcat_instance }}/bin/setenv.sh"
+    owner: "{{ dhis_system_user }}"
+    group: "{{ dhis_system_group }}"
+    mode: 0744
   notify:
     - "restart tomcat7 instance"

@@ -1,4 +1,1 @@
-dhis_system_user: "dhis2"
-dhis_system_group: "dhis2"
-dhis_tomcat_instance: "tomcat-dhis"
-dhis_user_home: "/home/{{ dhis_system_user }}"
+---
