@@ -29,9 +29,15 @@ dependencies:
   tags:
     - activemq
 
-- role: nginx
+- role: onaio.nginx
   site_name: "{{ opensrp_site_name }}"
   site_file: "roles/opensrp/templates/etc/nginx/sites-enabled/opensrp_site_name.j2"
+  nginx_install_method: "package"
+  nginx_sites: "{{ opensrp_nginx_sites }}"
+  nginx_enabled_sites: "{{ opensrp_nginx_enabled_sites }}"
+  nginx_ssl_dir: "{{ nginx_dir }}/ssl/{{ site.server.server_name }}"
+  become: true
+  become_user: "root"
   tags:
     - nginx
 
