@@ -29,6 +29,14 @@ dependencies:
   tags:
     - activemq
 
+- role: onaio.certbot
+  certbot_create_certs: true
+  certbot_site_names: "{{ opensrp_certbot_site_names }}"
+  certbot_mail_address: "{{ opensrp_certbot_mail_address }}"
+  when: opensrp_certs_from_letsencrypt
+  tags:
+    - certbot
+
 - role: onaio.nginx
   site_name: "{{ opensrp_site_name }}"
   site_file: "roles/opensrp/templates/etc/nginx/sites-enabled/opensrp_site_name.j2"
