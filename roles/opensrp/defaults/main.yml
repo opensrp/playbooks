@@ -78,6 +78,10 @@ opensrp_certs_from_letsencrypt: true
 opensrp_http_site: "{{ opensrp_site_name }}-http"
 opensrp_https_site: "{{ opensrp_site_name }}-https"
 
+# Certbot
+opensrp_certbot_site_names: ["{{ opensrp_site_name }}"]
+opensrp_certbot_mail_address: ""
+
 # NGINX
 opensrp_nginx_sites:
   - server:
