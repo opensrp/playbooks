@@ -68,3 +68,57 @@ opensrp_authencation_cache_ttl: 600
 opensrp_postgres_hba_config_host: "127.0.0.1/32"
 opensrp_install_postgres: yes
 opensrp_postgres_host: "localhost"
+
+# SSL
+opensrp_ssl_src_dir: "/etc/letsencrypt/live/{{ opensrp_site_name }}"
+opensrp_ssl_cert_file: "cert.pem"
+opensrp_ssl_key_file: "key.pem"
+opensrp_certs_from_letsencrypt: true
+
+opensrp_http_site: "{{ opensrp_site_name }}-http"
+opensrp_https_site: "{{ opensrp_site_name }}-https"
+
+# NGINX
+opensrp_nginx_sites:
+  - server:
+      name: "{{ opensrp_http_site }}"
+      __listen: "80;\n  listen [::]:80;\n"
+      server_name: "{{ opensrp_site_name }}"
+      return: "301 https://$server_name$request_uri"
+      ssl:
+        enabled: false
+
+  - server:
+      name:  "{{ opensrp_https_site }}"
+      __listen: "443;\n  listen [::]:443;\n"
+      server_name: "{{ opensrp_site_name }}"
+      client_max_body_size: "{{ opensrp_nginx_max_filesize }}"
+      ssl:
+        enabled: true
+        cert: "{{ opensrp_ssl_cert_file }}"
+        key:  "{{ opensrp_ssl_key_file }}"
+        src_dir: "{{ opensrp_ssl_src_dir }}"
+        conf: "{{ opensrp_site_name }}-ssl.conf"
+        remote_src: "{{ opensrp_certs_from_letsencrypt }}"
+        create_symlink: "{{ opensrp_certs_from_letsencrypt }}"
+
+      location1:
+        name: /
+        return: "301 https://$host/{{ opensrp_install_name }}"
+
+      location2:
+        name: "/{{ opensrp_install_name }}"
+        proxy_pass: "http://localhost:{{ opensrp_tomcat_http_port }}/{{ opensrp_install_name }}"
+        proxy_read_timeout: "86400s"
+        proxy_redirect: "off"
+        proxy_next_upstream: "error timeout invalid_header http_502 http_503 http_504"
+        proxy_set_header:
+          - Host $host
+          - X-Real-IP $remote_addr
+          - X-Forwarded-For $proxy_add_x_forwarded_for
+          - X-Forwarded-Host $server_name
+          - X-Forwarded-Proto https
+
+opensrp_nginx_enabled_sites:
+  - "{{ opensrp_http_site }}"
+  - "{{ opensrp_https_site }}"
