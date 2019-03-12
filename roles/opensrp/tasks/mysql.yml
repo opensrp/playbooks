@@ -25,7 +25,7 @@
   become_user: "root"
   mysql_db:
     name: "{{ opensrp_motech_database }}"
-    login_user: "{{ opensrp_mysql_rool_user }}"
+    login_user: "{{ opensrp_mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
     login_host: "{{ opensrp_mysql_host }}"
     state: import
