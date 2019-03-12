@@ -48,11 +48,6 @@
   tags:
   - psql-table-space
 
-- name: Execute migration script
-  become: yes
-  command: bash -lc "cd {{ opensrp_local_checkout_path }} && sh configs/assets/migrations/run_mybatis_migrations.sh {{ opensrp_install_postgres|lower }}"
-  tags:
-  - psql-table-space
 
 - name: Ensure OpenSRP psql user has the right access level
   postgresql_user:
@@ -63,6 +58,11 @@
     password: "{{ opensrp_postgres_password }}"
     role_attr_flags: CREATEDB,NOSUPERUSER
   tags:
-  - psql-table-space
+    - psql-table-space
 
+- name: Execute migration script
+  become: yes
+  command: bash -lc "cd {{ opensrp_local_checkout_path }} && sh configs/assets/migrations/run_mybatis_migrations.sh {{ opensrp_install_postgres|lower }}"
+  tags:
+    - psql-table-space
 
