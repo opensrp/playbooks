@@ -61,6 +61,7 @@
     name: "{{ opensrp_postgresql_user }}"
     password: "{{ opensrp_postgresql_password }}"
     encrypted: yes
+    priv: ALL
   tags:
     - psql-table-space
 
