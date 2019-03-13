@@ -60,6 +60,7 @@
     login_password: "{{ opensrp_postgres_superuser_password }}"
     name: "{{ opensrp_postgresql_user }}"
     password: "{{ opensrp_postgresql_password }}"
+    encrypted: yes
     role_attr_flags: CREATEDB,NOSUPERUSER
   tags:
     - psql-table-space
