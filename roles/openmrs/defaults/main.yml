@@ -35,7 +35,7 @@ openmrs_install_mysql: yes
 
 # SSL
 openmrs_ssl_src_dir: "/etc/letsencrypt/live/{{ openmrs_site_name }}"
-openmrs_ssl_cert_file: "cert.pem"
+openmrs_ssl_cert_file: "fullchain.pem"
 openmrs_ssl_key_file: "privkey.pem"
 opensrp_certs_from_letsencrypt: true
 
