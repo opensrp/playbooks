@@ -1,4 +1,4 @@
-- hosts: openmrs-app-servers, openmrs-mysql-servers
+- hosts: openmrs-app-servers
   gather_facts: False
   pre_tasks:
     - include_tasks: tasks/python2-ubuntu.yml
@@ -7,12 +7,6 @@
   roles:
     - common
   always_run: true
-
-- hosts: openmrs-mysql-servers
-  roles:
-    - mysql-5.7
-  tags:
-    - openmrs-mysql
 
 - hosts: openmrs-app-servers
   roles:
