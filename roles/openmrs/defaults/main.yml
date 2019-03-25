@@ -30,6 +30,7 @@ openmrs_tomcat_user_home: "/home/{{ openmrs_system_user }}"
 openmrs_home_directory: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/.OpenMRS"
 openmrs_mysql_connection_url: "jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/{{ openmrs_mysql_database }}?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull"
 openmrs_install_mysql: yes
+opensrp_mysql_root_user: "root"
 
 
 
@@ -37,6 +38,7 @@ openmrs_install_mysql: yes
 openmrs_ssl_src_dir: "/etc/letsencrypt/live/{{ openmrs_site_name }}"
 openmrs_ssl_cert_file: "cert.pem"
 openmrs_ssl_key_file: "privkey.pem"
+openmrs_certs_from_letsencrypt: true
 opensrp_certs_from_letsencrypt: true
 
 openmrs_http_site: "{{ openmrs_site_name }}-http"
