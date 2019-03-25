@@ -3,6 +3,7 @@ dhis_version: "2.26"
 dhis_java_ops: "-Xmx2048m -Xms2048m"
 dhis_java_packages:
   - openjdk-8-jre
+dhis_java_home: "/usr/lib/jvm/java-8-openjdk-amd64"
 dhis_user_home: "/home/{{ dhis_system_user }}"
 dhis_system_user: dhis2
 dhis_system_group: dhis2
