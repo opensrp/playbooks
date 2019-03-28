@@ -86,6 +86,11 @@ opensrp_https_site: "{{ opensrp_site_name }}-https"
 opensrp_certbot_site_names: ["{{ opensrp_site_name }}"]
 opensrp_certbot_mail_address: ""
 
+# Swap
+opensrp_swap_file_size_mb: 2048
+opensrp_swap_swappiness: 10
+opensrp_install_swap: false
+
 # NGINX
 opensrp_nginx_sites:
   - server:

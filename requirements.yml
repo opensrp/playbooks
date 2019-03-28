@@ -18,3 +18,6 @@
   name: onaio.certbot
   version: a19117aa21a497e9c33e06e52902910f4e26fb1e
   scm: git
+
+- src: geerlingguy.swap
+  version: 1.0.0

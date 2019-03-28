@@ -1,5 +1,12 @@
 ---
 dependencies:
+- role: geerlingguy.swap
+  become: true
+  become_user: "root"
+  swap_file_size_mb: "{{ dhis_swap_file_size_mb }}"
+  swap_swappiness: "{{ dhis_swap_swappiness }}"
+  when: dhis_install_swap
+
 - role: geerlingguy.java
   java_packages: "{{ dhis_java_packages }}"
   become: true

@@ -1,5 +1,12 @@
 ---
 dependencies:
+- role: geerlingguy.swap
+  become: true
+  become_user: "root"
+  swap_file_size_mb: "{{ openmrs_swap_file_size_mb }}"
+  swap_swappiness: "{{ openmrs_swap_swappiness }}"
+  when: openmrs_install_swap
+
 - role: tomcat7
   install_tomcat_service: false
   tomcat_system_user: "{{ openmrs_system_user }}"
