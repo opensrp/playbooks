@@ -2,7 +2,7 @@
 - name: Create the OpenSRP MySQL databases
   mysql_db:
     login_host: "{{ opensrp_mysql_host }}"
-    login_user: root
+    login_user: "{{ opensrp_mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
     name: "{{ item }}"
     state: present
@@ -25,7 +25,7 @@
   become_user: "root"
   mysql_db:
     name: "{{ opensrp_motech_database }}"
-    login_user: "root"
+    login_user: "{{ opensrp_mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
     login_host: "{{ opensrp_mysql_host }}"
     state: import
@@ -34,10 +34,11 @@
 - name: Create the OpenSRP MySQL user
   mysql_user:
     login_host: "{{ opensrp_mysql_host }}"
-    login_user: "root"
+    login_user: "{{ opensrp_mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
     name: "{{ opensrp_mysql_user }}"
     password: "{{ opensrp_mysql_password }}"
-    host: "{{ opensrp_mysql_app_host }}"
+    host: "{{ opensrp_mysql_host }}"
     priv: "{{ \".*:ALL/\".join(mysql_databases) }}.*:ALL"
     state: present
+  ignore_errors: true

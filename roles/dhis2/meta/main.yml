@@ -24,7 +24,7 @@ dependencies:
   tags:
     - tomcat7
 
-- role: certbot
+- role: onaio.certbot
   certbot_create_certs: "{{ dhis_certbot_create_certs }}"
   certbot_site_names: "{{ dhis_certbot_site_names }}"
   certbot_mail_address: "{{ dhis_certbot_mail_address }}"
