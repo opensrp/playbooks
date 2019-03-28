@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=forking
-WorkingDirectory={{ tomcat_Working_directory }}
+WorkingDirectory={{ tomcat_working_directory }}
 User={{ tomcat_system_user }}
 Group={{ tomcat_system_group }}
 ExecStart={{ tomcat_user_home }}/{{ tomcat_instance }}/bin/startup.sh
