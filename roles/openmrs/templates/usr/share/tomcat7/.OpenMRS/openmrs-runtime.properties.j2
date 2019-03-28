@@ -4,3 +4,8 @@ connection.url={{ openmrs_mysql_connection_url }}
 module.allow_web_admin=true
 auto_update_database=false
 sync.mandatory=false
+
+# Hibernate specific connection pool properties
+hibernate.c3p0.min_size={{ openmrs_hibernate_c3p0_min_size }}
+hibernate.c3p0.timeout={{ openmrs_hibernate_c3p0_timeout }}
+hibernate.c3p0.idle_test_period={{ openmrs_hibernate_c3p0_idle_test_period }}

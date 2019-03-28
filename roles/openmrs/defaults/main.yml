@@ -32,6 +32,10 @@ openmrs_mysql_connection_url: "jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_
 openmrs_install_mysql: yes
 openmrs_mysql_root_user: "root"
 
+# Hibernate
+openmrs_hibernate_c3p0_min_size: 5
+openmrs_hibernate_c3p0_timeout: 150
+openmrs_hibernate_c3p0_idle_test_period: 120
 
 # SSL
 openmrs_ssl_src_dir: "/etc/letsencrypt/live/{{ openmrs_site_name }}"
