@@ -57,7 +57,7 @@ dependencies:
   become: True
   tags:
     - collectd
-    -
+
 - role: oracle-java8
   tags:
    - oracle-java8
