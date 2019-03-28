@@ -51,19 +51,13 @@ dependencies:
   tags:
     - nginx
 
-- role: mysql-5.7
-  when: opensrp_install_mysql and opensrp_mysql_database is defined
-  mysql_port: "{{ opensrp_mysql_port }}"
-  tags:
-    - mysql-5.7
-
 - role: collectd
   collectd_deployed_app_name: "opensrp"
   collectd_deployed_app_version: "{{ opensrp_version }}"
   become: True
   tags:
     - collectd
-
+    -
 - role: oracle-java8
   tags:
    - oracle-java8

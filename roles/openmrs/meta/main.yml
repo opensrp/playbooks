@@ -15,11 +15,6 @@ dependencies:
   tags:
     - tomcat7
 
-- role: mysql-5.7
-  when: openmrs_install_mysql and openmrs_mysql_database is defined
-  tags:
-    - mysql-5.7
-
 - role: onaio.certbot
   become: true
   become_user: "root"
