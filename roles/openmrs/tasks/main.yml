@@ -2,7 +2,7 @@
 - name: Create the OpenMRS MySQL Database
   mysql_db:
     login_host: "{{ openmrs_mysql_host }}"
-    login_user: "{{ opensrp_mysql_root_user }}"
+    login_user: "{{ openmrs_mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
     name: "{{ openmrs_mysql_database }}"
     state: present
@@ -10,7 +10,7 @@
 - name: Create the OpenMRS MySQL User
   mysql_user:
     login_host: "{{ openmrs_mysql_host }}"
-    login_user: "{{ opensrp_mysql_root_user }}"
+    login_user: "{{ openmrs_mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
     name: "{{ openmrs_mysql_user }}"
     password: "{{ openmrs_mysql_password }}"
@@ -33,7 +33,7 @@
   become_user: "root"
   mysql_db:
     name: "{{ openmrs_mysql_database }}"
-    login_user: "{{ opensrp_mysql_root_user }}"
+    login_user: "{{ openmrs_mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
     login_host: "{{ openmrs_mysql_host }}"
     state: import

@@ -13,7 +13,7 @@ dependencies:
   tomcat_system_group: "{{ dhis_system_group }}"
   tomcat_user_home: "{{ dhis_user_home }}"
   tomcat_instance: "{{ dhis_tomcat_instance }}"
-  tomcat_Working_directory: "{{ tomcat_user_home }}/{{ tomcat_instance }}"
+  tomcat_working_directory: "{{ tomcat_user_home }}/{{ tomcat_instance }}"
   tomcat_http_port: "{{ dhis_tomcat_http_port }}"
   tomcat_shutdown_port: "{{ dhis_tomcat_shutdown_port }}"
   tomcat_max_filesize: "{{ dhis_tomcat_max_filesize }}"

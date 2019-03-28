@@ -30,9 +30,12 @@ openmrs_tomcat_user_home: "/home/{{ openmrs_system_user }}"
 openmrs_home_directory: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/.OpenMRS"
 openmrs_mysql_connection_url: "jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/{{ openmrs_mysql_database }}?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull"
 openmrs_install_mysql: yes
-opensrp_mysql_root_user: "root"
+openmrs_mysql_root_user: "root"
 
-
+# Hibernate
+openmrs_hibernate_c3p0_min_size: 5
+openmrs_hibernate_c3p0_timeout: 150
+openmrs_hibernate_c3p0_idle_test_period: 120
 
 # SSL
 openmrs_ssl_src_dir: "/etc/letsencrypt/live/{{ openmrs_site_name }}"
