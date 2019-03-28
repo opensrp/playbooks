@@ -98,7 +98,35 @@ openmrs_nginx_sites:
           - X-Forwarded-For $proxy_add_x_forwarded_for
           - X-Forwarded-Host $server_name
           - X-Forwarded-Proto https
-
+openmrs_nginx_log_dir: "/var/log/nginx"
 openmrs_nginx_enabled_sites:
   - "{{ openmrs_http_site }}"
   - "{{ openmrs_https_site }}"
+
+# Logstash
+openmrs_install_logstash: false
+openmrs_graylog_server: 127.0.0.1
+openmrs_graylog_port: "12204"
+openmrs_logstash_plugins:
+  - logstash-input-file
+  - logstash-output-gelf
+openmrs_logstash_custom_outputs:
+  - output: 'gelf'
+    lines:
+      - 'host => "{{ openmrs_graylog_server }}"'
+      - 'port => "{{ openmrs_graylog_port }}"'
+      - 'sender => "{{ openmrs_site_name }}"'
+openmrs_logstash_custom_inputs:
+  - input: 'file'
+    lines:
+      - 'path => ["{{ openmrs_nginx_log_dir }}/{{ openmrs_https_site }}-ssl-access.log"]'
+      - 'start_position => "end"'
+      - 'add_field => {'
+      - '  ssl => true'
+      - '  nginx_access => true'
+      - '  from_nginx => true'
+      - '  from_host => "%{host}"'
+      - '  from_domain => "{{ openmrs_site_name }}"'
+      - '  from_{{ openmrs_system_user }} => true'
+      - '  git_version => "{{ openmrs_version }}"'
+      - '}'

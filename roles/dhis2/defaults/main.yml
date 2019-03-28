@@ -47,6 +47,7 @@ dhis_nginx_https_site_name: "{{ dhis_site_name }}-https"
 dhis_nginx_enabled_sites:
   - "{{ dhis_nginx_http_site_name }}"
   - "{{ dhis_nginx_https_site_name }}"
+dhis_nginx_log_dir: "/var/log/nginx"
 dhis_nginx_sites:
   - server:
       name: "{{ dhis_nginx_http_site_name }}"
@@ -80,3 +81,31 @@ dhis_nginx_sites:
         proxy_read_timeout: "{{ dhis_nginx_proxy_read_timeout }}"
         proxy_redirect: "off"
         proxy_next_upstream: "error timeout invalid_header http_500 http_502 http_503 http_504"
+
+# Logstash
+dhis_install_logstash: false
+dhis_graylog_server: 127.0.0.1
+dhis_graylog_port: "12204"
+dhis_logstash_plugins:
+  - logstash-input-file
+  - logstash-output-gelf
+dhis_logstash_custom_outputs:
+  - output: 'gelf'
+    lines:
+      - 'host => "{{ dhis_graylog_server }}"'
+      - 'port => "{{ dhis_graylog_port }}"'
+      - 'sender => "{{ dhis_site_name }}"'
+dhis_logstash_custom_inputs:
+  - input: 'file'
+    lines:
+      - 'path => ["{{ dhis_nginx_log_dir }}/{{ dhis_nginx_https_site_name }}-ssl-access.log"]'
+      - 'start_position => "end"'
+      - 'add_field => {'
+      - '  ssl => true'
+      - '  nginx_access => true'
+      - '  from_nginx => true'
+      - '  from_host => "%{host}"'
+      - '  from_domain => "{{ dhis_site_name }}"'
+      - '  from_{{ dhis_system_user }} => true'
+      - '  git_version => "{{ dhis_version }}"'
+      - '}'

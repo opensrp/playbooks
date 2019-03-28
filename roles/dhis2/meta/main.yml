@@ -46,6 +46,7 @@ dependencies: # noqa 701
   nginx_sites: "{{ dhis_nginx_sites }}"
   nginx_enabled_sites: "{{ dhis_nginx_enabled_sites }}"
   nginx_ssl_dir: "{{ nginx_dir }}/ssl/{{ site.server.server_name }}"
+  nginx_log_dir: "{{ dhis_nginx_log_dir }}"
   become: true
   become_user: "root"
   tags:
@@ -57,3 +58,17 @@ dependencies: # noqa 701
   become: True
   tags:
     - collectd
+
+- role: onaio.logstash
+  become: true
+  become_user: "root"
+  clear_logstash_config: true
+  logstash_plugins: "{{ dhis_logstash_plugins }}"
+  logstash_custom_outputs: "{{ dhis_logstash_custom_outputs }}"
+  logstash_custom_inputs: "{{ dhis_logstash_custom_inputs }}"
+  logstash_system_groups: ["adm"]
+  config_logstash: true
+  logstash_install_java: false
+  when: dhis_install_logstash
+  tags:
+   - logstash
