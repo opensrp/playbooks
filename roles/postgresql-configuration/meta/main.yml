@@ -22,8 +22,6 @@ dependencies:
     owner: "{{ opensrp_postgresql_user }}"
     uuid_ossp: yes
     citext: yes
-    encoding:
-    lc_collate: "en_GB.UTF-8"
   postgresql_user_privileges:
   - name: "{{ opensrp_postgresql_user }}"
     db: "{{ opensrp_postgresql_database }}"
