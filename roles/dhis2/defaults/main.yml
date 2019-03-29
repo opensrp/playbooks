@@ -31,6 +31,11 @@ dhis_certbot_mail_address: ""
 dhis_certbot_site_names:
   - "{{ dhis_site_name }}"
 
+# Swap
+dhis_swap_file_size_mb: 2048
+dhis_swap_swappiness: 10
+dhis_install_swap: false
+
 # NGINX
 dhis_nginx_proxy_read_timeout: "60s"
 dhis_nginx_max_filesize: "50M"

@@ -1,5 +1,12 @@
 ---
 dependencies:
+- role: geerlingguy.swap
+  become: true
+  become_user: "root"
+  swap_file_size_mb: "{{ opensrp_swap_file_size_mb }}"
+  swap_swappiness: "{{ opensrp_swap_swappiness }}"
+  when: opensrp_install_swap
+
 - role: onaio.redis
   become: true
   become_user: "root"
