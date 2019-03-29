@@ -160,16 +160,16 @@ opensrp_nginx_enabled_sites:
 
 # Logstash
 opensrp_install_logstash: false
-opensrp_graylog_server: 127.0.0.1
-opensrp_graylog_port: "12204"
+opensrp_gelf_server: 127.0.0.1
+opensrp_gelf_port: "12204"
 opensrp_logstash_plugins:
   - logstash-input-file
   - logstash-output-gelf
 opensrp_logstash_custom_outputs:
   - output: 'gelf'
     lines:
-      - 'host => "{{ opensrp_graylog_server }}"'
-      - 'port => "{{ opensrp_graylog_port }}"'
+      - 'host => "{{ opensrp_gelf_server }}"'
+      - 'port => "{{ opensrp_gelf_port }}"'
       - 'sender => "{{ opensrp_site_name }}"'
 opensrp_logstash_custom_inputs:
   - input: 'file'
