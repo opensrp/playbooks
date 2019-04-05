@@ -13,7 +13,7 @@ dependencies: # noqa 701
   tomcat_system_group: "{{ tomcat_group }}"
   tomcat_user_home: "{{ openmrs_tomcat_user_home }}"
   tomcat_instance: "{{ openmrs_tomcat_instance }}"
-  tomcat_working_directory: "{{ tomcat_user_home }}/{{ tomcat_instance }}"
+  tomcat_working_directory: "{{ tomcat_user_home }}/.OpenMRS"
   tomcat_http_port: "{{ openmrs_tomcat_http_port }}"
   tomcat_shutdown_port: "{{ openmrs_tomcat_shutdown_port }}"
   tomcat_max_filesize: "{{ openmrs_tomcat_max_filesize }}"
