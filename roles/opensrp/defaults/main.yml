@@ -79,6 +79,11 @@ opensrp_maven_package_profiles:
   - postgres
   - jedis
   - basic_auth
+opensrp_oauth_default_client_id:
+opensrp_oauth_default_grant_types: []
+opensrp_oauth_default_secret:
+opensrp_oauth_default_scope: []
+opensrp_oauth_default_validity: 3600
 
 # SSL
 opensrp_ssl_src_dir: "/etc/letsencrypt/live/{{ opensrp_site_name }}"
