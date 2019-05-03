@@ -94,11 +94,9 @@ redis.port={{ opensrp_redis_port }}
 redis.password={{ opensrp_redis_password }}
 redis.pool.max.connections={{ opensrp_redis_max_connections }}
 
-{% if opensrp_oauth_default_client_id is defined and opensrp_oauth_default_client_id|length > 0 %}
 #OAuth2 Settings
 oauth.default.client.id={{ opensrp_oauth_default_client_id }}
 oauth.default.grant.types={{ opensrp_oauth_default_grant_types | join(',') }}
 oauth.default.secret={{ opensrp_oauth_default_secret }}
 oauth.default.scope={{ opensrp_oauth_default_scope | join(',') }}
 oauth.default.token.validity={{ opensrp_oauth_default_validity }}
-{% endif %}
