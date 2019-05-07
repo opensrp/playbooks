@@ -65,7 +65,7 @@ dependencies:
   tags:
     - collectd
 
-- role: oracle-java8
+- role: geerlingguy.java
   tags:
    - oracle-java8
 
