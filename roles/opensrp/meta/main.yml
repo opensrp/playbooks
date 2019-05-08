@@ -66,8 +66,11 @@ dependencies:
     - collectd
 
 - role: geerlingguy.java
+  java_packages: "{{ opensrp_java_packages }}"
+  become: true
+  become_user: "root"
   tags:
-   - oracle-java8
+    - java
 
 - role: postgresql-configuration
   when: opensrp_install_postgres
