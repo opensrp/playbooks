@@ -74,7 +74,6 @@ opensrp_postgres_superuser: postgres
 opensrp_postgres_superuser_password: ""
 opensrp_java_packages:
   - openjdk-8-jre
-opensrp_java_home: "/usr/lib/jvm/java-8-openjdk-amd64"
 
 # SSL
 opensrp_ssl_src_dir: "/etc/letsencrypt/live/{{ opensrp_site_name }}"
