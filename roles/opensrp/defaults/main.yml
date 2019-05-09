@@ -72,7 +72,6 @@ opensrp_install_mysql: yes
 opensrp_mysql_root_user: "root"
 opensrp_postgres_superuser: postgres
 opensrp_postgres_superuser_password: ""
-opensrp_java_ops: "-Xmx2048m -Xms2048m"
 opensrp_java_packages:
   - openjdk-8-jre
 opensrp_java_home: "/usr/lib/jvm/java-8-openjdk-amd64"
