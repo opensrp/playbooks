@@ -72,6 +72,9 @@ opensrp_install_mysql: yes
 opensrp_mysql_root_user: "root"
 opensrp_postgres_superuser: postgres
 opensrp_postgres_superuser_password: ""
+opensrp_java_packages:
+  - openjdk-8-jre
+
 # List of profiles to be activated. Only the specified profiles will
 # be made active. Read more on OpenSRP Server profiles here:
 # https://smartregister.atlassian.net/wiki/spaces/Documentation/pages/616595457/Server+Web+Build
