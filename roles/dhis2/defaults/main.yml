@@ -84,16 +84,16 @@ dhis_nginx_sites:
 
 # Logstash
 dhis_install_logstash: false
-dhis_gelf_server: 127.0.0.1
-dhis_gelf_port: "12204"
+dhis_logstash_gelf_server: 127.0.0.1
+dhis_logstash_gelf_port: "12204"
 dhis_logstash_plugins:
   - logstash-input-file
   - logstash-output-gelf
 dhis_logstash_custom_outputs:
   - output: 'gelf'
     lines:
-      - 'host => "{{ dhis_gelf_server }}"'
-      - 'port => "{{ dhis_gelf_port }}"'
+      - 'host => "{{ dhis_logstash_gelf_server }}"'
+      - 'port => "{{ dhis_logstash_gelf_port }}"'
       - 'sender => "{{ dhis_site_name }}"'
 dhis_logstash_custom_inputs:
   - input: 'file'

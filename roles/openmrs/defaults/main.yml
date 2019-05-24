@@ -105,16 +105,16 @@ openmrs_nginx_enabled_sites:
 
 # Logstash
 openmrs_install_logstash: false
-openmrs_gelf_server: 127.0.0.1
-openmrs_gelf_port: "12204"
+openmrs_logstash_gelf_server: 127.0.0.1
+openmrs_logstash_gelf_port: "12204"
 openmrs_logstash_plugins:
   - logstash-input-file
   - logstash-output-gelf
 openmrs_logstash_custom_outputs:
   - output: 'gelf'
     lines:
-      - 'host => "{{ openmrs_gelf_server }}"'
-      - 'port => "{{ openmrs_gelf_port }}"'
+      - 'host => "{{ openmrs_logstash_gelf_server }}"'
+      - 'port => "{{ openmrs_logstash_gelf_port }}"'
       - 'sender => "{{ openmrs_site_name }}"'
 openmrs_logstash_custom_inputs:
   - input: 'file'
