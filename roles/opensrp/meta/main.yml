@@ -54,6 +54,7 @@ dependencies: # noqa 701
   nginx_enabled_sites: "{{ opensrp_nginx_enabled_sites }}"
   nginx_ssl_dir: "{{ nginx_dir }}/ssl/{{ site.server.server_name }}"
   nginx_log_dir: "{{ opensrp_nginx_log_dir }}"
+  nginx_access_logs: "{{ opensrp_nginx_access_logs }}"
   become: true
   become_user: "root"
   tags:
@@ -88,6 +89,8 @@ dependencies: # noqa 701
   logstash_system_groups: ["adm"]
   config_logstash: true
   logstash_install_java: false
+  logstash_input_config_suffix: "{{ opensrp_logstash_input_config_suffix }}"
+  clear_logstash_config: "{{ opensrp_clear_logstash_config }}"
   when: opensrp_install_logstash
   tags:
    - logstash

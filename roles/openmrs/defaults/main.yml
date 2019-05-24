@@ -115,7 +115,7 @@ openmrs_logstash_custom_outputs:
     lines:
       - 'host => "{{ openmrs_logstash_gelf_server }}"'
       - 'port => "{{ openmrs_logstash_gelf_port }}"'
-      - 'sender => "{{ openmrs_site_name }}"'
+      - 'sender => "%{host}"'
 openmrs_logstash_custom_inputs:
   - input: 'file'
     lines:

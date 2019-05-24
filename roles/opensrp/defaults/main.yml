@@ -136,6 +136,7 @@ opensrp_nginx_sites:
         conf: "{{ opensrp_site_name }}-ssl.conf"
         remote_src: "{{ opensrp_certs_from_letsencrypt }}"
         create_symlink: "{{ opensrp_certs_from_letsencrypt }}"
+        access_log_format: "timed_combined"
 
       location1:
         name: /
@@ -157,11 +158,18 @@ opensrp_nginx_log_dir: "/var/log/nginx"
 opensrp_nginx_enabled_sites:
   - "{{ opensrp_http_site }}"
   - "{{ opensrp_https_site }}"
+opensrp_nginx_access_logs:
+  - name: "timed_combined"
+    format: "'$http_x_forwarded_for - $remote_user [$time_local]  \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_time $upstream_response_time $gzip_ratio' $request_length"
+    options: null
+    filename: "access.log"    
 
 # Logstash
 opensrp_install_logstash: false
 opensrp_logstash_gelf_server: 127.0.0.1
 opensrp_logstash_gelf_port: "12204"
+opensrp_logstash_input_config_suffix: "{{ opensrp_site_name }}"
+opensrp_clear_logstash_config: false
 opensrp_logstash_plugins:
   - logstash-input-file
   - logstash-output-gelf
@@ -170,7 +178,7 @@ opensrp_logstash_custom_outputs:
     lines:
       - 'host => "{{ opensrp_logstash_gelf_server }}"'
       - 'port => "{{ opensrp_logstash_gelf_port }}"'
-      - 'sender => "{{ opensrp_site_name }}"'
+      - 'sender => "%{host}"'
 opensrp_logstash_custom_inputs:
   - input: 'file'
     lines:
