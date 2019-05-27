@@ -41,7 +41,7 @@ dependencies:
   become: true
   become_user: "root"
   tags:
-    - nginx      
+    - nginx
 
 - role: collectd
   collectd_deployed_app_name: "openmrs"
