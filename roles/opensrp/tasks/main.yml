@@ -58,5 +58,5 @@
   become: yes
   become_user: root
   service:
-    name: "{{opensrp_tomcat_instance}}"
+    name: "{{ opensrp_tomcat_instance }}"
     state: restarted
