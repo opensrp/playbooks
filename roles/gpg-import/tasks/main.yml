@@ -48,13 +48,13 @@
   become: yes
   become_user: "{{ gpg_user }}"
   command: "gpg --allow-secret-key-import {{ import_directory }}/private.key"
-  changed_when: output is defined and output.stdout != ""
+  changed_when: output is defined and output.stdout|length > 0
 
 - name: Add trust
   become: yes
   become_user: "{{ gpg_user }}"
   command: "gpg --import-ownertrust {{ import_directory }}/trust"
-  changed_when: output is defined and output.stdout != ""
+  changed_when: output is defined and output.stdout|length > 0
 
 - name: delete temporary files
   become: yes
