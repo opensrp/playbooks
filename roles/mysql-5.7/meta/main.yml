@@ -1,5 +1,5 @@
 ---
-dependencies:
+dependencies: # noqa 701
  - role: mysql-backup
    when: mysql_install_server == True and mysql_setup_database_backups
    mysql_host: "{{ openmrs_mysql_host }}"

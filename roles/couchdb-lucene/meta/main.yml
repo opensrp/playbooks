@@ -1,5 +1,5 @@
 ---
-dependencies:
+dependencies: # noqa 701
  - role: collectd
    collectd_deployed_app_name: "couchdb-lucene"
    collectd_deployed_app_version: "{{ couchdb_lucene_version_name }}"

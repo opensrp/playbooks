@@ -1,5 +1,5 @@
 ---
-dependencies:
+dependencies: # noqa 701
 - role: gpg-import
   gpg_user: "{{ couchdb_backup_system_user }}"
   gpg_group: "{{ couchdb_backup_system_group }}"

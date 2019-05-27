@@ -1,5 +1,5 @@
 ---
-dependencies:
+dependencies: # noqa 701
  - {
   role: gpg-import,
   gpg_user: "{{ mysql_backup_system_user }}",
