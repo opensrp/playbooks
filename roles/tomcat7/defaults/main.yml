@@ -7,3 +7,5 @@ tomcat_max_filesize: "52428800"
 tomcat_fsize_threshold: "10485760"
 tomcat_user: "tomcat7"
 tomcat_group: "tomcat7"
+# The number of days to keep Tomcat logs before deleting them
+tomcat_logs_max_age_days: 90

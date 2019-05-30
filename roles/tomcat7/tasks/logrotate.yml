@@ -1,0 +1,8 @@
+---
+- name: Copy the logrotate configuration
+  template:
+    src: "etc/logrotate.d/tomcat_instance.j2"
+    dest: "{{ tomcat_logrotate_conf_dest }}"
+    owner: root
+    group: root
+    mode: 0644
