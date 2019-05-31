@@ -4,5 +4,5 @@ couchdb_lucene_system_group: "root"
 couchdb_lucene_bind_host: "localhost"
 couchdb_lucene_bind_port: 5985
 couchdb_lucene_java_opts: "-server -Xmx1g -XX:OnOutOfMemoryError=bin/kill_ppid"
-couchdb_lucene_local_checkout_path: "/tmp/couchdb-lucene"
-couchdb_lucene_local_package_directory: "/tmp/couchdb-lucene-tars"
+couchdb_lucene_local_checkout_path: "/tmp/{{ lookup('env', 'USER') }}/couchdb-lucene"
+couchdb_lucene_local_package_directory: "/tmp/{{ lookup('env', 'USER') }}/couchdb-lucene-tars"

@@ -59,6 +59,7 @@ openmrs_certbot_site_names: ["{{ openmrs_site_name }}"]
 openmrs_certbot_mail_address: ""
 
 # NGINX
+openmrs_nginx_server_names_hash_bucket_size: 64
 openmrs_nginx_sites:
   - server:
       name: "{{ openmrs_http_site }}"

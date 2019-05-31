@@ -38,6 +38,7 @@ dependencies:
   nginx_sites: "{{ openmrs_nginx_sites }}"
   nginx_enabled_sites: "{{ openmrs_nginx_enabled_sites }}"
   nginx_ssl_dir: "{{ nginx_dir }}/ssl/{{ site.server.server_name }}"
+  nginx_server_names_hash_bucket_size: "{{ openmrs_nginx_server_names_hash_bucket_size }}"
   become: true
   become_user: "root"
   tags:
