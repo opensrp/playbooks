@@ -81,6 +81,7 @@ openmrs_nginx_sites:
         conf: "{{ openmrs_site_name }}-ssl.conf"
         remote_src: "{{ openmrs_certs_from_letsencrypt }}"
         create_symlink: "{{ openmrs_certs_from_letsencrypt }}"
+        access_log_format: "timed_combined"
 
       location1:
         name: /
@@ -102,11 +103,18 @@ openmrs_nginx_log_dir: "/var/log/nginx"
 openmrs_nginx_enabled_sites:
   - "{{ openmrs_http_site }}"
   - "{{ openmrs_https_site }}"
+openmrs_nginx_access_logs:
+  - name: "timed_combined"
+    format: "'$http_x_forwarded_for - $remote_user [$time_local]  \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_time $upstream_response_time $gzip_ratio' $request_length"
+    options: null
+    filename: "access.log"
 
 # Logstash
 openmrs_install_logstash: false
 openmrs_logstash_gelf_server: 127.0.0.1
 openmrs_logstash_gelf_port: "12204"
+openmrs_logstash_input_config_suffix: "{{ openmrs_site_name }}"
+openmrs_clear_logstash_config: false
 openmrs_logstash_plugins:
   - logstash-input-file
   - logstash-output-gelf

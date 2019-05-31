@@ -82,7 +82,6 @@ dependencies: # noqa 701
 - role: onaio.logstash
   become: true
   become_user: "root"
-  clear_logstash_config: true
   logstash_plugins: "{{ opensrp_logstash_plugins }}"
   logstash_custom_outputs: "{{ opensrp_logstash_custom_outputs }}"
   logstash_custom_inputs: "{{ opensrp_logstash_custom_inputs }}"
