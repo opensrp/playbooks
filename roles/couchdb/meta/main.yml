@@ -1,7 +1,7 @@
 ---
-dependencies:
+dependencies: # noqa 701
  - role: couchdb-lucene
-   when: couchdb_lucene_support == True
+   when: couchdb_lucene_support
    tags:
     - couchdb-lucene
 

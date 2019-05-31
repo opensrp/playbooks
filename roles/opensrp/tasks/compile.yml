@@ -42,7 +42,7 @@
 - name: Compile the OpenSRP WAR
   shell: "cd {{ opensrp_local_checkout_path }} && mvn package -Dmaven.test.skip=true -P {{ opensrp_maven_package_profiles | join(',') }}"
   delegate_to: 127.0.0.1
-  changed_when: output.stdout != ""
+  changed_when: output.stdout|length > 0
 
 - name: Make sure the WAR directory exists
   file:

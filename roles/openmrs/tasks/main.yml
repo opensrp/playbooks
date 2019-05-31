@@ -63,14 +63,15 @@
   become: yes
   become_user: root
   file:
-    src: "{{openmrs_home_directory}}"
+    src: "{{ openmrs_home_directory }}"
     dest: "/var/lib/OpenMRS"
     owner: "{{ openmrs_system_user }}"
     group: "{{ tomcat_group }}"
     state: link
     mode: 0777
 
-- set_fact:
+- name: Set OpenMRS facts based on version
+  set_fact:
     openmrs_modules: "{{ openmrs_modules_v1 if (openmrs_version < 2) else openmrs_modules_v2 }}"
     template:
       "templates/conditionals/openmrs_version_template.j2"
@@ -102,5 +103,5 @@
   become: yes
   become_user: root
   service:
-    name: "{{openmrs_tomcat_instance}}"
+    name: "{{ openmrs_tomcat_instance }}"
     state: restarted

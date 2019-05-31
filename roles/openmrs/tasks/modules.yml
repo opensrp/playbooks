@@ -6,13 +6,13 @@
   become_user: "root"
   file:
     state: absent
-    path: "{{openmrs_home_directory}}/modules"
+    path: "{{ openmrs_home_directory }}/modules"
 
 - name: Create OpenMRS Modules Directory
   become: yes
   become_user: "root"
   file:
-    path: "{{openmrs_home_directory}}/modules"
+    path: "{{ openmrs_home_directory }}/modules"
     owner: "{{ tomcat_user }}"
     group: "{{ tomcat_group }}"
     state: directory
@@ -23,7 +23,7 @@
   become_user: "root"
   copy:
     src: "files/usr/share/tomcat7/.OpenMRS/modules/{{ item }}.omod"
-    dest: "{{openmrs_home_directory}}/modules/{{ item }}.omod"
+    dest: "{{ openmrs_home_directory }}/modules/{{ item }}.omod"
     mode: 0644
     owner: "{{ tomcat_user }}"
     group: "{{ tomcat_group }}"
@@ -33,7 +33,7 @@
   become: yes
   become_user: "root"
   file:
-    path: "{{openmrs_home_directory}}/owa"
+    path: "{{ openmrs_home_directory }}/owa"
     state: absent
 
 - name: Install Unarchive prerequisites
@@ -48,4 +48,4 @@
   become_user: "root"
   unarchive:
    src: "files/usr/share/tomcat7/.OpenMRS/owa.zip"
-   dest: "{{openmrs_home_directory}}"
+   dest: "{{ openmrs_home_directory }}"
