@@ -1,5 +1,5 @@
 ---
-dependencies:
+dependencies: # noqa 701
  - role: collectd
    collectd_deployed_app_name: "tomcat7"
    collectd_deployed_app_version: "{{ tomcat_service_version }}"

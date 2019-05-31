@@ -2,7 +2,7 @@
 
 mkdir -p {{ couchdb_backup_dir }}/{{ couchdb_backup_database }}
 find {{ couchdb_backup_dir }}/{{ couchdb_backup_database }} -mtime +{{ couchdb_max_backup_days }} -exec rm {} \;
-tar -czvf {{ couchdb_backup_dir }}/{{ couchdb_backup_database }}/`date +"%Y-%m-%d_%H%M%S"`-{{ couchdb_backup_database }}.tar.gz {{couchdb_storage_dir}}/{{ couchdb_backup_database }}.couch
+tar -czvf {{ couchdb_backup_dir }}/{{ couchdb_backup_database }}/`date +"%Y-%m-%d_%H%M%S"`-{{ couchdb_backup_database }}.tar.gz {{ couchdb_storage_dir }}/{{ couchdb_backup_database }}.couch
 
 {% if couchdb_backups_to_s3 %}
 export AWS_ACCESS_KEY_ID={{ couchdb_s3_backup_access_key }}
