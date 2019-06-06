@@ -27,7 +27,7 @@ ssl_cert: "{{ openmrs_site_name }}-fullchain.pem"
 openmrs_system_user: "openmrs"
 openmrs_tomcat_instance: "tomcat-openmrs"
 openmrs_tomcat_user_home: "/home/{{ openmrs_system_user }}"
-openmrs_home_directory: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/.OpenMRS"
+openmrs_home_directory: "{{ openmrs_tomcat_user_home }}/.OpenMRS"
 openmrs_mysql_connection_url: "jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/{{ openmrs_mysql_database }}?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull"
 openmrs_install_mysql: yes
 openmrs_mysql_root_user: "root"
@@ -81,6 +81,7 @@ openmrs_nginx_sites:
         conf: "{{ openmrs_site_name }}-ssl.conf"
         remote_src: "{{ openmrs_certs_from_letsencrypt }}"
         create_symlink: "{{ openmrs_certs_from_letsencrypt }}"
+        access_log_format: "timed_combined"
 
       location1:
         name: /
@@ -98,7 +99,42 @@ openmrs_nginx_sites:
           - X-Forwarded-For $proxy_add_x_forwarded_for
           - X-Forwarded-Host $server_name
           - X-Forwarded-Proto https
-
+openmrs_nginx_log_dir: "/var/log/nginx"
 openmrs_nginx_enabled_sites:
   - "{{ openmrs_http_site }}"
   - "{{ openmrs_https_site }}"
+openmrs_nginx_access_logs:
+  - name: "timed_combined"
+    format: "'$http_x_forwarded_for - $remote_user [$time_local]  \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_time $upstream_response_time $gzip_ratio' $request_length"
+    options: null
+    filename: "access.log"
+
+# Logstash
+openmrs_install_logstash: false
+openmrs_logstash_gelf_server: 127.0.0.1
+openmrs_logstash_gelf_port: "12204"
+openmrs_logstash_input_config_suffix: "{{ openmrs_site_name }}"
+openmrs_clear_logstash_config: false
+openmrs_logstash_plugins:
+  - logstash-input-file
+  - logstash-output-gelf
+openmrs_logstash_custom_outputs:
+  - output: 'gelf'
+    lines:
+      - 'host => "{{ openmrs_logstash_gelf_server }}"'
+      - 'port => "{{ openmrs_logstash_gelf_port }}"'
+      - 'sender => "%{host}"'
+openmrs_logstash_custom_inputs:
+  - input: 'file'
+    lines:
+      - 'path => ["{{ openmrs_nginx_log_dir }}/{{ openmrs_https_site }}-ssl-access.log"]'
+      - 'start_position => "end"'
+      - 'add_field => {'
+      - '  ssl => true'
+      - '  nginx_access => true'
+      - '  from_nginx => true'
+      - '  from_host => "%{host}"'
+      - '  from_domain => "{{ openmrs_site_name }}"'
+      - '  from_{{ openmrs_system_user }} => true'
+      - '  git_version => "{{ openmrs_version }}"'
+      - '}'
