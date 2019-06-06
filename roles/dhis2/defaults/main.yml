@@ -47,6 +47,7 @@ dhis_nginx_https_site_name: "{{ dhis_site_name }}-https"
 dhis_nginx_enabled_sites:
   - "{{ dhis_nginx_http_site_name }}"
   - "{{ dhis_nginx_https_site_name }}"
+dhis_nginx_log_dir: "/var/log/nginx"
 dhis_nginx_sites:
   - server:
       name: "{{ dhis_nginx_http_site_name }}"
@@ -68,6 +69,7 @@ dhis_nginx_sites:
         conf: "{{ dhis_site_name }}-ssl.conf"
         remote_src: "{{ dhis_certs_from_letsencrypt }}"
         create_symlink: "{{ dhis_certs_from_letsencrypt }}"
+        access_log_format: "timed_combined"
       location1:
         name: /
         proxy_pass: "http://localhost:{{ dhis_tomcat_http_port }}"
@@ -80,3 +82,38 @@ dhis_nginx_sites:
         proxy_read_timeout: "{{ dhis_nginx_proxy_read_timeout }}"
         proxy_redirect: "off"
         proxy_next_upstream: "error timeout invalid_header http_500 http_502 http_503 http_504"
+dhis_nginx_access_logs:
+  - name: "timed_combined"
+    format: "'$http_x_forwarded_for - $remote_user [$time_local]  \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_time $upstream_response_time $gzip_ratio' $request_length"
+    options: null
+    filename: "access.log"
+
+# Logstash
+dhis_install_logstash: false
+dhis_logstash_gelf_server: 127.0.0.1
+dhis_logstash_gelf_port: "12204"
+dhis_logstash_input_config_suffix: "{{ dhis_site_name }}"
+dhis_clear_logstash_config: false
+dhis_logstash_plugins:
+  - logstash-input-file
+  - logstash-output-gelf
+dhis_logstash_custom_outputs:
+  - output: 'gelf'
+    lines:
+      - 'host => "{{ dhis_logstash_gelf_server }}"'
+      - 'port => "{{ dhis_logstash_gelf_port }}"'
+      - 'sender => "{{ dhis_site_name }}"'
+dhis_logstash_custom_inputs:
+  - input: 'file'
+    lines:
+      - 'path => ["{{ dhis_nginx_log_dir }}/{{ dhis_nginx_https_site_name }}-ssl-access.log"]'
+      - 'start_position => "end"'
+      - 'add_field => {'
+      - '  ssl => true'
+      - '  nginx_access => true'
+      - '  from_nginx => true'
+      - '  from_host => "%{host}"'
+      - '  from_domain => "{{ dhis_site_name }}"'
+      - '  from_{{ dhis_system_user }} => true'
+      - '  git_version => "{{ dhis_version }}"'
+      - '}'

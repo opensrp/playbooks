@@ -21,3 +21,8 @@
 
 - src: geerlingguy.swap
   version: 1.0.0
+
+- src: https://github.com/onaio/ansible-logstash.git
+  name: onaio.logstash
+  version: 287f0b7ec647bada6df00980df8ff05caed74844
+  scm: git
