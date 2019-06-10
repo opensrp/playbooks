@@ -4,14 +4,24 @@
 - include_tasks: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
-- include_tasks: tomcat_user.yml
+- block:
+  - name: Include tomcat-user variables
+    include_vars: tomcat_user.yml
+
+  - name: Install tomcat-user
+    include_tasks: tomcat_user.yml
+
+  - name: Configure the tomcat-user instance
+    include_tasks: tomcat_user_instance.yml
   when: not install_tomcat_service
 
-- include_tasks: tomcat_service.yml
+- block:
+  - name: Include the Tomcat service variables
+    include_vars: tomcat_service.yml
+
+  - name: Install the Tomcat service
+    include_tasks: tomcat_service.yml
   when: install_tomcat_service
 
-- include_tasks: tomcat_shared_folder_user.yml
-  when: install_tomcat_service
-
-- include_tasks: tomcat_user_instance.yml
-  when: not install_tomcat_service
+- name: Configure Logrotate
+  include_tasks: logrotate.yml

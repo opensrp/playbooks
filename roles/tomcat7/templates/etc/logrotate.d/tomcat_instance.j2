@@ -1,0 +1,9 @@
+{{ tomcat_logs_dir }}/* {
+  copytruncate
+  daily
+  rotate {{ tomcat_logs_max_age_days }}
+  compress
+  missingok
+  delaycompress
+  notifempty
+}

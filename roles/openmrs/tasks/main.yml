@@ -94,6 +94,7 @@
   become_user: root
   get_url:
     url: "https://netcologne.dl.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version }}/openmrs.war"
+    validate_certs: "{{ openmrs_validate_certs }}"
     dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
     owner: "{{ openmrs_system_user }}"
     group: "{{ tomcat_group }}"

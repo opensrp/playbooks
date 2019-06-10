@@ -25,8 +25,8 @@ opensrp_couchdb_user: "root"
 opensrp_couchdb_password: "root"
 opensrp_rapidpro_token: ""
 opensrp_nginx_max_filesize: "50M"
-opensrp_local_checkout_path: "/tmp/opensrp"
-opensrp_local_package_directory: "/tmp/opensrp-wars"
+opensrp_local_checkout_path: "/tmp/{{ lookup('env', 'USER') }}/opensrp"
+opensrp_local_package_directory: "/tmp/{{ lookup('env', 'USER') }}/opensrp-wars"
 activemq_version: "5.12"
 couchdb_databases:
   - "opensrp"
@@ -116,6 +116,7 @@ opensrp_swap_swappiness: 10
 opensrp_install_swap: false
 
 # NGINX
+opensrp_nginx_server_names_hash_bucket_size: 64
 opensrp_nginx_sites:
   - server:
       name: "{{ opensrp_http_site }}"
@@ -138,6 +139,7 @@ opensrp_nginx_sites:
         conf: "{{ opensrp_site_name }}-ssl.conf"
         remote_src: "{{ opensrp_certs_from_letsencrypt }}"
         create_symlink: "{{ opensrp_certs_from_letsencrypt }}"
+        access_log_format: "timed_combined"
 
       location1:
         name: /
@@ -155,7 +157,42 @@ opensrp_nginx_sites:
           - X-Forwarded-For $proxy_add_x_forwarded_for
           - X-Forwarded-Host $server_name
           - X-Forwarded-Proto https
-
+opensrp_nginx_log_dir: "/var/log/nginx"
 opensrp_nginx_enabled_sites:
   - "{{ opensrp_http_site }}"
   - "{{ opensrp_https_site }}"
+opensrp_nginx_access_logs:
+  - name: "timed_combined"
+    format: "'$http_x_forwarded_for - $remote_user [$time_local]  \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_time $upstream_response_time $gzip_ratio' $request_length"
+    options: null
+    filename: "access.log"
+
+# Logstash
+opensrp_install_logstash: false
+opensrp_logstash_gelf_server: 127.0.0.1
+opensrp_logstash_gelf_port: "12204"
+opensrp_logstash_input_config_suffix: "{{ opensrp_site_name }}"
+opensrp_clear_logstash_config: false
+opensrp_logstash_plugins:
+  - logstash-input-file
+  - logstash-output-gelf
+opensrp_logstash_custom_outputs:
+  - output: 'gelf'
+    lines:
+      - 'host => "{{ opensrp_logstash_gelf_server }}"'
+      - 'port => "{{ opensrp_logstash_gelf_port }}"'
+      - 'sender => "%{host}"'
+opensrp_logstash_custom_inputs:
+  - input: 'file'
+    lines:
+      - 'path => ["{{ opensrp_nginx_log_dir }}/{{ opensrp_https_site }}-ssl-access.log"]'
+      - 'start_position => "end"'
+      - 'add_field => {'
+      - '  ssl => true'
+      - '  nginx_access => true'
+      - '  from_nginx => true'
+      - '  from_host => "%{host}"'
+      - '  from_domain => "{{ opensrp_site_name }}"'
+      - '  from_{{ opensrp_system_user }} => true'
+      - '  git_version => "{{ opensrp_version }}"'
+      - '}'
