@@ -25,8 +25,8 @@ opensrp_couchdb_user: "root"
 opensrp_couchdb_password: "root"
 opensrp_rapidpro_token: ""
 opensrp_nginx_max_filesize: "50M"
-opensrp_local_checkout_path: "/tmp/opensrp"
-opensrp_local_package_directory: "/tmp/opensrp-wars"
+opensrp_local_checkout_path: "/tmp/{{ lookup('env', 'USER') }}/opensrp"
+opensrp_local_package_directory: "/tmp/{{ lookup('env', 'USER') }}/opensrp-wars"
 activemq_version: "5.12"
 couchdb_databases:
   - "opensrp"
@@ -114,6 +114,7 @@ opensrp_swap_swappiness: 10
 opensrp_install_swap: false
 
 # NGINX
+opensrp_nginx_server_names_hash_bucket_size: 64
 opensrp_nginx_sites:
   - server:
       name: "{{ opensrp_http_site }}"
