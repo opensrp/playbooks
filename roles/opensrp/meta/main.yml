@@ -1,5 +1,5 @@
 ---
-dependencies:
+dependencies: # noqa 701
 - role: geerlingguy.swap
   become: true
   become_user: "root"

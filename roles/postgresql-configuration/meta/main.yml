@@ -1,5 +1,5 @@
 ---
-dependencies:
+dependencies: # noqa 701
 - role: collectd
   collectd_deployed_app_name: "postgresql"
   collectd_deployed_app_version: "-"
