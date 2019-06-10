@@ -1,0 +1,7 @@
+deployments
+
+# Terraform state
+terraform.tfstate.backup
+terraform.tfstate.*.backup
+*.terraform
+.tf_tmp_*
