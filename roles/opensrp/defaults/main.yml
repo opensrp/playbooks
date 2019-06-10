@@ -78,6 +78,9 @@ opensrp_java_packages:
 # List of profiles to be activated. Only the specified profiles will
 # be made active. Read more on OpenSRP Server profiles here:
 # https://smartregister.atlassian.net/wiki/spaces/Documentation/pages/616595457/Server+Web+Build
+
+opensrp_oauth_default_validity: 3600
+
 opensrp_maven_package_profiles:
   - postgres
   - jedis
