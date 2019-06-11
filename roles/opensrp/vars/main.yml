@@ -2,3 +2,11 @@ mysql_install_server: false
 mysql_databases:
  - "{{ opensrp_mysql_database }}"
  - "{{ opensrp_motech_database }}"
+opensrp_oauth_dictionary:
+    client_id: client-id
+    secret: secret
+    grant_types: authorized-grant-types
+    scope: scope
+    token_validity: access-token-validity
+    callback_url: redirect-uri
+    roles: authorities
