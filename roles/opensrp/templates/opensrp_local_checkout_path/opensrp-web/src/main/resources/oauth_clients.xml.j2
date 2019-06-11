@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd">
+
+	<oauth:client-details-service
+		id="clientDetails">
+		
+	{% if opensrp_oauth_profiles is iterable %}
+		{% for profileKey,profileValue in opensrp_oauth_profiles.items() %}
+		<oauth:client
+		{% for itemKey,itemValue in profileValue.items() %}
+			{% if itemValue is iterable and itemValue is not string %}
+			{{ opensrp_oauth_dictionary.get(itemKey) }}="oauth.${{ '{' }}{{ profileKey }}.{{ itemKey }}{{ '}' }}"
+		{% endfor %}
+		/>
+		{% endfor %}
+	{% endif %}
+
+	</oauth:client-details-service>
+
+</beans>
