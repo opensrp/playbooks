@@ -98,6 +98,10 @@ opensrp_oauth_profiles:
       - trust
     token_validity: 3600
 
+#CORS allowed source domain
+opensrp_cors_allowed_source: ""
+opensrp_cors_max_age: "60"     
+
 # SSL
 opensrp_ssl_src_dir: "/etc/letsencrypt/live/{{ opensrp_site_name }}"
 opensrp_ssl_cert_file: "fullchain.pem"
