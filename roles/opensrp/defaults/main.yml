@@ -97,6 +97,9 @@ opensrp_oauth_profiles:
       - write
       - trust
     token_validity: 3600
+    callback_url: ""
+    roles:
+      - ROLE_CLIENT
 
 #CORS allowed source domain
 opensrp_cors_allowed_source: ""
