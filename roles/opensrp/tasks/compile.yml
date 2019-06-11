@@ -30,6 +30,14 @@
   with_items:
     - "quartz"
 
+- name: Copy the OpenSRP oauth clients config file
+  template:
+    src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/resources/spring/{{ item }}.xml.j2"
+    dest: "{{ opensrp_local_checkout_path }}/src/main/resources/spring/{{ item }}.xml"
+  delegate_to: 127.0.0.1
+  with_items:
+    - "oauth_clients"
+    
 - name: Replace OpenSRP Context configs
   when: opensrp_psql_as_primary_database
   template:
