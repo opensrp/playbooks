@@ -37,7 +37,7 @@
   delegate_to: 127.0.0.1
   with_items:
     - "oauth_clients"
-    
+
 - name: Replace OpenSRP Context configs
   when: opensrp_psql_as_primary_database
   template:
