@@ -100,9 +100,9 @@ redis.pool.max.connections={{ opensrp_redis_max_connections }}
 #OAuth {{ profileKey }} settings
 {% for itemKey,itemValue in profileValue.items() %}
 {% if itemValue is iterable and itemValue is not string %}
-oauth.{{ profileKey }}.{{ itemKey | replace('_', '.') }}={{ itemValue | join(',') }}
+oauth.{{ profileKey }}.{{ itemKey }}={{ itemValue | join(',') }}
 {% else %}
-oauth.{{ profileKey }}.{{ itemKey | replace('_', '.') }}={{ itemValue }}
+oauth.{{ profileKey }}.{{ itemKey }}={{ itemValue }}
 {% endif %}
 {% endfor %}
 
