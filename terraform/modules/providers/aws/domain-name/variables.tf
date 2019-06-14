@@ -1,9 +1,17 @@
-variable "dns_zone_name" {}
+variable "domain_zone_name" {}
 
-variable "dns_names" {
+variable "domain_name" {}
+variable "domain_name_alias" {
+  default = ""
+}
+variable "domain_name_alias_zone_id" {
+  default = ""
+}
+variable "domain_name_cnames" {
   type = "list"
 }
 
-variable "dns_ip_addresses" {
-  type = "list"
+variable "domain_name_ip_addresses" {
+  type    = "list"
+  default = []
 }

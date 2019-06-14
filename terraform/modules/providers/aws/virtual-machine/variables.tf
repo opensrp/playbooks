@@ -1,6 +1,5 @@
 variable "vm_name" {}
 variable "vm_env" {}
-variable "vm_dns_zone_name" {}
 variable "vm_ssh_key_name" {}
 variable "vm_owner" {}
 variable "vm_project" {}

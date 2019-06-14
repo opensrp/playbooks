@@ -1,6 +1,6 @@
 # VPS
 resource "aws_instance" "main" {
-  count = "${length(var.vm_instances)}"
+  count                       = "${length(var.vm_instances)}"
   ami                         = "${lookup(var.vm_instances[count.index], "parent_image")}"
   availability_zone           = "${element(var.vm_availability_zones, count.index % length(var.vm_availability_zones))}"
   instance_type               = "${lookup(var.vm_instances[count.index], "instance_type")}"

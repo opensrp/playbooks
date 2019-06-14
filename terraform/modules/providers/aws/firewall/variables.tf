@@ -12,3 +12,4 @@ variable "firewall_owner" {}
 variable "firewall_env" {}
 variable "firewall_end_date" {}
 variable "firewall_project" {}
+variable "firewall_name" {}

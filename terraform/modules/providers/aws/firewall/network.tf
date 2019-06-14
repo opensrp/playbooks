@@ -1,6 +1,6 @@
 resource "aws_security_group" "ingress_rules" {
-    count       = "${length(var.firewall_ingress_rules)}"
-  name        = "${lookup(var.firewall_ingress_rules[count.index], "name")}"
+  count       = "${length(var.firewall_ingress_rules)}"
+  name        = "${var.firewall_name}-${lookup(var.firewall_ingress_rules[count.index], "name")}"
   description = "${lookup(var.firewall_ingress_rules[count.index], "description")}"
   vpc_id      = "${var.firewall_vpc_id}"
 
@@ -12,7 +12,7 @@ resource "aws_security_group" "ingress_rules" {
   }
 
   tags = {
-    Name            = "${lookup(var.firewall_ingress_rules[count.index], "name")}"
+    Name            = "${var.firewall_name}-${lookup(var.firewall_ingress_rules[count.index], "name")}"
     OwnerList       = "${var.firewall_owner}"
     EnvironmentList = "${var.firewall_env}"
     EndDate         = "${var.firewall_end_date}"
@@ -21,8 +21,8 @@ resource "aws_security_group" "ingress_rules" {
 }
 
 resource "aws_security_group" "egress_rules" {
-    count       = "${length(var.firewall_egress_rules)}"
-  name        = "${lookup(var.firewall_egress_rules[count.index], "name")}"
+  count       = "${length(var.firewall_egress_rules)}"
+  name        = "${var.firewall_name}-${lookup(var.firewall_egress_rules[count.index], "name")}"
   description = "${lookup(var.firewall_egress_rules[count.index], "description")}"
   vpc_id      = "${var.firewall_vpc_id}"
 
@@ -34,7 +34,7 @@ resource "aws_security_group" "egress_rules" {
   }
 
   tags = {
-    Name            = "${lookup(var.firewall_egress_rules[count.index], "name")}"
+    Name            = "${var.firewall_name}-${lookup(var.firewall_egress_rules[count.index], "name")}"
     OwnerList       = "${var.firewall_owner}"
     EnvironmentList = "${var.firewall_env}"
     EndDate         = "${var.firewall_end_date}"

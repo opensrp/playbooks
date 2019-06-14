@@ -10,4 +10,4 @@ script:
   - ansible-lint deploy-dhis.yml
   - ansible-lint deploy-opensrp.yml
   - ansible-lint deploy-openmrs.yml
-  - ./bin/terraform fmt -check=true terraform
+  - find terraform -type d -print0 | xargs -n 1 -0 ./bin/terraform fmt -check=true
