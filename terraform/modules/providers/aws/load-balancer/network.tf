@@ -179,7 +179,7 @@ module "tls_certificate" {
 
 module "lb_firewall" {
   source                 = "../firewall"
-  firewall_name = "${var.lb_name}"
+  firewall_name          = "${var.lb_name}"
   firewall_vpc_id        = "${var.lb_vpc_id}"
   firewall_ingress_rules = "${var.lb_firewall_ingress_rules}"
   firewall_egress_rules  = "${var.lb_firewall_egress_rules}"
