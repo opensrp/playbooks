@@ -17,10 +17,10 @@ variable "vmdns_vm_instances" {
 }
 variable "vmdns_domain_zone_name" {}
 variable "vmdns_private_domain_names" {
-  type = "list"
+  type    = "list"
   default = []
 }
 variable "vmdns_public_domain_names" {
-  type = "list"
+  type    = "list"
   default = []
 }

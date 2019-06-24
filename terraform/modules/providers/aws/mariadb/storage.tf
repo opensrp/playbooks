@@ -32,9 +32,9 @@ resource "aws_db_instance" "main" {
 resource "aws_db_parameter_group" "main" {
   name   = "${var.mariadb_name}"
   family = "mariadb${element(split(".", var.mariadb_version), 0)}.${element(split(".", var.mariadb_version), 1)}"
-  
+
   parameter {
-    name = "log_bin_trust_function_creators"
+    name  = "log_bin_trust_function_creators"
     value = 1
   }
 
