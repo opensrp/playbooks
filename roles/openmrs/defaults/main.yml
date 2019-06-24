@@ -29,7 +29,6 @@ openmrs_tomcat_instance: "tomcat-openmrs"
 openmrs_tomcat_user_home: "/home/{{ openmrs_system_user }}"
 openmrs_home_directory: "{{ openmrs_tomcat_user_home }}/.OpenMRS"
 openmrs_mysql_connection_url: "jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/{{ openmrs_mysql_database }}?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull"
-openmrs_install_mysql: yes
 openmrs_mysql_root_user: "root"
 openmrs_java_packages:
   - openjdk-8-jre

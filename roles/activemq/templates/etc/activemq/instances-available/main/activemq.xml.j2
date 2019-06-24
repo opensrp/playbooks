@@ -50,7 +50,7 @@
             http://activemq.apache.org/configuring-transports.html 
         -->
         <transportConnectors>
-            <transportConnector name="openwire" uri="tcp://127.0.0.1:{{ activemq_port }}"/>
+            <transportConnector name="openwire" uri="tcp://{{ activemq_host }}:{{ activemq_port }}"/>
             <!-- transportConnector name="http" uri="http://127.0.0.1:8161"/-->
         </transportConnectors>
 

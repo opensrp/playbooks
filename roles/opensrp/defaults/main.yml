@@ -4,11 +4,11 @@ opensrp_resource_sub_dirs:
   - "multimedia"
   - "qr-codes"
 opensrp_mysql_port: 3306
-opensrp_redis_version: 4.0.9
 opensrp_mysql_host: "localhost"
 opensrp_mysql_database: "opensrp"
 opensrp_motech_database: "motechquartz"
 opensrp_mysql_user: "opensrp"
+opensrp_mysql_app_host: "localhost"
 opensrp_mysql_password: "opensrp"
 opensrp_openmrs_url: "https://{{ openmrs_site_name }}/{{ openmrs_install_name }}/"
 opensrp_install_name: "opensrp"
@@ -16,10 +16,12 @@ opensrp_resource_dir: "/var/lib/OpenSRP"
 opensrp_version: "zeir-1.1.2"
 opensrp_openmrs_user: "admin"
 opensrp_openmrs_password: "admin"
+opensrp_openmrs_tomcat_user_home: "/home/openmrs"
+opensrp_openmrs_tomcat_instance: "openmrs"
+opensrp_openmrs_version: "2.1.4"
 opensrp_dhis_user: "admin"
 opensrp_dhis_password: "admin"
 opensrp_couchdb_server: "localhost"
-opensrp_mysql_app_host: "localhost"
 opensrp_couchdb_port: 5984
 opensrp_couchdb_user: "root"
 opensrp_couchdb_password: "root"
@@ -27,7 +29,8 @@ opensrp_rapidpro_token: ""
 opensrp_nginx_max_filesize: "50M"
 opensrp_local_checkout_path: "/tmp/opensrp"
 opensrp_local_package_directory: "/tmp/opensrp-wars"
-activemq_version: "5.12"
+opensrp_activemq_host: "127.0.0.1"
+opensrp_activemq_port: 61616
 couchdb_databases:
   - "opensrp"
 couchdb_admin_user: "root"
@@ -40,7 +43,6 @@ couchdb_lucene_version_name: "v1.1.0"
 couchdb_lucene_version_number: "1.1.0"
 couchdb_backup_database: "opensrp"
 allowed_couchdb_hosts: []
-activemq_memory_opts: "-Xms2048M -Xmx2048M"
 mysql_backups_to_s3: false
 tomcat_user: "tomcat7"
 tomcat_group: "tomcat7"
@@ -58,18 +60,15 @@ opensrp_tomcat_instance: "tomcat-opensrp"
 opensrp_user_home: "/home/{{ opensrp_system_user }}"
 opensrp_psql_as_primary_database: true
 opensrp_psql_table_space_dir: "/opt/postgres"
-opensrp_psql_admin_user: "postgres"
 opensrp_postgresql_user: "opensrp_admin"
 opensrp_postgresql_database: "opensrp"
 opensrp_redis_host: "localhost"
 opensrp_redis_port: 6379
 opensrp_redis_max_connections: 25
 opensrp_authencation_cache_ttl: 600
-opensrp_postgres_hba_config_host: "127.0.0.1/32"
-opensrp_install_postgres: yes
 opensrp_postgres_host: "localhost"
-opensrp_install_mysql: yes
 opensrp_mysql_root_user: "root"
+opensrp_mysql_root_password: ""
 opensrp_postgres_superuser: postgres
 opensrp_postgres_superuser_password: ""
 opensrp_java_packages:
@@ -179,10 +178,11 @@ opensrp_logstash_custom_outputs:
       - 'host => "{{ opensrp_logstash_gelf_server }}"'
       - 'port => "{{ opensrp_logstash_gelf_port }}"'
       - 'sender => "%{host}"'
+opensrp_nginx_logstash_log: "{{ opensrp_nginx_log_dir }}/{{ opensrp_https_site }}-ssl-access.log"
 opensrp_logstash_custom_inputs:
   - input: 'file'
     lines:
-      - 'path => ["{{ opensrp_nginx_log_dir }}/{{ opensrp_https_site }}-ssl-access.log"]'
+      - 'path => ["{{ opensrp_nginx_logstash_log }}"]'
       - 'start_position => "end"'
       - 'add_field => {'
       - '  ssl => true'

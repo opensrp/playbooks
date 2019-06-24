@@ -1,4 +1,5 @@
-mysql_install_server: false
-mysql_databases:
+opensrp_mysql_databases:
  - "{{ opensrp_mysql_database }}"
  - "{{ opensrp_motech_database }}"
+opensrp_mysql_user_privilages: "ALTER,ALTER ROUTINE,CREATE,CREATE ROUTINE,CREATE TEMPORARY TABLES,CREATE VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK TABLES,REFERENCES,SELECT,TRIGGER,UPDATE"
+opensrp_mysql_privilages_joiner: ".*:{{ opensrp_mysql_user_privilages }}/"

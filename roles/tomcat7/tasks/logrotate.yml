@@ -1,5 +1,7 @@
 ---
 - name: Copy the logrotate configuration
+  become: true
+  become_user: "root"
   template:
     src: "etc/logrotate.d/tomcat_instance.j2"
     dest: "{{ tomcat_logrotate_conf_dest }}"

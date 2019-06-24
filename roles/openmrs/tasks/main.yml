@@ -1,9 +1,19 @@
 ---
+- name: Install MySQL client package
+  become: yes
+  become_user: "root"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mysql-client
+    - python-mysqldb
+
 - name: Create the OpenMRS MySQL Database
   mysql_db:
     login_host: "{{ openmrs_mysql_host }}"
     login_user: "{{ openmrs_mysql_root_user }}"
-    login_password: "{{ mysql_root_password }}"
+    login_password: "{{ openmrs_mysql_root_password }}"
     name: "{{ openmrs_mysql_database }}"
     state: present
 
@@ -11,11 +21,11 @@
   mysql_user:
     login_host: "{{ openmrs_mysql_host }}"
     login_user: "{{ openmrs_mysql_root_user }}"
-    login_password: "{{ mysql_root_password }}"
+    login_password: "{{ openmrs_mysql_root_password }}"
     name: "{{ openmrs_mysql_user }}"
     password: "{{ openmrs_mysql_password }}"
     host: "{{ openmrs_mysql_app_host }}"
-    priv: "{{ openmrs_mysql_database }}.*:ALL"
+    priv: "{{ openmrs_mysql_database }}.*:{{ openmrs_mysql_user_privilages }}"
     state: present
 
 - name: Copy OpenMRS User Property Trigger .sql to host tmp
@@ -34,7 +44,7 @@
   mysql_db:
     name: "{{ openmrs_mysql_database }}"
     login_user: "{{ openmrs_mysql_root_user }}"
-    login_password: "{{ mysql_root_password }}"
+    login_password: "{{ openmrs_mysql_root_password }}"
     login_host: "{{ openmrs_mysql_host }}"
     state: import
     target: "/tmp/{{ openmrs_mysql_database_trigger }}.sql"
@@ -93,7 +103,7 @@
   become: yes
   become_user: root
   get_url:
-    url: "https://netcologne.dl.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version }}/openmrs.war"
+    url: "https://downloads.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version }}/openmrs.war"
     dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
     owner: "{{ openmrs_system_user }}"
     group: "{{ tomcat_group }}"

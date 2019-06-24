@@ -1,4 +1,4 @@
-- hosts: opensrp-app-servers, opensrp-couchdb-servers, opensrp-mysql-servers
+- hosts: opensrp-app-servers, opensrp-couchdb-servers, opensrp-mysql-servers, opensrp-redis-servers, opensrp-activemq-servers, opensrp-postgresql-servers
   gather_facts: False
   pre_tasks:
     - include_tasks: tasks/python2-ubuntu.yml
@@ -9,6 +9,8 @@
   always_run: true
 
 - hosts: opensrp-couchdb-servers
+  serial: 1 # Runs playbook one server at at time (to achieve a rolling update)
+  max_fail_percentage: 0
   roles:
     - couchdb
   tags:
@@ -20,7 +22,34 @@
   tags:
     - opensrp-mysql
 
+- hosts: opensrp-redis-servers
+  become: true
+  become_user: "root"
+  roles:
+    - onaio.redis
+  tags:
+    - opensrp-redis
+
+- hosts: opensrp-activemq-servers
+  become: true
+  become_user: "root"
+  roles:
+    - activemq
+  tags:
+    - opensrp-activemq
+
+- hosts: opensrp-postgresql-servers
+  become: true
+  become_user: "root"
+  roles:
+    - ANXS.postgresql
+  tags:
+    - opensrp-postgresql
+    - opensrp-postgres
+
 - hosts: opensrp-app-servers
+  serial: 1 # Runs playbook one server at at time (to achieve a rolling update)
+  max_fail_percentage: 0
   roles:
     - opensrp
   tags:
