@@ -1,6 +1,6 @@
 ---
 - name: Copy the logrotate configuration
-  become: true
+  become: yes
   become_user: "root"
   template:
     src: "etc/logrotate.d/tomcat_instance.j2"

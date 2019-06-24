@@ -9,6 +9,7 @@ openmrs_tomcat_max_filesize: "52428800"
 openmrs_tomcat_fsize_threshold: "10485760"
 catalina_ops: "-Xms1500M -Xmx1500M"
 openmrs_version: "2.1.4"
+openmrs_validate_certs: true
 openmrs_nginx_max_filesize: "50M"
 openmrs_install_name: "openmrs"
 openmrs_mysql_user: "openmrs"
@@ -58,6 +59,7 @@ openmrs_certbot_site_names: ["{{ openmrs_site_name }}"]
 openmrs_certbot_mail_address: ""
 
 # NGINX
+openmrs_nginx_server_names_hash_bucket_size: 64
 openmrs_nginx_sites:
   - server:
       name: "{{ openmrs_http_site }}"
