@@ -16,7 +16,5 @@ module "lb" {
   lb_domain_name                     = "${var.lbvm_domain_name}"
   lb_domain_name_cnames              = "${var.lbvm_domain_name_cnames}"
   lb_ssl_policy                      = "${var.lbvm_lb_ssl_policy}"
-  lb_firewall_ingress_rules          = "${var.lbvm_lb_firewall_ingress_rules}"
-  lb_firewall_egress_rules           = "${var.lbvm_lb_firewall_egress_rules}"
   lb_logs_object_storage_bucket_name = "${var.lbvm_lb_logs_object_storage_bucket_name}"
 }

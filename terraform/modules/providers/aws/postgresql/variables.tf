@@ -11,8 +11,7 @@ variable "postgresql_storage_type" {}
 variable "postgresql_username" {}
 variable "postgresql_password" {}
 variable "postgresql_vpc_id" {}
-variable "postgresql_firewall_ingress_rules" {}
-variable "postgresql_firewall_egress_rules" {}
+variable "postgresql_firewall_rule_ingress_cidr_blocks" {}
 variable "postgresql_subnet_ids" {}
 variable "postgresql_deletion_protection" {
   default = true
@@ -34,5 +33,5 @@ variable "postgresql_backup_retention_period" {
   default = 35
 }
 variable "postgresql_backup_window" {
-  default = "03:30-5:00"
+  default = "03:30-05:00"
 }

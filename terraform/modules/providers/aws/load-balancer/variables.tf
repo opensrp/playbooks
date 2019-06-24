@@ -66,8 +66,6 @@ variable "lb_logs_user_identifiers" {
     "arn:aws:iam::037604701340:root"  // cn-northwest-1**
   ]
 }
-variable "lb_firewall_ingress_rules" {}
-variable "lb_firewall_egress_rules" {}
 variable "lb_logs_object_storage_bucket_name" {}
 variable "lb_listener_rules" {
   type = "list"

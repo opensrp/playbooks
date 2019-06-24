@@ -1,13 +1,36 @@
-module "firewall" {
-  source                 = "../firewall"
-  firewall_name          = "${var.postgresql_name}"
-  firewall_vpc_id        = "${var.postgresql_vpc_id}"
-  firewall_ingress_rules = "${var.postgresql_firewall_ingress_rules}"
-  firewall_egress_rules  = "${var.postgresql_firewall_egress_rules}"
-  firewall_owner         = "${var.postgresql_owner}"
-  firewall_env           = "${var.postgresql_env}"
-  firewall_end_date      = "${var.postgresql_end_date}"
-  firewall_project       = "${var.postgresql_project}"
+resource "aws_security_group" "firewall_rule" {
+  name        = "${var.postgresql_name}"
+  description = "Access to the ${var.postgresql_name} database"
+  vpc_id      = "${var.postgresql_vpc_id}"
+
+  ingress {
+    from_port   = "${var.postgresql_port}"
+    to_port     = "${var.postgresql_port}"
+    protocol    = "tcp"
+    cidr_blocks = "${var.postgresql_firewall_rule_ingress_cidr_blocks}"
+  }
+
+  egress {
+    from_port   = "0"
+    to_port     = "65535"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = "0"
+    to_port     = "65535"
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name            = "${var.postgresql_name}"
+    OwnerList       = "${var.postgresql_owner}"
+    EnvironmentList = "${var.postgresql_env}"
+    EndDate         = "${var.postgresql_end_date}"
+    ProjectList     = "${var.postgresql_project}"
+  }
 }
 
 resource "aws_db_subnet_group" "main" {

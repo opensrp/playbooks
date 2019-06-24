@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "logs-policy-document" {
 resource "aws_alb" "main" {
   name                       = "${var.lb_name}"
   internal                   = false
-  security_groups            = "${module.lb_firewall.firewall_rules}"
+  security_groups            = ["${aws_security_group.firewall_rule.id}"]
   subnets                    = "${var.lb_subnets}"
   enable_deletion_protection = "${var.lb_enable_delete_protection}"
   idle_timeout               = "${var.lb_idle_timeout}"
@@ -177,14 +177,44 @@ module "tls_certificate" {
   tls_certificate_domain_zone_name   = "${var.lb_domain_zone_name}"
 }
 
-module "lb_firewall" {
-  source                 = "../firewall"
-  firewall_name          = "${var.lb_name}"
-  firewall_vpc_id        = "${var.lb_vpc_id}"
-  firewall_ingress_rules = "${var.lb_firewall_ingress_rules}"
-  firewall_egress_rules  = "${var.lb_firewall_egress_rules}"
-  firewall_owner         = "${var.lb_owner}"
-  firewall_env           = "${var.lb_env}"
-  firewall_end_date      = "${var.lb_end_date}"
-  firewall_project       = "${var.lb_project}"
+resource "aws_security_group" "firewall_rule" {
+  name        = "${var.lb_name}"
+  description = "Access to ${var.lb_name} load balancer"
+  vpc_id      = "${var.lb_vpc_id}"
+
+  ingress {
+    from_port   = "80"
+    to_port     = "80"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = "443"
+    to_port     = "443"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = "0"
+    to_port     = "65535"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = "0"
+    to_port     = "65535"
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name            = "${var.lb_name}"
+    OwnerList       = "${var.lb_owner}"
+    EnvironmentList = "${var.lb_env}"
+    EndDate         = "${var.lb_end_date}"
+    ProjectList     = "${var.lb_project}"
+  }
 }

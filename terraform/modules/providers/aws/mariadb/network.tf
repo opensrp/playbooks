@@ -1,13 +1,36 @@
-module "firewall" {
-  source                 = "../firewall"
-  firewall_name          = "${var.mariadb_name}"
-  firewall_vpc_id        = "${var.mariadb_vpc_id}"
-  firewall_ingress_rules = "${var.mariadb_firewall_ingress_rules}"
-  firewall_egress_rules  = "${var.mariadb_firewall_egress_rules}"
-  firewall_owner         = "${var.mariadb_owner}"
-  firewall_env           = "${var.mariadb_env}"
-  firewall_end_date      = "${var.mariadb_end_date}"
-  firewall_project       = "${var.mariadb_project}"
+resource "aws_security_group" "firewall_rule" {
+  name        = "${var.mariadb_name}"
+  description = "Access to the ${var.mariadb_name} database"
+  vpc_id      = "${var.mariadb_vpc_id}"
+
+  ingress {
+    from_port   = "${var.mariadb_port}"
+    to_port     = "${var.mariadb_port}"
+    protocol    = "tcp"
+    cidr_blocks = "${var.mariadb_firewall_rule_ingress_cidr_blocks}"
+  }
+
+  egress {
+    from_port   = "0"
+    to_port     = "65535"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = "0"
+    to_port     = "65535"
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name            = "${var.mariadb_name}"
+    OwnerList       = "${var.mariadb_owner}"
+    EnvironmentList = "${var.mariadb_env}"
+    EndDate         = "${var.mariadb_end_date}"
+    ProjectList     = "${var.mariadb_project}"
+  }
 }
 
 resource "aws_db_subnet_group" "main" {

@@ -11,8 +11,9 @@ variable "mariadb_storage_type" {}
 variable "mariadb_username" {}
 variable "mariadb_password" {}
 variable "mariadb_vpc_id" {}
-variable "mariadb_firewall_ingress_rules" {}
-variable "mariadb_firewall_egress_rules" {}
+variable "mariadb_firewall_rule_ingress_cidr_blocks" {
+  type = "list"
+}
 variable "mariadb_subnet_ids" {}
 variable "mariadb_deletion_protection" {
   default = true
@@ -21,7 +22,7 @@ variable "mariadb_multi_az" {
   default = false
 }
 variable "mariadb_port" {
-  default = 5432
+  default = 3306
 }
 variable "mariadb_copy_tags_to_snapshot" {
   default = true
@@ -34,5 +35,5 @@ variable "mariadb_backup_retention_period" {
   default = 35
 }
 variable "mariadb_backup_window" {
-  default = "03:30-5:00"
+  default = "03:30-05:00"
 }

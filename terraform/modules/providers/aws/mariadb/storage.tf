@@ -16,7 +16,7 @@ resource "aws_db_instance" "main" {
   copy_tags_to_snapshot     = "${var.mariadb_copy_tags_to_snapshot}"
   storage_encrypted         = true
   kms_key_id                = "${aws_kms_key.main.arn}"
-  vpc_security_group_ids    = "${module.firewall.firewall_rules}"
+  vpc_security_group_ids    = ["${aws_security_group.firewall_rule.id}"]
   final_snapshot_identifier = "${var.mariadb_name}-timestamp()"
   backup_retention_period   = "${var.mariadb_backup_retention_period}"
   backup_window             = "${var.mariadb_backup_window}"
@@ -32,6 +32,12 @@ resource "aws_db_instance" "main" {
 resource "aws_db_parameter_group" "main" {
   name   = "${var.mariadb_name}"
   family = "mariadb${element(split(".", var.mariadb_version), 0)}.${element(split(".", var.mariadb_version), 1)}"
+  
+  parameter {
+    name = "log_bin_trust_function_creators"
+    value = 1
+  }
+
   tags = {
     Name            = "${var.mariadb_name}"
     OwnerList       = "${var.mariadb_owner}"

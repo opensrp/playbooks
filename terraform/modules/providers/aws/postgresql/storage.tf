@@ -16,7 +16,7 @@ resource "aws_db_instance" "main" {
   copy_tags_to_snapshot     = "${var.postgresql_copy_tags_to_snapshot}"
   storage_encrypted         = true
   kms_key_id                = "${aws_kms_key.main.arn}"
-  vpc_security_group_ids    = "${module.firewall.firewall_rules}"
+  vpc_security_group_ids    = ["${aws_security_group.firewall_rule.id}"]
   final_snapshot_identifier = "${var.postgresql_name}-timestamp()"
   backup_retention_period   = "${var.postgresql_backup_retention_period}"
   backup_window             = "${var.postgresql_backup_window}"
