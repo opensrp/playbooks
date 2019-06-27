@@ -39,35 +39,6 @@ resource "aws_alb" "main" {
 }
 
 # HTTP
-resource "aws_alb_target_group" "http" {
-  name     = "${var.lb_name}-http"
-  port     = "${var.lb_http_port}"
-  protocol = "HTTP"
-  vpc_id   = "${var.lb_vpc_id}"
-
-  health_check {
-    healthy_threshold   = "${var.lb_health_check_healthy_threshold}"
-    path                = "${var.lb_health_check_path}"
-    timeout             = "${var.lb_health_check_timeout}"
-    unhealthy_threshold = "${var.lb_health_check_unhealthy_threshold}"
-    matcher             = "${var.lb_health_check_healthy_status_code}"
-  }
-
-  tags = {
-    OwnerList       = "${var.lb_owner}"
-    EnvironmentList = "${var.lb_env}"
-    EndDate         = "${var.lb_end_date}"
-    ProjectList     = "${var.lb_project}"
-  }
-}
-
-resource "aws_alb_target_group_attachment" "http" {
-  count            = "${length(var.lb_instance_ids)}"
-  target_group_arn = "${aws_alb_target_group.http.arn}"
-  target_id        = "${element(var.lb_instance_ids, count.index)}"
-  port             = "${var.lb_instance_port}"
-}
-
 resource "aws_alb_listener" "http" {
   load_balancer_arn = "${aws_alb.main.arn}"
   port              = "80"
@@ -75,24 +46,12 @@ resource "aws_alb_listener" "http" {
   depends_on        = ["aws_alb.main"]
 
   default_action {
-    target_group_arn = "${aws_alb_target_group.http.arn}"
-    type             = "forward"
-  }
-}
-
-resource "aws_alb_listener_rule" "http" {
-  count        = "${length(var.lb_listener_rules)}"
-  listener_arn = "${aws_alb_listener.http.arn}"
-  priority     = "${lookup(element(var.lb_listener_rules, count.index), "priority")}"
-
-  action {
-    type             = "${lookup(element(var.lb_listener_rules, count.index), "action_type")}"
-    target_group_arn = "${aws_alb_target_group.http.arn}"
-  }
-
-  condition {
-    field  = "${lookup(element(var.lb_listener_rules, count.index), "condition_field")}"
-    values = "${split(",", lookup(element(var.lb_listener_rules, count.index), "condition_field"))}"
+    type = "redirect"
+    redirect {
+      status_code = "HTTP_301"
+      protocol    = "HTTPS"
+      port        = 443
+    }
   }
 }
 
