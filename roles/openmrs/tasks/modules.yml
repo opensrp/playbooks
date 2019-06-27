@@ -13,8 +13,8 @@
   become_user: "root"
   file:
     path: "{{ openmrs_home_directory }}/modules"
-    owner: "{{ tomcat_user }}"
-    group: "{{ tomcat_group }}"
+    owner: "{{ openmrs_system_user }}"
+    group: "{{ openmrs_system_group }}"
     state: directory
     mode: 0755
 
@@ -25,8 +25,8 @@
     src: "files/usr/share/tomcat7/.OpenMRS/modules/{{ item }}.omod"
     dest: "{{ openmrs_home_directory }}/modules/{{ item }}.omod"
     mode: 0644
-    owner: "{{ tomcat_user }}"
-    group: "{{ tomcat_group }}"
+    owner: "{{ openmrs_system_user }}"
+    group: "{{ openmrs_system_group }}"
   with_items: "{{ openmrs_modules }}"
 
 - name: Clean open-web-apps files
@@ -49,3 +49,5 @@
   unarchive:
    src: "files/usr/share/tomcat7/.OpenMRS/owa.zip"
    dest: "{{ openmrs_home_directory }}"
+   owner: "{{ openmrs_system_user }}"
+   group: "{{ openmrs_system_group }}"

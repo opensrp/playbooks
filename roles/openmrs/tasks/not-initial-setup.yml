@@ -1,0 +1,37 @@
+---
+- name: Copy OpenMRS User Property Trigger .sql to host tmp
+  become: yes
+  become_user: "root"
+  copy:
+    src: "tmp/openmrs_user_property_trigger.sql"
+    dest: "/tmp/{{ openmrs_mysql_database_trigger }}.sql"
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Import the OpenMRS trigger .sql file
+  become: yes
+  become_user: "root"
+  mysql_db:
+    name: "{{ openmrs_mysql_database }}"
+    login_user: "{{ openmrs_mysql_root_user }}"
+    login_password: "{{ openmrs_mysql_root_password }}"
+    login_host: "{{ openmrs_mysql_host }}"
+    state: import
+    target: "/tmp/{{ openmrs_mysql_database_trigger }}.sql"
+
+- name: Check if the encryption key and vector are set
+  debug:
+    msg: "Please make sure openmrs_encryption_vector and openmrs_encryption_key are set. Check the {{ openmrs_home_directory }}/openmrs-runtime.properties file currently in the server if these variables are not yet set in the inventories."
+  failed_when: true
+  when: openmrs_require_encryption and (openmrs_encryption_vector|length == 0 or openmrs_encryption_key|length == 0)
+
+- name: Copy the OpenMRS Runtime Template
+  become: yes
+  become_user: root
+  template:
+    src: "templates/usr/share/tomcat7/.OpenMRS/openmrs-runtime.properties.j2"
+    dest: "{{ openmrs_home_directory }}/openmrs-runtime.properties"
+    owner: "{{ openmrs_system_user }}"
+    group: "{{ openmrs_system_group }}"
+    mode: 0640

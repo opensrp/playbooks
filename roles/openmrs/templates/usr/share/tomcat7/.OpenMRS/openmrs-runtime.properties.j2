@@ -1,9 +1,13 @@
-connection.username={{ openmrs_mysql_user }}
-connection.password={{ openmrs_mysql_password }}
-connection.url={{ openmrs_mysql_connection_url }}
-module.allow_web_admin=true
-auto_update_database=false
+connection.username="{{ openmrs_mysql_user }}"
+connection.password="{{ openmrs_mysql_password }}"
+connection.url="{{ openmrs_mysql_connection_url }}"
+module.allow_web_admin="{{ openmrs_allow_web_admin }}"
+auto_update_database="{{ openmrs_auto_update_database }}"
 sync.mandatory=false
+{% if openmrs_encryption_vector|length > 0 and openmrs_encryption_key|length > 0 %}
+encryption.vector="{{ openmrs_encryption_vector }}"
+encryption.key="{{ openmrs_encryption_key }}"
+{% endif %}
 
 # Hibernate specific connection pool properties
 hibernate.c3p0.min_size={{ openmrs_hibernate_c3p0_min_size }}
