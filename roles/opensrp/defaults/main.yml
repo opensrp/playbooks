@@ -149,8 +149,8 @@ opensrp_nginx_sites:
         access_log_format: "timed_combined"
 
       location1:
-        name: /
-        return: "301 https://$host/{{ opensrp_install_name }}"
+        name: "= /"
+        return: "301 https://$host/{{ opensrp_install_name }}/"
 
       location2:
         name: "/{{ opensrp_install_name }}"
