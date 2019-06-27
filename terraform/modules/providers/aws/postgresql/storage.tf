@@ -17,7 +17,7 @@ resource "aws_db_instance" "main" {
   storage_encrypted         = true
   kms_key_id                = "${aws_kms_key.main.arn}"
   vpc_security_group_ids    = ["${aws_security_group.firewall_rule.id}"]
-  final_snapshot_identifier = "${var.postgresql_name}-timestamp()"
+  final_snapshot_identifier = "${var.postgresql_name}"
   backup_retention_period   = "${var.postgresql_backup_retention_period}"
   backup_window             = "${var.postgresql_backup_window}"
   tags = {

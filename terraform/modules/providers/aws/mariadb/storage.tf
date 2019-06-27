@@ -17,7 +17,7 @@ resource "aws_db_instance" "main" {
   storage_encrypted         = true
   kms_key_id                = "${aws_kms_key.main.arn}"
   vpc_security_group_ids    = ["${aws_security_group.firewall_rule.id}"]
-  final_snapshot_identifier = "${var.mariadb_name}-timestamp()"
+  final_snapshot_identifier = "${var.mariadb_name}"
   backup_retention_period   = "${var.mariadb_backup_retention_period}"
   backup_window             = "${var.mariadb_backup_window}"
   tags = {
