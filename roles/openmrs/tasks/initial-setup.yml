@@ -1,4 +1,13 @@
 ---
+- name: Restart the Tomcat7 Service
+  become: yes
+  become_user: root
+  service:
+    name: "{{ openmrs_tomcat_instance }}"
+    state: restarted
+
+- meta: flush_handlers
+
 - name: Give prompt on what user should do in the browser
   pause:
     prompt: |
@@ -46,22 +55,34 @@
       Currently the default administrator user/pass is admin:test. Please specify a new password for that user
         Password: {{ openmrs_admin_password }}
         Retype password: {{ openmrs_admin_password }}
+
+      ----------------------------------------------------------------------------------
+      Press ENTER when setup on the browser is done and you are redirected to the login page
+      ---------------------------------------------------------------------------------- 
   register: openmrs_initial_setup_instructions
+
+- name: Check if the properties file created on the server
+  stat:
+    path: "{{ openmrs_home_directory }}/openmrs-runtime.properties"
+  register: openmrs_properties_file_status2
+
+- name: Stop deployment
+  debug:
+    msg: "{{ openmrs_home_directory }}/openmrs-runtime.propeties file doesn't exist on the server"
+  failed_when: true
+  when: not openmrs_properties_file_status2.stat.exists
 
 - name: Give prompt on copying the encryption.vector and encryption.key
   pause:
     prompt: |
-      SSH as {{ asible_ssh_user }}@{{ ansible_ssh_host }}
+      SSH as {{ ansible_ssh_user }}@{{ ansible_ssh_host }}
 
       Get the values of encryption.vector and encryption.key from {{ openmrs_home_directory }}/openmrs-runtime.properties
       and copy them to these variables in your inventory:
-       - encryption.vector to openmrs_encryption_vector
-       - encryption.key to openmrs_encryption_key
-  register: openmrs_initial_setup_encryption
+       - encryption.vector to openmrs_encryption_vector variable
+       - encryption.key to openmrs_encryption_key variable
 
-- name: Restart the Tomcat7 Service
-  become: yes
-  become_user: root
-  service:
-    name: "{{ openmrs_tomcat_instance }}"
-    state: restarted
+      ----------------------------------------------------------------------------------
+      Press ENTER when done adding the variables to the inventories
+      ----------------------------------------------------------------------------------
+  register: openmrs_initial_setup_encryption
