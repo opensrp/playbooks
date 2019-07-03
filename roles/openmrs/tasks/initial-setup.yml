@@ -27,7 +27,7 @@
       On page labeled 'Step 1 of 5'
 
       Please specify how to connect to your currently installed database server:
-        Database connection: jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/@DBNAME@?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+        Database connection: jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/@DBNAME@?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull # noqa 204
 
       Do you currently have an OpenMRS database installed that you would like to connect to? Yes
         If yes, what is the name of this database? openmrs
@@ -58,7 +58,7 @@
 
       ----------------------------------------------------------------------------------
       Press ENTER when setup on the browser is done and you are redirected to the login page
-      ---------------------------------------------------------------------------------- 
+      ----------------------------------------------------------------------------------
   register: openmrs_initial_setup_instructions
 
 - name: Check if the properties file created on the server

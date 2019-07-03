@@ -112,7 +112,10 @@
 - block:
   - name: Check if the encryption key and vector are set
     debug:
-      msg: "Please make sure openmrs_encryption_vector and openmrs_encryption_key are set. Check the {{ openmrs_home_directory }}/openmrs-runtime.properties file currently in the server if these variables are not yet set in the inventories."
+      msg: |
+        Please make sure openmrs_encryption_vector and openmrs_encryption_key are set.
+        Check the {{ openmrs_home_directory }}/openmrs-runtime.properties file currently
+        in the server if these variables are not yet set in the inventories.
     failed_when: true
     when: openmrs_require_encryption and (openmrs_encryption_vector|length == 0 or openmrs_encryption_key|length == 0)
 

@@ -56,13 +56,13 @@
 
 - name: Download the Mybatis archive
   unarchive:
-    src: "https://github.com/mybatis/migrations/releases/download/mybatis-migrations-{{ opensrp_mybatis_version }}/mybatis-migrations-{{ opensrp_mybatis_version }}-bundle.zip"
+    src: "https://github.com/mybatis/migrations/releases/download/mybatis-migrations-{{ opensrp_mybatis_version }}/mybatis-migrations-{{ opensrp_mybatis_version }}-bundle.zip" # noqa 204
     dest: "{{ opensrp_mybatis_install_dir }}"
     remote_src: yes
   tags:
     - psql-table-space
 
 - name: Run the Mybatis migrations # noqa 301
-  command: "{{ opensrp_mybatis_install_dir }}/mybatis-migrations-{{ opensrp_mybatis_version }}/bin/migrate up --path={{ opensrp_local_checkout_path }}/configs/assets/migrations --env={{ opensrp_mybatis_env }} {{ opensrp_mybatis_migration_extra_args }}"
+  command: "{{ opensrp_mybatis_install_dir }}/mybatis-migrations-{{ opensrp_mybatis_version }}/bin/migrate up --path={{ opensrp_local_checkout_path }}/configs/assets/migrations --env={{ opensrp_mybatis_env }} {{ opensrp_mybatis_migration_extra_args }}" # noqa 204
   tags:
     - psql-table-space
