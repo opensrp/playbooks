@@ -71,6 +71,11 @@ opensrp_mysql_root_user: "root"
 opensrp_mysql_root_password: ""
 opensrp_postgres_superuser: postgres
 opensrp_postgres_superuser_password: ""
+opensrp_postgresql_user_role_attr_flags: "SUPERUSER"
+opensrp_mybatis_version: "3.3.1"
+opensrp_mybatis_install_dir: "/opt/mybatis"
+opensrp_mybatis_env: "development"
+opensrp_mybatis_migration_extra_args: ""
 opensrp_java_packages:
   - openjdk-8-jre
 
