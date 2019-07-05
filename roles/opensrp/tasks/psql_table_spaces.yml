@@ -47,6 +47,8 @@
     - psql-table-space
 
 - name: Make sure the Mybatis installation dir exists
+  become: yes
+  become_user: "root"
   file:
     path: "{{ opensrp_mybatis_install_dir }}"
     state: "directory"
