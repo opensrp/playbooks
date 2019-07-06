@@ -52,6 +52,7 @@
   file:
     path: "{{ opensrp_mybatis_install_dir }}"
     state: "directory"
+    owner: "{{ ansible_ssh_user }}"
     mode: "0755"
   tags:
     - psql-table-space
