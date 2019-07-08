@@ -33,7 +33,7 @@
     url: "http://127.0.0.1:{{ couchdb_port }}/_config/admins/{{ couchdb_admin_user }}"
     method: PUT
     body: "\"{{ couchdb_admin_password }}\""
-    retries: 50
+  retries: 50
 
 - name: Create the CouchDB databases
   uri:
