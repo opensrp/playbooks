@@ -9,26 +9,6 @@
   tags:
     - psql-table-space
 
-- name: Replace OpenSRP migrations scripts
-  template:
-    src: "templates/opensrp_local_checkout_path/configs/assets/migrations/{{ item }}.sh.j2"
-    dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/{{ item }}.sh"
-  delegate_to: 127.0.0.1
-  with_items:
-    - "run_mybatis_migrations"
-  tags:
-    - psql-table-space
-
-- name: Replace OpenSRP migrations shell scripts
-  template:
-    src: "templates/opensrp_local_checkout_path/configs/assets/migrations/{{ item }}.sh.j2"
-    dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/{{ item }}.sh"
-  delegate_to: 127.0.0.1
-  with_items:
-    - "run_mybatis_migrations"
-  tags:
-    - psql-table-space
-
 - name: Copy psql migration scripts
   copy:
     src: "{{ opensrp_local_checkout_path }}/configs/assets/migrations"
@@ -62,12 +42,30 @@
     password: "{{ opensrp_postgresql_password }}"
     encrypted: yes
     priv: ALL
+    role_attr_flags: "{{ opensrp_postgresql_user_role_attr_flags }}"
   tags:
     - psql-table-space
 
-- name: Execute migration script # noqa 301
+- name: Make sure the Mybatis installation dir exists
   become: yes
-  command: bash -lc "cd {{ opensrp_local_checkout_path }} && sh configs/assets/migrations/run_mybatis_migrations.sh {{ opensrp_install_postgres|lower }}"
+  become_user: "root"
+  file:
+    path: "{{ opensrp_mybatis_install_dir }}"
+    state: "directory"
+    owner: "{{ ansible_ssh_user }}"
+    mode: "0755"
   tags:
     - psql-table-space
 
+- name: Download the Mybatis archive
+  unarchive:
+    src: "https://github.com/mybatis/migrations/releases/download/mybatis-migrations-{{ opensrp_mybatis_version }}/mybatis-migrations-{{ opensrp_mybatis_version }}-bundle.zip" # noqa 204
+    dest: "{{ opensrp_mybatis_install_dir }}"
+    remote_src: yes
+  tags:
+    - psql-table-space
+
+- name: Run the Mybatis migrations # noqa 301
+  command: "{{ opensrp_mybatis_install_dir }}/mybatis-migrations-{{ opensrp_mybatis_version }}/bin/migrate up --path={{ opensrp_local_checkout_path }}/configs/assets/migrations --env={{ opensrp_mybatis_env }} {{ opensrp_mybatis_migration_extra_args }}" # noqa 204
+  tags:
+    - psql-table-space

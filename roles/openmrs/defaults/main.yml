@@ -26,14 +26,20 @@ openmrs_dump_files: []
 ssl_key: "{{ openmrs_site_name }}-key.pem"
 ssl_cert: "{{ openmrs_site_name }}-fullchain.pem"
 openmrs_system_user: "openmrs"
+openmrs_system_group: "{{ tomcat_group }}"
 openmrs_tomcat_instance: "tomcat-openmrs"
 openmrs_tomcat_user_home: "/home/{{ openmrs_system_user }}"
 openmrs_home_directory: "{{ openmrs_tomcat_user_home }}/.OpenMRS"
 openmrs_mysql_connection_url: "jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/{{ openmrs_mysql_database }}?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull"
-openmrs_install_mysql: yes
 openmrs_mysql_root_user: "root"
 openmrs_java_packages:
   - openjdk-8-jre
+openmrs_admin_password:
+openmrs_auto_update_database: "false"
+openmrs_allow_web_admin: "true"
+openmrs_encryption_vector:
+openmrs_encryption_key:
+openmrs_require_encryption: true
 
 # Hibernate
 openmrs_hibernate_c3p0_min_size: 5
@@ -86,7 +92,7 @@ openmrs_nginx_sites:
         access_log_format: "timed_combined"
 
       location1:
-        name: /
+        name: "= /"
         return: "301 https://$host/{{ openmrs_install_name }}"
 
       location2:
@@ -105,6 +111,8 @@ openmrs_nginx_log_dir: "/var/log/nginx"
 openmrs_nginx_enabled_sites:
   - "{{ openmrs_http_site }}"
   - "{{ openmrs_https_site }}"
+openmrs_nginx_disabled_sites:
+  - default
 openmrs_nginx_access_logs:
   - name: "timed_combined"
     format: "'$http_x_forwarded_for - $remote_user [$time_local]  \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_time $upstream_response_time $gzip_ratio' $request_length"

@@ -1,5 +1,7 @@
-- src: ANXS.postgresql
-  version: v1.10.1
+- src: https://github.com/onaio/postgresql.git
+  name: ANXS.postgresql
+  version: eecf0b28d8ae833f9118132384447ea19f76c802
+  scm: git
 
 - src: https://github.com/onaio/ansible-nginx.git
   name: onaio.nginx

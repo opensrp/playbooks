@@ -1,9 +1,19 @@
 ---
+- name: Install MySQL client package
+  become: yes
+  become_user: "root"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mysql-client
+    - python-mysqldb
+
 - name: Create the OpenMRS MySQL Database
   mysql_db:
     login_host: "{{ openmrs_mysql_host }}"
     login_user: "{{ openmrs_mysql_root_user }}"
-    login_password: "{{ mysql_root_password }}"
+    login_password: "{{ openmrs_mysql_root_password }}"
     name: "{{ openmrs_mysql_database }}"
     state: present
 
@@ -11,33 +21,12 @@
   mysql_user:
     login_host: "{{ openmrs_mysql_host }}"
     login_user: "{{ openmrs_mysql_root_user }}"
-    login_password: "{{ mysql_root_password }}"
+    login_password: "{{ openmrs_mysql_root_password }}"
     name: "{{ openmrs_mysql_user }}"
     password: "{{ openmrs_mysql_password }}"
     host: "{{ openmrs_mysql_app_host }}"
-    priv: "{{ openmrs_mysql_database }}.*:ALL"
+    priv: "{{ openmrs_mysql_database }}.*:{{ openmrs_mysql_user_privilages }}"
     state: present
-
-- name: Copy OpenMRS User Property Trigger .sql to host tmp
-  become: yes
-  become_user: "root"
-  copy:
-    src: "tmp/openmrs_user_property_trigger.sql"
-    dest: "/tmp/{{ openmrs_mysql_database_trigger }}.sql"
-    owner: root
-    group: root
-    mode: 0700
-
-- name: Import the OpenMRS trigger .sql file
-  become: yes
-  become_user: "root"
-  mysql_db:
-    name: "{{ openmrs_mysql_database }}"
-    login_user: "{{ openmrs_mysql_root_user }}"
-    login_password: "{{ mysql_root_password }}"
-    login_host: "{{ openmrs_mysql_host }}"
-    state: import
-    target: "/tmp/{{ openmrs_mysql_database_trigger }}.sql"
 
 - name: Create OpenMRS Config Directory
   become: yes
@@ -45,19 +34,9 @@
   file:
     path: "{{ openmrs_home_directory }}"
     owner: "{{ openmrs_system_user }}"
-    group: "{{ tomcat_group }}"
+    group: "{{ openmrs_system_group }}"
     state: directory
     mode: 0775
-
-- name: Copy the OpenMRS Runtime Template
-  become: yes
-  become_user: root
-  template:
-    src: "templates/usr/share/tomcat7/.OpenMRS/openmrs-runtime.properties.j2"
-    dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/.OpenMRS/openmrs-runtime.properties"
-    owner: "{{ openmrs_system_user }}"
-    group: "{{ tomcat_group }}"
-    mode: 0640
 
 - name: Create a symbolic link of the OpenMRS config directory
   become: yes
@@ -66,7 +45,7 @@
     src: "{{ openmrs_home_directory }}"
     dest: "/var/lib/OpenMRS"
     owner: "{{ openmrs_system_user }}"
-    group: "{{ tomcat_group }}"
+    group: "{{ openmrs_system_group }}"
     state: link
     mode: 0777
 
@@ -93,11 +72,63 @@
   become: yes
   become_user: root
   get_url:
-    url: "https://netcologne.dl.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version }}/openmrs.war"
-    validate_certs: "{{ openmrs_validate_certs }}"
+    url: "https://downloads.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version }}/openmrs.war"
     dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
     owner: "{{ openmrs_system_user }}"
-    group: "{{ tomcat_group }}"
+    group: "{{ openmrs_system_group }}"
+  retries: 3
+  delay: 10
+
+- name: Check if the properties file is already on the server
+  stat:
+    path: "{{ openmrs_home_directory }}/openmrs-runtime.properties"
+  register: openmrs_properties_file_status
+
+- name: Include initial-setup.yml
+  include_tasks: initial-setup.yml
+  when: not openmrs_properties_file_status.stat.exists
+
+- name: Copy OpenMRS User Property Trigger .sql to host tmp
+  become: yes
+  become_user: "root"
+  copy:
+    src: "tmp/openmrs_user_property_trigger.sql"
+    dest: "/tmp/{{ openmrs_mysql_database_trigger }}.sql"
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Import the OpenMRS trigger .sql file
+  become: yes
+  become_user: "root"
+  mysql_db:
+    name: "{{ openmrs_mysql_database }}"
+    login_user: "{{ openmrs_mysql_root_user }}"
+    login_password: "{{ openmrs_mysql_root_password }}"
+    login_host: "{{ openmrs_mysql_host }}"
+    state: import
+    target: "/tmp/{{ openmrs_mysql_database_trigger }}.sql"
+
+- block:
+  - name: Check if the encryption key and vector are set
+    debug:
+      msg: |
+        Please make sure openmrs_encryption_vector and openmrs_encryption_key are set.
+        Check the {{ openmrs_home_directory }}/openmrs-runtime.properties file currently
+        in the server if these variables are not yet set in the inventories.
+    failed_when: true
+    when: openmrs_require_encryption and (openmrs_encryption_vector|length == 0 or openmrs_encryption_key|length == 0)
+
+  - name: Copy the OpenMRS Runtime Template
+    become: yes
+    become_user: root
+    template:
+      src: "templates/usr/share/tomcat7/.OpenMRS/openmrs-runtime.properties.j2"
+      dest: "{{ openmrs_home_directory }}/openmrs-runtime.properties"
+      owner: "{{ openmrs_system_user }}"
+      group: "{{ openmrs_system_group }}"
+      mode: 0640
+  when: openmrs_properties_file_status.stat.exists
 
 - name: Restart the Tomcat7 Service
   become: yes

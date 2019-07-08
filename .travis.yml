@@ -3,7 +3,11 @@ python:
   - "2.7"
 install:
   - pip install -r requirements.txt
+  - mkdir bin
+  - curl -o bin/terraform.zip "https://releases.hashicorp.com/terraform/0.12.1/terraform_0.12.1_linux_amd64.zip"
+  - unzip bin/terraform.zip -d bin
 script:
-  - ansible-lint deploy-dhis.yml 
-  - ansible-lint deploy-opensrp.yml 
-  - ansible-lint deploy-openmrs.yml 
+  - ansible-lint deploy-dhis.yml
+  - ansible-lint deploy-opensrp.yml
+  - ansible-lint deploy-openmrs.yml
+  - find terraform -type d -print0 | xargs -n 1 -0 ./bin/terraform fmt -check=true

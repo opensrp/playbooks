@@ -1,0 +1,88 @@
+---
+- name: Restart the Tomcat7 Service
+  become: yes
+  become_user: root
+  service:
+    name: "{{ openmrs_tomcat_instance }}"
+    state: restarted
+
+- meta: flush_handlers
+
+- name: Give prompt on what user should do in the browser
+  pause:
+    prompt: |
+      Open the OpenMRS initial setup page on https://{{ openmrs_site_name }}/{{ openmrs_install_name }}/initialsetup and follow these steps:
+
+      ----------------------------------------------------------------------------------
+      On the first page:
+
+      Which language do you prefer? English
+
+      ----------------------------------------------------------------------------------
+      On the second page:
+
+      Which type of installation do you want? Advanced
+
+      ----------------------------------------------------------------------------------
+      On page labeled 'Step 1 of 5'
+
+      Please specify how to connect to your currently installed database server:
+        Database connection: jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/@DBNAME@?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull # noqa 204
+
+      Do you currently have an OpenMRS database installed that you would like to connect to? Yes
+        If yes, what is the name of this database? openmrs
+
+      ----------------------------------------------------------------------------------
+      On page labeled 'Step 2 of 5'
+
+      Do you need OpenMRS to automatically create the tables for your current database openmrs? Yes
+
+      Do you currently have a database user other than root that has read/write access to the openmrs database? Yes
+        If yes, specify the log in user name and password for that database user:
+          Username: {{ openmrs_mysql_user }}
+          Password: {{ openmrs_mysql_password }}
+
+      ----------------------------------------------------------------------------------
+      On page labeled 'Step 3 of 5'
+
+      Do you want to be able to upload modules from the web interface? No
+
+      Do you want updates to the database to be automatically applied on startup when a new web application is deployed? Yes
+
+      ----------------------------------------------------------------------------------
+      On page labeled 'Step 4 of 5'
+
+      Currently the default administrator user/pass is admin:test. Please specify a new password for that user
+        Password: {{ openmrs_admin_password }}
+        Retype password: {{ openmrs_admin_password }}
+
+      ----------------------------------------------------------------------------------
+      Press ENTER when setup on the browser is done and you are redirected to the login page
+      ----------------------------------------------------------------------------------
+  register: openmrs_initial_setup_instructions
+
+- name: Check if the properties file created on the server
+  stat:
+    path: "{{ openmrs_home_directory }}/openmrs-runtime.properties"
+  register: openmrs_properties_file_status2
+
+- name: Stop deployment
+  debug:
+    msg: "{{ openmrs_home_directory }}/openmrs-runtime.propeties file doesn't exist on the server"
+  failed_when: true
+  when: not openmrs_properties_file_status2.stat.exists
+
+- name: Give prompt on copying the encryption.vector and encryption.key
+  pause:
+    prompt: |
+      SSH as {{ ansible_ssh_user }}@{{ ansible_ssh_host }}
+
+      Get the values of encryption.vector and encryption.key from {{ openmrs_home_directory }}/openmrs-runtime.properties
+      and copy them to these variables in your inventory:
+       - encryption.vector to openmrs_encryption_vector variable
+       - encryption.key to openmrs_encryption_key variable
+
+      ----------------------------------------------------------------------------------
+      Press ENTER when done adding the variables to the inventories
+      ----------------------------------------------------------------------------------
+  register: openmrs_initial_setup_encryption
