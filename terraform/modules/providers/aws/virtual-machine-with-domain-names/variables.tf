@@ -6,9 +6,6 @@ variable "vmdns_end_date" {}
 variable "vmdns_project" {}
 variable "vmdns_name" {}
 variable "vmdns_vpc_id" {}
-variable "vmdns_vm_subnet_ids" {
-  type = "list"
-}
 variable "vmdns_vm_availability_zones" {
   type = "list"
 }
