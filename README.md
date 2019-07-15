@@ -76,9 +76,18 @@ inventories/
 
 Each environment directory contains a `hosts` file that's used to group `host_vars` into `group_vars` and `group_vars` into other `group_vars`. Please avoid setting ansible variables in that file.
 
+## Packer
+
+[Packer][7] allows for packaging of machine/container images from Ansible scripts like the ones defined in this repository. To run any of the packer files defined in this repository, do:
+
+```sh
+packer build -var-file=inventories/<DevOps client>/<environment>/packer/<name of setup>/<name of variant>.json packer/<name of setup>.json
+```
+
 [1]: https://www.ansible.com
 [2]: https://pypi.python.org/pypi/pycrypto
 [3]: https://www.virtualbox.org
 [4]: https://docs.ansible.com/ansible/playbooks_best_practices.html#alternative-directory-layout
 [5]: https://pip.pypa.io/en/stable/
 [6]: https://virtualenvwrapper.readthedocs.io/en/latest/
+[7]: https://packer.io/

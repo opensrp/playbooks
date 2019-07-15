@@ -1,0 +1,46 @@
+{
+    "builders": [{
+      "type": "amazon-ebs",
+      "access_key": "{{ user `aws_access_key` }}",
+      "secret_key": "{{ user `aws_secret_key` }}",
+      "region": "{{ user `region` }}",
+      "source_ami": "{{ user `source_ami` }}",
+      "instance_type": "t3.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+      "tags": {
+        "Name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}",
+        "OS_Version": "{{ user `distribution_name` }}",
+        "Description": "OpenSRP {{ user `distribution_name` }} {{ user `distribution_version` }}",
+        "Release": "{{ user `distribution_version` }}",
+        "OwnerList": "{{ user `owner` }}",
+        "EnvironmentList": "{{ user `env` }}",
+        "EndDate": "{{ user `end_date` }}",
+        "ProjectList": "{{ user `project` }}"
+      },
+      "run_tags": {
+        "OwnerList": "{{ user `owner` }}",
+        "EnvironmentList": "{{ user `env` }}",
+        "EndDate": "{{ user `end_date` }}",
+        "ProjectList": "{{ user `project` }}"
+      },
+      "run_volume_tags": {
+        "OwnerList": "{{ user `owner` }}",
+        "EnvironmentList": "{{ user `env` }}",
+        "EndDate": "{{ user `end_date` }}",
+        "ProjectList": "{{ user `project` }}"
+      }
+    }],
+    "provisioners": [{
+      "type": "ansible",
+      "extra_arguments": [
+        "--vault-password-file={{ user `ansible_vault_file` }}",
+        "--module-path=library/",
+        "--extra-vars", "ssh_local_user={{ user `local_user` }}"
+      ],
+      "inventory_directory": "{{ user `ansible_inventory` }}",
+      "playbook_file": "setup-server.yml",
+      "groups": ["all", "monitored-servers"],
+      "user": "ubuntu"
+    }]
+  }
