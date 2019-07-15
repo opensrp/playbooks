@@ -16,3 +16,4 @@ script:
   - ansible-lint deploy-openmrs.yml
   - find terraform -type d -print0 | xargs -n 1 -0 ./bin/terraform fmt -check=true
   - find packer -name *.json -print0 | xargs -n 1 -0 ./bin/packer validate -syntax-only
+  - find packer -name *.json -print0 | xargs -I {} -0 bash -c 'diff <(python3 -m json.tool {}) <(cat {})'
