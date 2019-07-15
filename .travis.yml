@@ -1,13 +1,19 @@
 language: python
 python:
-  - "2.7"
+  - "3.6"
+env:
+  - terraform_version="0.12.1" terraform_os_arch="linux_amd64" packer_version="1.4.2" packer_os_arch="linux_amd64"
 install:
   - pip install -r requirements.txt
   - mkdir bin
-  - curl -o bin/terraform.zip "https://releases.hashicorp.com/terraform/0.12.1/terraform_0.12.1_linux_amd64.zip"
+  - curl -o bin/terraform.zip "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_${terraform_os_arch}.zip"
   - unzip bin/terraform.zip -d bin
+  - curl -o bin/packer.zip "https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_${packer_os_arch}.zip"
+  - unzip bin/packer.zip -d bin
 script:
   - ansible-lint deploy-dhis.yml
   - ansible-lint deploy-opensrp.yml
   - ansible-lint deploy-openmrs.yml
   - find terraform -type d -print0 | xargs -n 1 -0 ./bin/terraform fmt -check=true
+  - find packer -name *.json -print0 | xargs -n 1 -0 ./bin/packer validate -syntax-only
+  - find packer -name *.json -print0 | xargs -I {} -0 bash -c 'diff <(python3 -m json.tool {}) <(cat {})'
