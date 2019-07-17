@@ -46,6 +46,44 @@
   tags:
     - psql-table-space
 
+- name: Give opensrp user access to the database schemas
+  postgresql_privs:
+    db: "{{ opensrp_postgresql_database }}"
+    login_host: "{{ opensrp_postgres_host }}"
+    login_user: "{{ opensrp_postgres_superuser }}"
+    login_password: "{{ opensrp_postgres_superuser_password }}"
+    privs: ALL
+    objs: "{{ item }}"
+    type: schema
+    roles: "{{ opensrp_postgresql_user }}"
+    grant_option: no
+  with_items:
+    - core
+    - error
+    - schedule
+    - feed
+    - form
+    - public
+
+- name: Give opensrp user access to the database schemas 
+  postgresql_privs:
+    db: "{{ opensrp_postgresql_database }}"
+    login_host: "{{ opensrp_postgres_host }}"
+    login_user: "{{ opensrp_postgres_superuser }}"
+    login_password: "{{ opensrp_postgres_superuser_password }}"
+    privs: ALL
+    objs: table,sequence,function
+    roles: "{{ opensrp_postgresql_user }}"
+    grant_option: no
+    schema: "{{ item }}"
+  with_items:
+    - core
+    - error
+    - schedule
+    - feed
+    - form    
+    - public   
+
 - name: Make sure the Mybatis installation dir exists
   become: yes
   become_user: "root"
