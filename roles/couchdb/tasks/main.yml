@@ -28,12 +28,37 @@
     enabled: true
     state: restarted
 
-- name: Add CouchDB admin user
+- name: Waits for port 5984 of any IP to close active connections, don't start checking for 10 seconds
+  wait_for:
+    host: 127.0.0.1
+    port: 5984
+    delay: 10
+
+- name: Check if CouchDB admin user exists
+  uri:
+    url: "http://127.0.0.1:{{ couchdb_port }}/_config/admins/{{ couchdb_admin_user }}"
+    method: GET
+    user: "{{ couchdb_admin_user }}"
+    password: "{{ couchdb_admin_password }}"
+    force_basic_auth: yes
+  ignore_errors: true
+  register: _couchdb_admin_user_check
+
+- name: Add CouchDB non-existing admin user
   uri:
     url: "http://127.0.0.1:{{ couchdb_port }}/_config/admins/{{ couchdb_admin_user }}"
     method: PUT
     body: "\"{{ couchdb_admin_password }}\""
   retries: 50
+  when: _couchdb_admin_user_check.status == 404
+
+- name: Return to user instructions for deleting admin user
+  debug:
+    msg: |
+      Admin user password seems to have changed, or is wrong.
+      This role doesn't yet support changing the admin password
+  failed_when: true
+  when: _couchdb_admin_user_check.status == 401
 
 - name: Create the CouchDB databases
   uri:
