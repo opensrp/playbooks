@@ -50,6 +50,13 @@
     ],
     "provisioners": [
         {
+            "type": "shell",
+            "inline": [
+                "sleep 30",
+                "sudo apt-get update"
+            ]
+        },
+        {
             "type": "ansible",
             "extra_arguments": [
                 "--vault-password-file={{ user `ansible_vault_file` }}",
