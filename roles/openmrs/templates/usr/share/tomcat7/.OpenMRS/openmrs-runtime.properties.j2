@@ -4,7 +4,7 @@ connection.url={{ openmrs_mysql_connection_url }}
 module.allow_web_admin={{ openmrs_allow_web_admin }}
 auto_update_database={{ openmrs_auto_update_database }}
 sync.mandatory=false
-{% if openmrs_encryption_vector|length > 0 and openmrs_encryption_key|length > 0 %}
+{% if openmrs_encryption_vector and openmrs_encryption_vector|length > 0 and openmrs_encryption_key and openmrs_encryption_key|length > 0 %}
 encryption.vector={{ openmrs_encryption_vector }}
 encryption.key={{ openmrs_encryption_key }}
 {% endif %}
