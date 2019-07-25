@@ -78,6 +78,7 @@ opensrp_mybatis_env: "development"
 opensrp_mybatis_migration_extra_args: ""
 opensrp_java_packages:
   - openjdk-8-jre
+opensrp_multimedia_parent_directory: "{{ opensrp_openmrs_tomcat_user_home }}/.OpenMRS"
 
 # List of profiles to be activated. Only the specified profiles will
 # be made active. Read more on OpenSRP Server profiles here:
