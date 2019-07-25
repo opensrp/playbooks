@@ -6,7 +6,6 @@
       setup:
   roles:
     - common
-  always_run: true
 
 - hosts: openmrs-mysql-servers
   roles:
