@@ -89,7 +89,7 @@
     - form
     - public
 
-- name: Give opensrp user access to the database schemas 
+- name: Give opensrp user access to the database schemas
   postgresql_privs:
     db: "{{ opensrp_postgresql_database }}"
     login_host: "{{ opensrp_postgres_host }}"
@@ -105,8 +105,8 @@
     - error
     - schedule
     - feed
-    - form    
-    - public   
+    - form
+    - public
 
 - name: Give opensrp user access to the database schemas
   postgresql_privs:
@@ -126,7 +126,7 @@
     - schedule
     - feed
     - form
-    - public     
+    - public
   tags:
-    - psql-table-space    
+    - psql-table-space
 
