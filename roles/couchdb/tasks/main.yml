@@ -28,6 +28,12 @@
     enabled: true
     state: restarted
 
+- name: Wait for CouchDB to be available
+  wait_for:
+    host: 127.0.0.1
+    port: "{{ couchdb_port }}"
+    delay: 10
+
 - name: Add CouchDB admin user
   uri:
     url: "http://127.0.0.1:{{ couchdb_port }}/_config/admins/{{ couchdb_admin_user }}"

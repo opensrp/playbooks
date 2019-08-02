@@ -6,7 +6,6 @@
       setup:
   roles:
     - common
-  always_run: true
 
 - hosts: opensrp-couchdb-servers
   serial: 1 # Runs playbook one server at at time (to achieve a rolling update)

@@ -13,7 +13,7 @@
 		{% for profileKey,profileValue in opensrp_oauth_profiles.items() %}
 		<oauth:client
 		{% for itemKey,itemValue in profileValue.items() %}
-			{{ opensrp_oauth_dictionary.get(itemKey) }}="${{ '{' }}oauth.{{ profileKey }}.{{ itemKey }}{{ '}' }}"
+			{{ opensrp_oauth_dictionary.get(itemKey) }}="${{ '{' }}oauth.{{ profileKey }}.{{ itemKey | replace('_', '.') }}{{ '}' }}"
 		{% endfor %}
 		/>
 		{% endfor %}
