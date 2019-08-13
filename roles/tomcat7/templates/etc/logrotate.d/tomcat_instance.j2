@@ -1,4 +1,4 @@
-{{ tomcat_logs_dir }}/* {
+{% for tomcat_rotated_log in tomcat_rotated_logs %}{{ tomcat_rotated_log }} {% endfor %}}{
   copytruncate
   daily
   rotate {{ tomcat_logs_max_age_days }}
