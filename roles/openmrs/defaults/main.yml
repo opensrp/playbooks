@@ -41,6 +41,7 @@ openmrs_encryption_vector:
 openmrs_encryption_key:
 openmrs_require_encryption: true
 openmrs_binary_download_directory: "/tmp/openmrs_binary"
+openmrs_binary_file_path: "{{ openmrs_binary_download_directory }}/{{ openmrs_install_name }}.war"
 
 # Hibernate
 openmrs_hibernate_c3p0_min_size: 5

@@ -76,14 +76,14 @@
   with_items:
     - "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
     - "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}"
-    - "{{ openmrs_binary_download_directory }}"
+    - "{{ openmrs_binary_file_path }}"
 
 - name: Download the OpenMRS Binary
   become: yes
   become_user: root
   get_url:
     url: "https://downloads.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version }}/openmrs.war"
-    dest: "{{ openmrs_binary_download_directory }}/{{ openmrs_install_name }}.war"
+    dest: "{{ openmrs_binary_file_path }}"
     owner: "{{ openmrs_system_user }}"
     group: "{{ openmrs_system_group }}"
     timeout: 60
@@ -94,7 +94,7 @@
   become: yes
   become_user: root
   copy:
-    src: "{{ openmrs_binary_download_directory }}/{{ openmrs_install_name }}.war"
+    src: "{{ openmrs_binary_file_path }}"
     dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
     owner: "{{ openmrs_system_user }}"
     group: "{{ openmrs_system_group }}"
