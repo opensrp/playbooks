@@ -40,6 +40,7 @@ openmrs_allow_web_admin: "true"
 openmrs_encryption_vector:
 openmrs_encryption_key:
 openmrs_require_encryption: true
+openmrs_binary_download_directory: "/tmp/openmrs_binary"
 
 # Hibernate
 openmrs_hibernate_c3p0_min_size: 5
