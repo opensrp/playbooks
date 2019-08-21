@@ -58,16 +58,15 @@
 - include_tasks: modules.yml
   when: openmrs_modules|length > 0
 
-- name: Create OpenMRS Binary Download directory
+- name: Make sure the OpenMRS Binary Download directory dir exists
   become: yes
-  become_user: root
+  become_user: "root"
   file:
     path: "{{ openmrs_binary_download_directory }}"
-    owner: "{{ openmrs_system_user }}"
-    group: "{{ tomcat_group }}"
-    state: directory
-    mode: 0755
-    
+    state: "directory"
+    owner: "{{ ansible_ssh_user }}"
+    mode: "0755"
+
 - name: Make sure the OpenMRS directories are absent
   become: yes
   become_user: root
