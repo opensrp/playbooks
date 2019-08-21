@@ -67,8 +67,7 @@
     group: "{{ tomcat_group }}"
     state: directory
     mode: 0755
-  
-
+    
 - name: Make sure the OpenMRS directories are absent
   become: yes
   become_user: root
