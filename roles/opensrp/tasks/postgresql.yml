@@ -7,14 +7,14 @@
   with_items:
     - "development"
   tags:
-    - psql-table-space
+    - postgresql
 
 - name: Copy psql migration scripts
   copy:
     src: "{{ opensrp_local_checkout_path }}/configs/assets/migrations"
     dest: "{{ opensrp_local_checkout_path }}/configs/assets"
   tags:
-    - psql-table-space
+    - postgresql
 
 - name: Install migration prerequisites
   become: yes
@@ -29,8 +29,16 @@
     - libpq-dev
     - python-psycopg2
   tags:
-    - psql-table-space
+    - postgresql
 
+- name: Make sure the OpenSRP PostgreSQL database exists
+  postgresql_db:
+    name: "{{ opensrp_postgresql_database }}"
+    login_host: "{{ opensrp_postgres_host }}"
+    login_user: "{{ opensrp_postgres_superuser }}"
+    login_password: "{{ opensrp_postgres_superuser_password }}"
+  tags:
+    - postgresql
 
 - name: Ensure OpenSRP psql user has the right access level
   postgresql_user:
@@ -44,7 +52,7 @@
     priv: ALL
     role_attr_flags: "{{ opensrp_postgresql_user_role_attr_flags }}"
   tags:
-    - psql-table-space
+    - postgresql
 
 - name: Make sure the Mybatis installation dir exists
   become: yes
@@ -55,7 +63,7 @@
     owner: "{{ ansible_ssh_user }}"
     mode: "0755"
   tags:
-    - psql-table-space
+    - postgresql
 
 - name: Download the Mybatis archive
   unarchive:
@@ -63,12 +71,12 @@
     dest: "{{ opensrp_mybatis_install_dir }}"
     remote_src: yes
   tags:
-    - psql-table-space
+    - postgresql
 
 - name: Run the Mybatis migrations # noqa 301
   command: "{{ opensrp_mybatis_install_dir }}/mybatis-migrations-{{ opensrp_mybatis_version }}/bin/migrate up --path={{ opensrp_local_checkout_path }}/configs/assets/migrations --env={{ opensrp_mybatis_env }} {{ opensrp_mybatis_migration_extra_args }}" # noqa 204
   tags:
-    - psql-table-space
+    - postgresql
 
 - name: Give opensrp user access to the database schemas
   postgresql_privs:
@@ -88,6 +96,8 @@
     - feed
     - form
     - public
+  tags:
+    - postgresql
 
 - name: Give opensrp user access to the database schemas
   postgresql_privs:
@@ -107,6 +117,8 @@
     - feed
     - form
     - public
+  tags:
+    - postgresql
 
 - name: Give opensrp user access to the database schemas
   postgresql_privs:
@@ -128,5 +140,4 @@
     - form
     - public
   tags:
-    - psql-table-space
-
+    - postgresql
