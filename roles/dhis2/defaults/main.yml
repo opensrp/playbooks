@@ -23,7 +23,11 @@ dhis_tomcat_fsize_threshold: "10485760"
 dhis_postgresql_user: dhis
 dhis_postgresql_database: dhis2
 dhis_postgresql_password: ""
-dhis_postgresql_connection_url: "jdbc:postgresql:{{ dhis_postgresql_database }}"
+dhis_postgresql_host: localhost
+dhis_postgresql_port: 5432
+dhis_postgresql_connection_url: "jdbc:postgresql://{{ dhis_postgresql_host }}:{{ dhis_postgresql_port }}/{{ dhis_postgresql_database }}"
+dhis_postgresql_login_user: root
+dhis_postgres_login_password:
 
 # Certbot
 dhis_certbot_create_certs: true
