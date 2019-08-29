@@ -1,0 +1,16 @@
+---
+# General
+timezone: "Africa/Nairobi"
+
+# Variables shared between multiple group_vars
+all_redis_password: "strongpassword"
+all_openmrs_site_name: "openmrs.xxxxxxxxxx.org"
+all_openmrs_install_name: "openmrs"
+all_couchdb_admin_user: "root"
+all_couchdb_admin_password: "strongpassword"
+all_openmrs_admin_password: "strongpassword"
+all_opensrp_postgres_superuser: "root"
+all_opensrp_postgres_superuser_password: "strongpassword"
+all_mysql_root_password: "strongpassword"
+all_psql_table_space_dir: "/opt/postgres"
+all_opensrp_postgresql_database: "opensrp"

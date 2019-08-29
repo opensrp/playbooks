@@ -1,0 +1,2 @@
+ansible_ssh_user: ubuntu
+ansible_ssh_host: 1.2.3.4
