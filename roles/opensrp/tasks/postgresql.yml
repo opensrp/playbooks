@@ -1,11 +1,9 @@
 ---
 - name: Copy the OpenSRP migrations environment configs
   template:
-    src: "templates/opensrp_local_checkout_path/configs/assets/migrations/environments/{{ item }}.properties.j2"
-    dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/environments/{{ item }}.properties"
+    src: "templates/opensrp_local_checkout_path/configs/assets/migrations/environments/opensrp_mybatis_env.properties.j2"
+    dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/environments/{{ opensrp_mybatis_env }}.properties"
   delegate_to: 127.0.0.1
-  with_items:
-    - "development"
   tags:
     - postgresql
 
