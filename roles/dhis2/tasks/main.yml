@@ -25,7 +25,7 @@
     owner: "{{ dhis_system_user }}"
     group: "{{ dhis_system_group }}"
     state: directory
-    mode: 0644
+    mode: 0750
 
 - name: Copy DHIS Config
   become: yes
@@ -36,6 +36,37 @@
     owner: "{{ dhis_system_user }}"
     group: "{{ dhis_system_group }}"
     mode: 0600
+
+- name: Install PostgreSQL prerequisites
+  become: yes
+  become_user: "root"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - libpq-dev
+    - python-psycopg2
+
+- name: Make sure the DHIS database exists
+  postgresql_db:
+    name: "{{ dhis_postgresql_database }}"
+    login_host: "{{ dhis_postgresql_host }}"
+    port: "{{ dhis_postgresql_port }}"
+    login_user: "{{ dhis_postgresql_login_user }}"
+    login_password: "{{ dhis_postgres_login_password }}"
+    encoding: UTF-8
+
+- name: Ensure DHIS psql user has the right access level to the database
+  postgresql_user:
+    db: "{{ dhis_postgresql_database }}"
+    login_host: "{{ dhis_postgresql_host }}"
+    port: "{{ dhis_postgresql_port }}"
+    login_user: "{{ dhis_postgresql_login_user }}"
+    login_password: "{{ dhis_postgres_login_password }}"
+    name: "{{ dhis_postgresql_user }}"
+    password: "{{ dhis_postgresql_password }}"
+    encrypted: yes
+    priv: ALL
 
 - name: Download The DHIS2 War
   become: yes

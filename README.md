@@ -1,4 +1,4 @@
-# Ansible Playbooks [![Build Status](https://travis-ci.org/OpenSRP/playbooks.svg?branch=master)](https://travis-ci.org/OpenSRP/playbooks)
+# Ansible Playbooks [![Build Status](https://travis-ci.com/OpenSRP/playbooks.svg?branch=master)](https://travis-ci.com/OpenSRP/playbooks)
 
 A collection of [Ansible][1] scripts and templates used to deploy systems used by OpenSRP.
 We use Ansible's recommended [alternative directory layout][4].

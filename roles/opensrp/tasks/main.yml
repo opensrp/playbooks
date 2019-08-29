@@ -49,10 +49,10 @@
     owner: "{{ opensrp_system_user }}"
     group: "{{ tomcat_group }}"
 
-- include_tasks: psql_table_spaces.yml
+- include_tasks: postgresql.yml
   when: opensrp_psql_as_primary_database
   tags:
-  - psql-table-space
+  - postgresql
 
 - name: Restart OpenSRP Tomcat Instance
   become: yes
