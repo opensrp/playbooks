@@ -146,7 +146,7 @@
     become: yes
     become_user: root
     template:
-      src: "templates/usr/share/tomcat7/.OpenMRS/openmrs-runtime.properties.j2"
+      src: "templates/openmrs_home_directory/openmrs-runtime.properties.j2"
       dest: "{{ openmrs_home_directory }}/openmrs-runtime.properties"
       owner: "{{ openmrs_system_user }}"
       group: "{{ openmrs_system_group }}"
