@@ -58,7 +58,16 @@
 - include_tasks: modules.yml
   when: openmrs_modules|length > 0
 
-- name: Make sure the OpenMRS directory is absent in Tomcat's app directory
+- name: Make sure the OpenMRS Binary Download directory dir exists
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ openmrs_binary_download_directory }}"
+    state: "directory"
+    owner: "{{ ansible_ssh_user }}"
+    mode: "0755"
+
+- name: Make sure the OpenMRS directories are absent
   become: yes
   become_user: root
   file:
@@ -67,18 +76,29 @@
   with_items:
     - "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
     - "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}"
+    - "{{ openmrs_binary_file_path }}"
 
-- name: Install the OpenMRS Binary
+- name: Download the OpenMRS Binary
   become: yes
   become_user: root
   get_url:
     url: "https://downloads.sourceforge.net/project/openmrs/releases/OpenMRS_Platform_{{ openmrs_version }}/openmrs.war"
-    dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
+    dest: "{{ openmrs_binary_file_path }}"
     owner: "{{ openmrs_system_user }}"
     group: "{{ openmrs_system_group }}"
     timeout: 60
   retries: 3
   delay: 10
+
+- name: Install the OpenMRS Binary
+  become: yes
+  become_user: root
+  copy:
+    src: "{{ openmrs_binary_file_path }}"
+    dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/webapps/{{ openmrs_install_name }}.war"
+    owner: "{{ openmrs_system_user }}"
+    group: "{{ openmrs_system_group }}"
+    remote_src: yes
 
 - name: Check if the properties file is already on the server
   become: yes
