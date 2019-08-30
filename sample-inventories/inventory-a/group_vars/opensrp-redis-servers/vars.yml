@@ -1,0 +1,4 @@
+redis_version: "4.0.9"
+redis_password: "{{ all_redis_password }}"
+redis_bind_address: 0.0.0.0
+redis_backup_enabled: false
