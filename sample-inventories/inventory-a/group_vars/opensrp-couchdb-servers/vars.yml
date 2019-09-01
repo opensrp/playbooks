@@ -1,0 +1,9 @@
+---
+couchdb_admin_user: "{{ all_couchdb_admin_user }}"
+couchdb_admin_password: "{{ all_couchdb_admin_password }}"
+couchdb_version: "1.6.0-0ubuntu7"
+allowed_couchdb_hosts: []
+compacted_dbs: ["atomfeed", "motech-scheduletracking-api", "opensrp", "opensrp-errortrace", "opensrp-form", "_replicator", "rules", "_users"]
+couchdb_setup_database_backups: false
+couchdb_databases:
+  - "opensrp"

@@ -1,0 +1,28 @@
+tomcat_http_port: 8080
+tomcat_shutdown_port: 8005
+tomcat_ajp_port: 8009
+tomcat_max_filesize: "52428800"
+tomcat_fsize_threshold: "10485760"
+catalina_ops: "-Xms750M -Xmx750M"
+opensrp_mysql_password: "strongpassword"
+opensrp_site_name: "xxxxxxxxxx.org"
+opensrp_openmrs_url: "https://{{ all_openmrs_site_name }}/{{ all_openmrs_install_name }}/"
+opensrp_version: "v1.2.18-SNAPSHOT"
+opensrp_openmrs_password: "strongpassword"
+opensrp_dhis_url: "https://dhis.xxxxxxxxxx.org/api/"
+opensrp_dhis_user: "admin"
+opensrp_dhis_password: "strongpassword"
+opensrp_couchdb_user: "{{ all_couchdb_admin_user }}"
+opensrp_couchdb_password: "{{ all_couchdb_admin_password }}"
+opensrp_rapidpro_url: "https://rapidpro.xxxxxxxxxx.org"
+opensrp_rapidpro_token: "strongpassword"
+opensrp_redis_password: "{{ all_redis_password }}"
+opensrp_postgresql_password: "strongpassword"
+opensrp_postgresql_user: "opensrp"
+opensrp_mysql_root_password: "{{ all_mysql_root_password }}"
+opensrp_postgres_superuser: "{{ all_opensrp_postgres_superuser }}"
+opensrp_postgres_superuser_password: "{{ all_opensrp_postgres_superuser_password }}"
+opensrp_install_swap: true
+opensrp_psql_table_space_dir: "{{ all_psql_table_space_dir }}"
+opensrp_certbot_mail_address: "techops+{{ opensrp_site_name }}@xxxxxxxxxx.org"
+opensrp_postgresql_database: "{{ all_opensrp_postgresql_database }}"

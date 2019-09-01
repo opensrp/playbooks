@@ -1,8 +1,9 @@
 # Inventory files are for grouping hosts into groups and groups into other groups. Avoid setting variables here
+[openmrs-app-servers]
+host1
 
-[deployment-servers:children]
-opensrp-app-servers
-openmrs-app-servers
+[openmrs-mysql-servers]
+host1
 
 [opensrp-app-servers]
 host1
@@ -13,11 +14,15 @@ host1
 [opensrp-mysql-servers]
 host1
 
-[openmrs-app-servers]
+[opensrp-redis-servers]
 host1
 
-[openmrs-mysql-servers]
+[opensrp-activemq-servers]
 host1
 
-[monitored-servers]
+[opensrp-postgresql-servers]
 host1
+
+[mysql:children]
+openmrs-mysql-servers
+opensrp-mysql-servers

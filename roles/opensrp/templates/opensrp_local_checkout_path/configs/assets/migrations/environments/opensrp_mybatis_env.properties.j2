@@ -23,8 +23,8 @@ time_zone=GMT+0:00
 ## JDBC connection properties.
 driver=org.postgresql.Driver
 url=jdbc:postgresql://{{ opensrp_postgres_host }}:5432/{{ opensrp_postgresql_database }}
-username={{ opensrp_postgres_superuser }}
-password={{ opensrp_postgres_superuser_password }}
+username={{ opensrp_postgresql_user }}
+password={{ opensrp_postgresql_password }}
 
 #
 # A NOTE ON STORED PROCEDURES AND DELIMITERS
@@ -78,8 +78,8 @@ changelog=CHANGELOG
 # Example: The following would be referenced in a migration file as ${ip_address}
 # ip_address=192.168.0.1
 
-core_tablespace_location='{{ opensrp_psql_table_space_dir }}/core'
-error_tablespace_location ='{{ opensrp_psql_table_space_dir }}/error'
-schedule_tablespace_location='{{ opensrp_psql_table_space_dir }}/schedule'
-feed_tablespace_location='{{ opensrp_psql_table_space_dir }}/feed'
-form_tablespace_location='{{ opensrp_psql_table_space_dir }}/form'
+core_tablespace={{ opensrp_core_tablespace }}
+error_tablespace={{ opensrp_error_tablespace }}
+schedule_tablespace={{ opensrp_schedule_tablespace }}
+feed_tablespace={{ opensrp_feed_tablespace }}
+form_tablespace={{ opensrp_form_tablespace }}
