@@ -48,14 +48,13 @@ openmrs_log_level: "ERROR"
 openmrs_modules:
   - "idgen-4.5.0"
   - "uiframework-3.13.0"
-  - "registrationcoopenmrs_modulesre-1.8.0"
+  - "registrationcore-1.8.0.omod"
   - "providermanagement-2.10.0"
   - "teammodule-2.0.0B"
   - "uicommons-2.6.0"
   - "webservices.rest-2.24.0"
   - "legacyui-1.4.0"
   - "uilibrary-2.0.6"
-
 
 # Hibernate
 openmrs_hibernate_c3p0_min_size: 5
