@@ -146,12 +146,22 @@
     become: yes
     become_user: root
     template:
-      src: "templates/usr/share/tomcat7/.OpenMRS/openmrs-runtime.properties.j2"
+      src: "templates/openmrs_home_directory/openmrs-runtime.properties.j2"
       dest: "{{ openmrs_home_directory }}/openmrs-runtime.properties"
       owner: "{{ openmrs_system_user }}"
       group: "{{ openmrs_system_group }}"
       mode: 0640
   when: openmrs_properties_file_status.stat.exists
+
+- name: Copy the OpenMRS Runtime Template
+  become: yes
+  become_user: root
+  template:
+    src: "templates/openmrs_tomcat_user_home/openmrs_tomcat_instance/conf/logging.properties.j2"
+    dest: "{{ openmrs_tomcat_user_home }}/{{ openmrs_tomcat_instance }}/conf/logging.properties"
+    owner: "{{ openmrs_system_user }}"
+    group: "{{ openmrs_system_group }}"
+    mode: 0640
 
 - name: Restart the Tomcat7 Service
   become: yes
