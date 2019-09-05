@@ -1,46 +1,73 @@
-variable "lb_env" {}
-variable "lb_owner" {}
-variable "lb_project" {}
-variable "lb_end_date" {}
-variable "lb_name" {}
-variable "lb_subnets" {
-  type = "list"
+variable "lb_env" {
 }
+
+variable "lb_owner" {
+}
+
+variable "lb_project" {
+}
+
+variable "lb_end_date" {
+}
+
+variable "lb_name" {
+}
+
+variable "lb_subnets" {
+  type = list(string)
+}
+
 variable "lb_enable_delete_protection" {
   default = false
 }
+
 variable "lb_idle_timeout" {
   default = 300
 }
+
 variable "lb_http_port" {
   default = 80
 }
+
 variable "lb_https_port" {
   default = 443
 }
-variable "lb_instance_port" {}
+
+variable "lb_instance_port" {
+}
+
 variable "lb_instance_protocol" {
   default = "HTTP"
 }
-variable "lb_vpc_id" {}
+
+variable "lb_vpc_id" {
+}
+
 variable "lb_health_check_healthy_threshold" {
   default = 5
 }
-variable "lb_health_check_path" {}
+
+variable "lb_health_check_path" {
+}
+
 variable "lb_health_check_timeout" {
   default = 5
 }
+
 variable "lb_health_check_unhealthy_threshold" {
   default = 2
 }
+
 variable "lb_health_check_healthy_status_code" {
   default = "200"
 }
+
 variable "lb_instance_ids" {
-  type = "list"
+  type = list(string)
 }
+
 variable "lb_logs_user_identifiers" {
-  type = "list"
+  type = list(string)
   default = [
     "arn:aws:iam::127311923021:root", // us-east-1
     "arn:aws:iam::033677994240:root", // us-east-2
@@ -63,14 +90,26 @@ variable "lb_logs_user_identifiers" {
     "arn:aws:iam::048591011584:root", // us-gov-west-1*
     "arn:aws:iam::190560391635:root", // us-gov-east-1*
     "arn:aws:iam::638102146993:root", // cn-north-1**
-    "arn:aws:iam::037604701340:root"  // cn-northwest-1**
-  ]
+    "arn:aws:iam::037604701340:root",
+  ] // cn-northwest-1**
 }
-variable "lb_logs_object_storage_bucket_name" {}
+
+variable "lb_logs_object_storage_bucket_name" {
+}
+
 variable "lb_listener_rules" {
-  type = "list"
+  type = list(object({ priority = number, action_type = string, condition_field = string, values = string }))
 }
-variable "lb_ssl_policy" {}
-variable "lb_domain_zone_name" {}
-variable "lb_domain_name" {}
-variable "lb_domain_name_cnames" {}
+
+variable "lb_ssl_policy" {
+}
+
+variable "lb_domain_zone_name" {
+}
+
+variable "lb_domain_name" {
+}
+
+variable "lb_domain_name_cnames" {
+}
+

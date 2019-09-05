@@ -1,15 +1,26 @@
-variable "firewall_vpc_id" {}
+variable "firewall_vpc_id" {
+}
 
 variable "firewall_ingress_rules" {
-  type = "list"
+  type = list(string)
 }
 
 variable "firewall_egress_rules" {
-  type = "list"
+  type = list(string)
 }
 
-variable "firewall_owner" {}
-variable "firewall_env" {}
-variable "firewall_end_date" {}
-variable "firewall_project" {}
-variable "firewall_name" {}
+variable "firewall_owner" {
+}
+
+variable "firewall_env" {
+}
+
+variable "firewall_end_date" {
+}
+
+variable "firewall_project" {
+}
+
+variable "firewall_name" {
+}
+

@@ -1,3 +1,4 @@
 data "aws_route53_zone" "main" {
-  name = "${var.domain_zone_name}"
+  name = var.domain_zone_name
 }
+
