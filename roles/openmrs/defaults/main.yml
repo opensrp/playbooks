@@ -21,7 +21,6 @@ openmrs_mysql_port: 3306
 mysql_root_password: "root"
 openmrs_mysql_password: "openmrs"
 openmrs_dumps_gzipped: true
-openmrs_modules: []
 openmrs_dump_files: []
 ssl_key: "{{ openmrs_site_name }}-key.pem"
 ssl_cert: "{{ openmrs_site_name }}-fullchain.pem"
