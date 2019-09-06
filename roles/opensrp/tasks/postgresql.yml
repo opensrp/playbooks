@@ -1,16 +1,24 @@
 ---
+- name: Ensure checkout directory is empty
+  file:
+    state: absent
+    path: "{{ opensrp_local_checkout_path }}"
+  tags:
+    - postgresql
+
+- name: Checking out codebase
+  git:
+    repo: "{{ opensrp_git_url }}"
+    dest: "{{ opensrp_local_checkout_path }}"
+    version: "{{ opensrp_version }}"
+    recursive: yes
+  tags:
+    - postgresql
+
 - name: Copy the OpenSRP migrations environment configs
   template:
     src: "templates/opensrp_local_checkout_path/configs/assets/migrations/environments/opensrp_mybatis_env.properties.j2"
     dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/environments/{{ opensrp_mybatis_env }}.properties"
-  delegate_to: 127.0.0.1
-  tags:
-    - postgresql
-
-- name: Copy psql migration scripts
-  copy:
-    src: "{{ opensrp_local_checkout_path }}/configs/assets/migrations"
-    dest: "{{ opensrp_local_checkout_path }}/configs/assets"
   tags:
     - postgresql
 
@@ -73,5 +81,12 @@
 
 - name: Run the Mybatis migrations # noqa 301
   command: "{{ opensrp_mybatis_install_dir }}/mybatis-migrations-{{ opensrp_mybatis_version }}/bin/migrate up --path={{ opensrp_local_checkout_path }}/configs/assets/migrations --env={{ opensrp_mybatis_env }} {{ opensrp_mybatis_migration_extra_args }}" # noqa 204
+  tags:
+    - postgresql
+
+- name: Ensure checkout directory is empty
+  file:
+    state: absent
+    path: "{{ opensrp_local_checkout_path }}"
   tags:
     - postgresql
