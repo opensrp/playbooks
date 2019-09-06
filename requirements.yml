@@ -5,7 +5,7 @@
 
 - src: https://github.com/onaio/ansible-nginx.git
   name: onaio.nginx
-  version: eca5049500549c4e12cb4cb663a8b4f8499ac39b
+  version: 8d1f0c6fb82531cfbd804c147bd5a2f3b7e549b3
   scm: git
 
 - src: geerlingguy.java
