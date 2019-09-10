@@ -55,7 +55,7 @@
 - name: Create tablespace location for core, error, schedule, feed and form
   become: yes
   become_user: root
-  file: 
+  file:
     path: "{{ item }}"
     state: directory
     owner: postgres
