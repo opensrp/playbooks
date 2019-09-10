@@ -52,6 +52,22 @@
   tags:
     - postgresql
 
+- name: Create tablespace location for core, error, schedule, feed and form
+  become: yes
+  become_user: root
+  file: 
+    path: "{{ item }}"
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: '0777'
+  with_items:
+    - '/opt/postgres/core'
+    - '/opt/postgres/error'
+    - '/opt/postgres/schedule'
+    - '/opt/postgres/feed'
+    - '/opt/postgres/form'
+
 - name: Make sure the Mybatis installation dir exists
   become: yes
   become_user: "root"
