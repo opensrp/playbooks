@@ -54,6 +54,8 @@ openmrs_modules:
   - "webservices.rest-2.24.0"
   - "legacyui-1.4.0"
   - "uilibrary-2.0.6"
+  - "dhislocation-1.2.0"
+  - "event-2.6.0"
 
 # Hibernate
 openmrs_hibernate_c3p0_min_size: 5
