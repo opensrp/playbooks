@@ -39,6 +39,10 @@ variable "lbvm_lb_instance_port" {
   default = 80
 }
 
+variable "lbvm_lb_idle_timeout" {
+  default = 300
+}
+
 variable "lbvm_lb_instance_protocol" {
   default = "HTTP"
 }
