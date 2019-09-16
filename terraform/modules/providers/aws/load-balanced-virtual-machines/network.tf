@@ -16,6 +16,7 @@ module "lb" {
   lb_domain_name                     = var.lbvm_domain_name
   lb_domain_name_cnames              = var.lbvm_domain_name_cnames
   lb_ssl_policy                      = var.lbvm_lb_ssl_policy
+  lb_idle_timeout                    = var.lbvm_lb_idle_timeout
   lb_logs_object_storage_bucket_name = var.lbvm_lb_logs_object_storage_bucket_name
 }
 
