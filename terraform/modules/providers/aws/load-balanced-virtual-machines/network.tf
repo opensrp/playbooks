@@ -18,5 +18,7 @@ module "lb" {
   lb_ssl_policy                      = var.lbvm_lb_ssl_policy
   lb_idle_timeout                    = var.lbvm_lb_idle_timeout
   lb_logs_object_storage_bucket_name = var.lbvm_lb_logs_object_storage_bucket_name
+  lb_stickiness_cookie_duration      = var.lbvm_lb_stickiness_cookie_duration
+  lb_stickiness_enabled              = var.lbvm_lb_stickiness_enabled
 }
 

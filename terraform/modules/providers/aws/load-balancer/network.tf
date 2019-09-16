@@ -70,6 +70,12 @@ resource "aws_alb_target_group" "https" {
     matcher             = var.lb_health_check_healthy_status_code
   }
 
+  stickiness {
+    type            = var.lb_stickiness_type
+    cookie_duration = var.lb_stickiness_cookie_duration
+    enabled         = var.lb_stickiness_enabled
+  }
+
   tags = {
     OwnerList       = var.lb_owner
     EnvironmentList = var.lb_env
