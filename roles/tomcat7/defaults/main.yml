@@ -9,6 +9,10 @@ tomcat_user: "tomcat7"
 tomcat_group: "tomcat7"
 # The number of days to keep Tomcat logs before deleting them
 tomcat_logs_max_age_days: 90
+# The maximum file size of Tomcat logs before rotating them
+tomcat_logs_max_file_size: 500M
+# The number of Tomcat log files to maintain
+tomcat_logs_archives_to_keep: 7
 # logs that will be rotated using logrotate
 tomcat_rotated_logs:
   - "{{ tomcat_logs_dir }}/catalina.out"
