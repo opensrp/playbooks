@@ -94,6 +94,21 @@ variable "lb_logs_user_identifiers" {
   ] // cn-northwest-1**
 }
 
+variable "lb_stickiness_type" {
+  type    = string
+  default = "lb_cookie"
+}
+
+variable "lb_stickiness_cookie_duration" {
+  type    = number
+  default = 86400
+}
+
+variable "lb_stickiness_enabled" {
+  type    = bool
+  default = false
+}
+
 variable "lb_logs_object_storage_bucket_name" {
 }
 
