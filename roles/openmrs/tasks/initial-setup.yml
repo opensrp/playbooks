@@ -30,7 +30,7 @@
         Database connection: jdbc:mysql://{{ openmrs_mysql_host }}:{{ openmrs_mysql_port }}/@DBNAME@?autoReconnect=true&sessionVariables=default_storage_engine=InnoDB&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull # noqa 204
 
       Do you currently have an OpenMRS database installed that you would like to connect to? Yes
-        If yes, what is the name of this database? openmrs
+        If yes, what is the name of this database? {{ openmrs_mysql_database }}
 
       ----------------------------------------------------------------------------------
       On page labeled 'Step 2 of 5'
