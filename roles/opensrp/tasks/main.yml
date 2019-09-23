@@ -30,6 +30,15 @@
     mode: 0755
   with_items: "{{ opensrp_resource_sub_dirs }}"
 
+- name: Create OpenSRP multimedia directory
+  become: yes
+  become_user: root
+  file:
+    path: "{{ opensrp_multimedia_parent_directory }}"
+    group: "{{ tomcat_group }}"
+    state: directory
+    mode: 0775
+
 - name: Make sure the OpenSRP directory is absent in Tomcat's app directory
   become: yes
   become_user: root
