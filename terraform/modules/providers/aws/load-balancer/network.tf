@@ -84,6 +84,45 @@ resource "aws_alb_target_group" "https" {
   }
 }
 
+resource "aws_cloudwatch_metric_alarm" "https-unhealthy-hosts" {
+  alarm_name                = "alb-${var.lb_name}-https-unhealthy-hosts"
+  comparison_operator       = "GreaterThanThreshold"
+  evaluation_periods        = var.lb_alarm_unhealthy_hosts_evaluation_periods
+  metric_name               = "UnHealthyHostCount"
+  namespace                 = "AWS/ApplicationELB"
+  period                    = var.lb_alarm_unhealthy_hosts_period
+  statistic                 = "Average"
+  threshold                 = floor(length(var.lb_instance_ids) * var.lb_alarm_unhealthy_hosts_threshold)
+  alarm_actions             = var.lb_alarm_alarm_actions
+  ok_actions                = var.lb_alarm_ok_actions
+  insufficient_data_actions = var.lb_alarm_insufficient_data_actions
+
+  dimensions = {
+    LoadBalancer = aws_alb.main.arn_suffix
+    TargetGroup  = aws_alb_target_group.https.arn_suffix
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "https-requests-5xx-count" {
+  alarm_name                = "alb-${var.lb_name}-https-requests-5xx-count"
+  comparison_operator       = "GreaterThanThreshold"
+  evaluation_periods        = var.lb_alarm_requests_5xx_count_evaluation_periods
+  metric_name               = "HTTPCode_Target_5XX_Count"
+  namespace                 = "AWS/ApplicationELB"
+  period                    = var.lb_alarm_requests_5xx_count_period
+  statistic                 = "Sum"
+  threshold                 = var.lb_alarm_requests_5xx_threshold
+  alarm_actions             = var.lb_alarm_alarm_actions
+  ok_actions                = var.lb_alarm_ok_actions
+  insufficient_data_actions = var.lb_alarm_insufficient_data_actions
+  treat_missing_data        = "notBreaching"
+
+  dimensions = {
+    LoadBalancer = aws_alb.main.arn_suffix
+    TargetGroup  = aws_alb_target_group.https.arn_suffix
+  }
+}
+
 resource "aws_alb_target_group_attachment" "https" {
   count            = length(var.lb_instance_ids)
   target_group_arn = aws_alb_target_group.https.arn

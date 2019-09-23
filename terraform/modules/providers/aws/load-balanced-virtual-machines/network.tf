@@ -20,5 +20,8 @@ module "lb" {
   lb_logs_object_storage_bucket_name = var.lbvm_lb_logs_object_storage_bucket_name
   lb_stickiness_cookie_duration      = var.lbvm_lb_stickiness_cookie_duration
   lb_stickiness_enabled              = var.lbvm_lb_stickiness_enabled
+  lb_alarm_alarm_actions             = var.lbvm_alarm_alarm_actions
+  lb_alarm_insufficient_data_actions = var.lbvm_alarm_insufficient_data_actions
+  lb_alarm_ok_actions                = var.lbvm_alarm_ok_actions
 }
 
