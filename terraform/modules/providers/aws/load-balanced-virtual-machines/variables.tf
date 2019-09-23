@@ -39,6 +39,10 @@ variable "lbvm_lb_instance_port" {
   default = 80
 }
 
+variable "lbvm_lb_idle_timeout" {
+  default = 300
+}
+
 variable "lbvm_lb_instance_protocol" {
   default = "HTTP"
 }
@@ -66,3 +70,12 @@ variable "lbvm_domain_name_cnames" {
 variable "lbvm_lb_logs_object_storage_bucket_name" {
 }
 
+variable "lbvm_lb_stickiness_cookie_duration" {
+  type    = number
+  default = 86400
+}
+
+variable "lbvm_lb_stickiness_enabled" {
+  type    = bool
+  default = false
+}
