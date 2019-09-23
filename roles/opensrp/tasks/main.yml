@@ -30,6 +30,20 @@
     mode: 0755
   with_items: "{{ opensrp_resource_sub_dirs }}"
 
+# 1. We expect that the user that owns the directory is the OpenMRS user and not the
+# OpenSRP user (this is why we don't set the user owner for the directory)
+#
+# 2. We expect that the OpenSRP user and the OpenMRS user both belong to the `tomcat_group`
+# group (this is why we allow the tomcat_group group to write to the directory)
+- name: Create OpenSRP multimedia directory
+  become: yes
+  become_user: root
+  file:
+    path: "{{ opensrp_multimedia_parent_directory }}"
+    group: "{{ tomcat_group }}"
+    state: directory
+    mode: 0775
+
 - name: Make sure the OpenSRP directory is absent in Tomcat's app directory
   become: yes
   become_user: root
