@@ -41,6 +41,7 @@
   postgresql_db:
     name: "{{ opensrp_postgresql_database }}"
     login_host: "{{ opensrp_postgres_host }}"
+    port: "{{ opensrp_postgres_port }}"
     login_user: "{{ opensrp_postgres_superuser }}"
     login_password: "{{ opensrp_postgres_superuser_password }}"
   tags:
@@ -50,6 +51,7 @@
   postgresql_user:
     db: "{{ opensrp_postgresql_database }}"
     login_host: "{{ opensrp_postgres_host }}"
+    port: "{{ opensrp_postgres_port }}"
     login_user: "{{ opensrp_postgres_superuser }}"
     login_password: "{{ opensrp_postgres_superuser_password }}"
     name: "{{ opensrp_postgresql_user }}"
