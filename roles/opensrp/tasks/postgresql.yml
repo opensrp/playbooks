@@ -1,4 +1,20 @@
 ---
+- name: Install migration prerequisites
+  become: yes
+  become_user: "root"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - unzip
+    - python-migrate
+    - postgresql
+    - libpq-dev
+    - python-psycopg2
+    - git
+  tags:
+    - postgresql
+
 - name: Ensure checkout directory is empty
   file:
     state: absent
@@ -19,21 +35,6 @@
   template:
     src: "templates/opensrp_local_checkout_path/configs/assets/migrations/environments/opensrp_mybatis_env.properties.j2"
     dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/environments/{{ opensrp_mybatis_env }}.properties"
-  tags:
-    - postgresql
-
-- name: Install migration prerequisites
-  become: yes
-  become_user: "root"
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - unzip
-    - python-migrate
-    - postgresql
-    - libpq-dev
-    - python-psycopg2
   tags:
     - postgresql
 
