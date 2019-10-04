@@ -17,8 +17,8 @@ resource "aws_instance" "main" {
 
   root_block_device {
     delete_on_termination = false
-    volume_size = var.vm_instances[count.index]["volume_size"]
-    volume_type = var.vm_instances[count.index]["volume_type"]
+    volume_size           = var.vm_instances[count.index]["volume_size"]
+    volume_type           = var.vm_instances[count.index]["volume_type"]
   }
 
   tags = {
