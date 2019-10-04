@@ -1,7 +1,7 @@
 ---
 dependencies: # noqa 701
  - {
-  role: gpg-import,
+  role: onaio.gpg-import,
   gpg_user: "{{ mysql_backup_system_user }}",
   gpg_group: "{{ mysql_backup_system_group }}",
   gpg_private_key: "{{ mysql_backup_gpg_dir }}/{{ mysql_backup_gpg_key }}-priv.key",
