@@ -14,3 +14,10 @@
   apt:
     name: "duplicity={{ mysql_backup_duplicity_version }}"
     state: present
+
+- name: Install git
+  become: true
+  become_user: root
+  apt:
+    name: git
+    state: present

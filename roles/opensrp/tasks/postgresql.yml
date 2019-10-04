@@ -1,4 +1,20 @@
 ---
+- name: Install migration prerequisites
+  become: yes
+  become_user: "root"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - unzip
+    - python-migrate
+    - postgresql
+    - libpq-dev
+    - python-psycopg2
+    - git
+  tags:
+    - postgresql
+
 - name: Ensure checkout directory is empty
   file:
     state: absent
@@ -22,25 +38,11 @@
   tags:
     - postgresql
 
-- name: Install migration prerequisites
-  become: yes
-  become_user: "root"
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - unzip
-    - python-migrate
-    - postgresql
-    - libpq-dev
-    - python-psycopg2
-  tags:
-    - postgresql
-
 - name: Make sure the OpenSRP PostgreSQL database exists
   postgresql_db:
     name: "{{ opensrp_postgresql_database }}"
     login_host: "{{ opensrp_postgres_host }}"
+    port: "{{ opensrp_postgres_port }}"
     login_user: "{{ opensrp_postgres_superuser }}"
     login_password: "{{ opensrp_postgres_superuser_password }}"
   tags:
@@ -50,6 +52,7 @@
   postgresql_user:
     db: "{{ opensrp_postgresql_database }}"
     login_host: "{{ opensrp_postgres_host }}"
+    port: "{{ opensrp_postgres_port }}"
     login_user: "{{ opensrp_postgres_superuser }}"
     login_password: "{{ opensrp_postgres_superuser_password }}"
     name: "{{ opensrp_postgresql_user }}"

@@ -2,8 +2,8 @@
 dependencies: # noqa 701
  - role: mysql-backup
    when: mysql_install_server and mysql_setup_database_backups
-   mysql_host: "{{ openmrs_mysql_host }}"
-   mysql_backup_user: "root"
+   mysql_host: "{{ mysql_backup_connection_host }}"
+   mysql_backup_user: "{{ mysql_root_user }}"
    mysql_backup_password: "{{ mysql_root_password }}"
    tags:
     - mysql-backup
