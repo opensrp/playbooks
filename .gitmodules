@@ -19,3 +19,6 @@
 [submodule "terraform/modules/providers/aws/postgresql"]
 	path = terraform/modules/providers/aws/postgresql
 	url = https://github.com/onaio/terraform-aws-postgresql.git
+[submodule "roles/postgresql"]
+	path = roles/postgresql
+	url = https://github.com/onaio/ansible-postgresql.git

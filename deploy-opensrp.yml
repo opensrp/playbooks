@@ -41,7 +41,7 @@
   become: true
   become_user: "root"
   roles:
-    - ANXS.postgresql
+    - postgresql
   tags:
     - opensrp-postgresql
     - opensrp-postgres
