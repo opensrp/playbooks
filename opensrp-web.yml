@@ -21,7 +21,7 @@
         - SSL
         - certbot
       when:
-        - opensrp_web_use_certbot == True
+        - opensrp_web_use_certbot
 
     - name: "Setup react"
       role: onaio.react
