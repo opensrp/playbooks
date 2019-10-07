@@ -53,6 +53,7 @@
         nginx_log_dir: "{{ opensrp_web_nginx_log_path }}"
         nginx_large_client_header_buffers: "{{ opensrp_web_nginx_large_client_header_buffers }}"
         nginx_first_start: "{{ opensrp_web_nginx_first_start }}"
+        nginx_access_logs: "{{ opensrp_web_nginx_access_logs }}"
       tags:
         - nginx
         - configure
