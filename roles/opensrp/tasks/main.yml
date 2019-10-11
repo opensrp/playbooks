@@ -74,3 +74,6 @@
   service:
     name: "{{ opensrp_tomcat_instance }}"
     state: restarted
+
+- include_tasks: vietnam.yml
+  when: brand_login_page is defined

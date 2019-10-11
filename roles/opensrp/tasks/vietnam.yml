@@ -1,0 +1,90 @@
+---
+# Required variables:
+#  brand_login_page
+- name: Delete login header file
+  become: yes
+  become_user: "root"
+  file:
+    state: absent
+    path: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/WEB-INF/jspf/header.jspf"
+
+- name: Copy custom header.jspf to tomcat
+  become: yes
+  become_user: "root"
+  copy:
+    src: "tmp/miecd_branding/header.jspf"
+    dest: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/WEB-INF/jspf/header.jspf"
+    owner: root
+    group: root
+
+- name: Create images directory in css folder
+  become: yes
+  become_user: root
+  file:
+    path: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/resources/css/images"
+    owner: "{{ opensrp_system_user }}"
+    group: "{{ tomcat_group }}"
+    state: directory
+
+- name: Copy child-hero.jpg image to tomcat
+  become: yes
+  become_user: "root"
+  copy:
+    src: "tmp/miecd_branding/child-hero.jpg"
+    dest: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/resources/css/images/child-hero.jpg"
+    owner: root
+    group: root
+
+- name: Copy unicef-logo-bg.svg image to tomcat
+  become: yes
+  become_user: "root"
+  copy:
+    src: "tmp/miecd_branding/unicef-logo-bg.svg"
+    dest: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/resources/css/images/unicef-logo-bg.svg"
+    owner: root
+    group: root
+
+- name: Copy vietnam.css to tomcat
+  become: yes
+  become_user: "root"
+  copy:
+    src: "tmp/miecd_branding/vietnam.css"
+    dest: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/resources/css/vietnam.css"
+    owner: root
+    group: root
+
+- name: Create vietnam directory in images folder
+  become: yes
+  become_user: root
+  file:
+    path: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/resources/images/vietnam"
+    owner: "{{ opensrp_system_user }}"
+    group: "{{ tomcat_group }}"
+    state: directory
+
+- name: Copy uni-vietnam.png image to tomcat
+  become: yes
+  become_user: "root"
+  copy:
+    src: "tmp/miecd_branding/uni-vietnam.png"
+    dest: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/resources/images/vietnam/uni-vietnam.png"
+    owner: root
+    group: root
+
+- name: Copy vietnam-moh.png image to tomcat
+  become: yes
+  become_user: "root"
+  copy:
+    src: "tmp/miecd_branding/vietnam-moh.png"
+    dest: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/resources/images/vietnam/vietnam-moh.png"
+    owner: root
+    group: root
+
+- name: Copy vietnam.js to tomcat
+  become: yes
+  become_user: "root"
+  copy:
+    src: "tmp/miecd_branding/vietnam.js"
+    dest: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/resources/js/vietnam.js"
+    owner: root
+    group: root
