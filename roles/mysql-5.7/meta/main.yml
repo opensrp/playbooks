@@ -14,3 +14,5 @@ dependencies: # noqa 701
    collectd_deployed_app_version: "{{ mysql_server_version }}"
    become: True
    when: mysql_install_server
+   tags: 
+    - collectd

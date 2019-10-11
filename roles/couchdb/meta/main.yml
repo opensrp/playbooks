@@ -17,3 +17,5 @@ dependencies: # noqa 701
    collectd_deployed_app_name: "couchdb"
    collectd_deployed_app_version: "{{ couchdb_version }}"
    become: True
+   tags:
+    - collectd
