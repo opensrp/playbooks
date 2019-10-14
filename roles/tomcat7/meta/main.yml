@@ -5,7 +5,7 @@ dependencies: # noqa 701
    collectd_deployed_app_version: "{{ tomcat_service_version }}"
    become: True
    when: install_tomcat_service
-   tags: 
+   tags:
       - collectd
 
  - role: collectd
@@ -13,5 +13,5 @@ dependencies: # noqa 701
    collectd_deployed_app_version: "{{ tomcat_user_version }}"
    become: True
    when: not install_tomcat_service
-   tags: 
+   tags:
       - collectd
