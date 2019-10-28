@@ -76,7 +76,7 @@
     state: restarted
 
 - pause:
-    minutes: 1
+    seconds: 30
 
 - include_tasks: vietnam.yml
   when: brand_login_page is defined
