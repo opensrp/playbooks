@@ -19,3 +19,6 @@
 [submodule "terraform/modules/providers/aws/postgresql"]
 	path = terraform/modules/providers/aws/postgresql
 	url = https://github.com/onaio/terraform-aws-postgresql.git
+[submodule "terraform/modules/providers/aws/slack-notifications"]
+	path = terraform/modules/providers/aws/slack-notifications
+	url = https://github.com/terraform-aws-modules/terraform-aws-notify-slack.git
