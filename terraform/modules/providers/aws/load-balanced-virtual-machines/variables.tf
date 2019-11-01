@@ -79,3 +79,21 @@ variable "lbvm_lb_stickiness_enabled" {
   type    = bool
   default = false
 }
+
+variable "lbvm_alarm_alarm_actions" {
+  type        = list(string)
+  default     = []
+  description = "The list of actions to execute when this alarm transitions into an ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+}
+
+variable "lbvm_alarm_insufficient_data_actions" {
+  type        = list(string)
+  default     = []
+  description = "The list of actions to execute when this alarm transitions into an INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+}
+
+variable "lbvm_alarm_ok_actions" {
+  type        = list(string)
+  default     = []
+  description = "The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+}
