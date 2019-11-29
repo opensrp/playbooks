@@ -1,0 +1,4 @@
+ansible==2.6
+ansible-lint
+pip-tools
+-r aws.pip
