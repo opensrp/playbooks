@@ -4,7 +4,7 @@
   vars_files:
     - vars/setup-server.yml
   pre_tasks:
-    - include_tasks: tasks/python2-ubuntu.yml
+    - include_tasks: tasks/python3-ubuntu.yml
     - name: Setup Ansible
       setup:
   roles:
