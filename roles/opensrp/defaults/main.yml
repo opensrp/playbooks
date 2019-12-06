@@ -187,7 +187,7 @@ opensrp_nginx_disabled_sites:
   - default
 opensrp_nginx_access_logs:
   - name: "timed_combined"
-    format: "'$http_x_forwarded_for - $remote_user [$time_local]  \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_time $upstream_response_time $gzip_ratio' $request_length"
+    format: "'$http_x_forwarded_for - $remote_user [$time_local]  \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_time $upstream_response_time $gzip_ratio $request_length'"
     options: null
     filename: "access.log"
 
