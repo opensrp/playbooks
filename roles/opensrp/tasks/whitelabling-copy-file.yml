@@ -1,0 +1,17 @@
+- name: Create file's directory
+  become: yes
+  become_user: root
+  file:
+    path: "{{ current_file.dest }}"
+    owner: "{{ opensrp_system_user }}"
+    group: "{{ tomcat_group }}"
+    state: directory
+
+- name: Copy the file
+  become: yes
+  become_user: root
+  copy:
+    src: "{{ current_file.src }}"
+    dest: "{{ current_file.dest }}"
+    owner: "{{ opensrp_system_user }}"
+    group: "{{ tomcat_group }}"

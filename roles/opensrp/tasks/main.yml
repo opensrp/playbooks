@@ -75,9 +75,11 @@
     name: "{{ opensrp_tomcat_instance }}"
     state: restarted
 
-- name: Pause 30 secs for Tomcat to extract war
+- name: Pause 15 secs to allow tomcat to extract war
   pause:
-    seconds: 30
+    seconds: 15
 
-- include_tasks: vietnam.yml
-  when: brand_login_page is defined
+- include_tasks: whitelabling-copy-file.yml
+  with_items: "{{ opensrp_whitelabing_copy_files }}"
+  loop_control:
+    loop_var: "current_file" 
