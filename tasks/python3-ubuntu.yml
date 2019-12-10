@@ -1,0 +1,5 @@
+---
+- name: Install Python 3 from apt for Ansible
+  raw: test -e /usr/bin/python3 || (sudo apt -y update && sudo apt install -y python3-minimal)
+  register: output
+  changed_when: False

@@ -1,7 +1,7 @@
 - hosts: dhis-app-servers, dhis-postgresql-servers
   gather_facts: False
   pre_tasks:
-    - include_tasks: tasks/python2-ubuntu.yml
+    - include_tasks: tasks/python3-ubuntu.yml
     - name: Setup Ansible
       setup:
   roles:
