@@ -75,9 +75,11 @@
     name: "{{ opensrp_tomcat_instance }}"
     state: restarted
 
-- name: Pause 15 secs to allow tomcat to extract war
-  pause:
-    seconds: 15
+- name: Wait until the folder webapps/opensrp/WEB-INF is present before continuing. Tomcat is extracting war file
+  become: yes
+  become_user: root
+  wait_for:
+    path: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/WEB-INF"
 
 - include_tasks: whitelabling-copy-file.yml
   with_items: "{{ opensrp_whitelabing_copy_files }}"
