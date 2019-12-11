@@ -23,14 +23,14 @@ Make sure all [pip][5] requirements are installed by running the following comma
 you do this in a dedicated [Python virtual env][6]:
 
 ```sh
-pip install -r requirements.txt
+pip install -r requirements/base.pip
 ```
 
 Install the [Ansible Galaxy](https://docs.ansible.com/ansible/latest/reference_appendices/galaxy.html) requirements using these commands:
 
 ```sh
 mkdir -p ~/.ansible/roles/opensrp
-ansible-galaxy install -r requirements.yml -p ~/.ansible/roles/opensrp
+ansible-galaxy install -r requirements/ansible-galaxy.yml -p ~/.ansible/roles/opensrp
 ```
 
 ## Inventories
