@@ -1,0 +1,59 @@
+---
+- hosts: opensrp-web
+  serial: 1 # Runs playbook one server at at time (to achieve a rolling update)
+  max_fail_percentage: 0 # Don't continue deploying on other hosts if playbook fails on one
+  gather_facts: true
+  become: true
+  roles:
+    - name: "Setup SSL certificates"
+      role: onaio.certbot
+      vars:
+        site_name: "{{ opensrp_web_certbot_site_names[0] }}"
+        certbot_create_certs: "{{ opensrp_web_certbot_create_certs }}"
+        certbot_mail_address: "{{ opensrp_web_certbot_mail_address }}"
+        certbot_renew_certs: "{{ opensrp_web_certbot_renew_certs }}"
+        certbot_install_cert: "{{ opensrp_web_certbot_install_cert }}"
+        certbot_webserver_installed: "nginx"
+        certbot_site_names: "{{ opensrp_web_certbot_site_names }}"
+        certbot_package:  "python-certbot-nginx"
+      tags:
+        - install
+        - SSL
+        - certbot
+      when:
+        - opensrp_web_use_certbot
+
+    - name: "Setup react"
+      role: onaio.react
+      become: true
+      become_user: "root"
+      vars:
+        react_system_user: "{{ opensrp_web_react_system_user }}"
+        react_system_user_home: "{{ opensrp_web_react_system_user_home }}"
+        react_codebase_path: "{{ opensrp_web_react_codebase_path }}"
+        react_git_url: "{{ opensrp_web_react_git_url }}"
+        react_git_version: "{{ opensrp_web_react_git_version }}"
+        react_git_key: "{{ opensrp_web_react_git_key }}"
+        react_app_settings: "{{ opensrp_web_react_app_settings }}"
+      tags:
+        - install
+        - react
+
+    - name: "Setup nginx"
+      role: onaio.nginx
+      become: true
+      become_user: "root"
+      vars:
+        nginx_sites: "{{ opensrp_web_nginx_sites }}"
+        nginx_ssl_dir: "{{ opensrp_web_nginx_ssl_dir }}"
+        nginx_install_method: "package"
+        nginx_enabled_sites: "{{ opensrp_web_nginx_enabled_sites }}"
+        nginx_default_enable: false
+        monit_protection: "{{ opensrp_web_nginx_monit_protection }}"
+        nginx_log_dir: "{{ opensrp_web_nginx_log_path }}"
+        nginx_large_client_header_buffers: "{{ opensrp_web_nginx_large_client_header_buffers }}"
+        nginx_first_start: "{{ opensrp_web_nginx_first_start }}"
+        nginx_access_logs: "{{ opensrp_web_nginx_access_logs }}"
+      tags:
+        - nginx
+        - configure

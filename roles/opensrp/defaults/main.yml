@@ -221,3 +221,4 @@ opensrp_logstash_custom_inputs:
       - '  from_{{ opensrp_system_user }} => true'
       - '  git_version => "{{ opensrp_version }}"'
       - '}'
+opensrp_whitelabeling_copy_files: []

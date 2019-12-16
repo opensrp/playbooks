@@ -28,3 +28,8 @@
   name: onaio.logstash
   version: 287f0b7ec647bada6df00980df8ff05caed74844
   scm: git
+
+- src: git+https://github.com/onaio/ansible-react
+  name: onaio.react
+  version: v0.0.2
+  scm: git
