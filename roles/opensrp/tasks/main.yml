@@ -81,7 +81,7 @@
   wait_for:
     path: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/opensrp/WEB-INF"
 
-- include_tasks: whitelabling-copy-file.yml
-  with_items: "{{ opensrp_whitelabing_copy_files }}"
+- include_tasks: whitelabeling-copy-file.yml
+  with_items: "{{ opensrp_whitelabeling_copy_files }}"
   loop_control:
     loop_var: "current_file" 
