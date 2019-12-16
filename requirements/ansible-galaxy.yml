@@ -33,3 +33,8 @@
   name: onaio.react
   version: v0.0.2
   scm: git
+
+- src: https://github.com/onaio/ansible-gpg-import.git
+  name: onaio.gpg-import
+  version: c5bb983d5b4bc5fec82a03d71543fefbe2ddd06e
+  scm: git

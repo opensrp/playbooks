@@ -1,6 +1,6 @@
 ---
 dependencies: # noqa 701
-- role: gpg-import
+- role: onaio.gpg-import
   gpg_user: "{{ couchdb_backup_system_user }}"
   gpg_group: "{{ couchdb_backup_system_group }}"
   gpg_private_key: "{{ couchdb_backup_gpg_dir }}/{{ couchdb_backup_gpg_key }}-priv.key"
