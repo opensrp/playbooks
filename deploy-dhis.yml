@@ -11,7 +11,7 @@
   become: true
   become_user: "root"
   roles:
-    - ANXS.postgresql
+    - postgresql
 
 - hosts: dhis-app-servers
   roles:
