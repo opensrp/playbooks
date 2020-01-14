@@ -75,3 +75,9 @@ dependencies: # noqa 701
   when: openmrs_install_logstash
   tags:
    - logstash
+
+- role: onaio.monit
+  monit_scripts: "{{ openmrs_monit_scripts }}"
+  openmrs_monit_hostname: "{{ openmrs_monit_hostname }}"
+  openmrs_tomcat_http_port_timeout: "{{ openmrs_tomcat_http_port_timeout }}"
+  openmrs_tomcat_instance: "{{ openmrs_tomcat_instance | default(openmrs_site_name) | default(ansible_host) }}"
