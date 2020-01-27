@@ -120,14 +120,14 @@ opensrp_cors_max_age: "60"
 opensrp_use_opensrp_team_module: false
 
 # S3 configuration (should be populated for deployments using S3 multimedia storage)
-aws_access_key_id: ""
-aws_secret_access_key: ""
-aws_region: ""
-aws_bucket: ""
-aws_key_folder: ""
+opensrp_aws_access_key_id: ""
+opensrp_aws_secret_access_key: ""
+opensrp_aws_region: ""
+opensrp_s3_bucket_name: ""
+opensrp_s3_bucket_folder_path: ""
 
 # multimedia file manager (is file system by default)
-multimedia_file_manager: "FileSystemMultimediaFileManager"
+opensrp_multimedia_file_manager: "FileSystemMultimediaFileManager"
 
 # SSL
 opensrp_ssl_src_dir: "/etc/letsencrypt/live/{{ opensrp_site_name }}"
