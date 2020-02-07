@@ -66,6 +66,8 @@ openmrs_hibernate_c3p0_idle_test_period: 120
 openmrs_monit_scripts: ["tomcat-openmrs"]
 openmrs_monit_hostname: "{{ openmrs_system_user }}"
 openmrs_tomcat_http_port_timeout: 15
+openmrs_monit_request_end_point: "/openmrs/ws/rest/v1/session"
+openmrs_monit_content_regex: "'.*\,\"authenticated\"\:false.*'" 
 # Swap
 openmrs_swap_file_size_mb: 2048
 openmrs_swap_swappiness: 10
