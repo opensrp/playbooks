@@ -38,3 +38,8 @@
   name: onaio.gpg-import
   version: c5bb983d5b4bc5fec82a03d71543fefbe2ddd06e
   scm: git
+
+- src: https://github.com/onaio/ansible-monit.git
+  name: onaio.redis
+  version: 915997b4ba97c78daaf6ff5fb59b19fcff476524
+  scm: git
