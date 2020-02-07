@@ -77,7 +77,10 @@ dependencies: # noqa 701
    - logstash
 
 - role: onaio.monit
-  monit_scripts: "{{ openmrs_monit_scripts }}"
+  monit_template_scripts: "{{ openmrs_monit_template_scripts }}"
+  service_name: "{{ openmrs_tomcat_instance }}"
+  monit_request_end_point: "{{ openmrs_monit_request_end_point }}"
+  monit_content_regex: "{{ openmrs_monit_content_regex }}"
   openmrs_monit_hostname: "{{ openmrs_monit_hostname }}"
   openmrs_tomcat_http_port_timeout: "{{ openmrs_tomcat_http_port_timeout }}"
   openmrs_tomcat_instance: "{{ openmrs_tomcat_instance | default(openmrs_site_name) | default(ansible_host) }}"
