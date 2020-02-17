@@ -35,12 +35,14 @@
                 "ProjectList": "{{ user `project` }}"
             },
             "run_tags": {
+                "Name": "{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
                 "OwnerList": "{{ user `owner` }}",
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
                 "ProjectList": "{{ user `project` }}"
             },
             "run_volume_tags": {
+                "Name": "{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
                 "OwnerList": "{{ user `owner` }}",
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
