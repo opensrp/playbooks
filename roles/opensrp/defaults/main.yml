@@ -73,6 +73,8 @@ opensrp_redis_max_connections: 25
 opensrp_authencation_cache_ttl: 600
 opensrp_postgres_host: "localhost"
 opensrp_postgres_port: 5432
+opensrp_postgres_enable_ssl: true
+opensrp_postgres_sslmode: "verify-full"
 opensrp_mysql_root_user: "root"
 opensrp_mysql_root_password: ""
 opensrp_postgres_superuser: postgres
