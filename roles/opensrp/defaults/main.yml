@@ -129,6 +129,17 @@ opensrp_s3_bucket_folder_path: ""
 # multimedia file manager (is file system by default)
 opensrp_multimedia_file_manager: "FileSystemMultimediaFileManager"
 
+
+#Schedules interval Configuration in milliseconds
+opensrp_event_add_serverversion_interval: 180000
+opensrp_view_add_serverversion_interval: 120000
+opensrp_task_add_serverversion_interval: 120000
+opensrp_location_add_serverversion_interval: 120000
+
+opensrp_openmrs_sync_interval: 300000
+opensrp_openmrs_validate_interval: 420000
+opensrp_dhis2_sync_interval: 600000
+
 # SSL
 opensrp_ssl_src_dir: "/etc/letsencrypt/live/{{ opensrp_site_name }}"
 opensrp_ssl_cert_file: "fullchain.pem"
