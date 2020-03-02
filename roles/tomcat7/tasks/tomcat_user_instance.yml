@@ -23,7 +23,7 @@
 - name: Create Tomcat7 User Instance
   become: yes
   become_user: "root"
-  command: "tomcat7-instance-create {{ tomcat_instance }}"
+  command: "tomcat7-instance-create -p {{ tomcat_http_port }} -c {{ tomcat_shutdown_port }} {{ tomcat_instance }}"
   args:
     chdir: "{{ tomcat_user_home }}"
     creates: "{{ tomcat_user_home }}/{{ tomcat_instance }}"
