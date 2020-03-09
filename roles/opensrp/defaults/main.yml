@@ -74,7 +74,7 @@ opensrp_authencation_cache_ttl: 600
 opensrp_postgres_host: "localhost"
 opensrp_postgres_port: 5432
 opensrp_postgres_enable_ssl: true
-opensrp_postgres_sslmode: "verify-full"
+opensrp_postgres_sslmode: "verify-ca"
 opensrp_mysql_root_user: "root"
 opensrp_mysql_root_password: ""
 opensrp_postgres_superuser: postgres
@@ -122,8 +122,8 @@ opensrp_cors_max_age: "60"
 opensrp_use_opensrp_team_module: false
 
 # S3 configuration (should be populated for deployments using S3 multimedia storage)
-opensrp_aws_access_key_id: "
-opensrp_aws_secret_access_key: "
+opensrp_aws_access_key_id: ""
+opensrp_aws_secret_access_key: ""
 opensrp_aws_region: ""
 opensrp_s3_bucket_name: ""
 opensrp_s3_bucket_folder_path_prefix: ""
