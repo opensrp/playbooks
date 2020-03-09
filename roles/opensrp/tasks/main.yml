@@ -77,7 +77,7 @@
   become: yes
   become_user: root
   command: "update-ca-certificates"
-  when: (ca_bundle_url|length > 0 and downloaded_rds_ca_bundle) is changed
+  when: (ca_bundle_url|length > 0 and downloaded_ca_bundle) is changed
 
 - include_tasks: postgresql.yml
   when: opensrp_psql_as_primary_database

@@ -78,6 +78,8 @@ opensrp_mysql_root_password: ""
 opensrp_postgres_superuser: postgres
 opensrp_postgres_superuser_password: ""
 opensrp_postgresql_user_role_attr_flags: "LOGIN"
+opensrp_postgres_enable_ssl: true
+opensrp_postgres_sslmode: "verify-ca"
 opensrp_mybatis_version: "3.3.1"
 opensrp_mybatis_install_dir: "/opt/mybatis"
 opensrp_mybatis_env: "deployment"
