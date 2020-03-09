@@ -1,4 +1,19 @@
 ---
+- name: Ensures {{ opensrp_user_home }}/.postgresql dir exists
+  become: yes
+  become_user: root
+  file: path="{{ opensrp_user_home }}/.postgresql"
+    state=directory
+
+- name: Copy the CA certificate bundle to postgres default location
+  become: yes
+  become_user: root
+  copy:
+    src: "/usr/local/share/ca-certificates/ca-bundle.crt"
+    dest: "{{ opensrp_user_home }}/.postgresql/root.crt"
+    remote_src: yes
+  when: ca_bundle_url|length > 0
+
 - name: Install migration prerequisites
   become: yes
   become_user: "root"

@@ -116,14 +116,14 @@ opensrp_oauth_profiles:
 
 #CORS allowed source domain
 opensrp_cors_allowed_source: ""
-opensrp_cors_max_age: "60"   
+opensrp_cors_max_age: "60"
 
 #Team module settings
 opensrp_use_opensrp_team_module: false
 
 # S3 configuration (should be populated for deployments using S3 multimedia storage)
-opensrp_aws_access_key_id: ""
-opensrp_aws_secret_access_key: ""
+opensrp_aws_access_key_id: "
+opensrp_aws_secret_access_key: "
 opensrp_aws_region: ""
 opensrp_s3_bucket_name: ""
 opensrp_s3_bucket_folder_path_prefix: ""
@@ -173,14 +173,14 @@ opensrp_nginx_sites:
         enabled: false
 
   - server:
-      name:  "{{ opensrp_https_site }}"
+      name: "{{ opensrp_https_site }}"
       __listen: "443;\n  listen [::]:443;\n"
       server_name: "{{ opensrp_site_name }}"
       client_max_body_size: "{{ opensrp_nginx_max_filesize }}"
       ssl:
         enabled: true
         cert: "{{ opensrp_ssl_cert_file }}"
-        key:  "{{ opensrp_ssl_key_file }}"
+        key: "{{ opensrp_ssl_key_file }}"
         src_dir: "{{ opensrp_ssl_src_dir }}"
         conf: "{{ opensrp_site_name }}-ssl.conf"
         remote_src: "{{ opensrp_certs_from_letsencrypt }}"
@@ -211,7 +211,7 @@ opensrp_nginx_disabled_sites:
   - default
 opensrp_nginx_access_logs:
   - name: "timed_combined"
-    format: "'$http_x_forwarded_for - $remote_user [$time_local]  \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_time $upstream_response_time $gzip_ratio $request_length'"
+    format: '''$http_x_forwarded_for - $remote_user [$time_local]  "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $request_time $upstream_response_time $gzip_ratio $request_length'''
     options: null
     filename: "access.log"
 
@@ -225,24 +225,27 @@ opensrp_logstash_plugins:
   - logstash-input-file
   - logstash-output-gelf
 opensrp_logstash_custom_outputs:
-  - output: 'gelf'
+  - output: "gelf"
     lines:
       - 'host => "{{ opensrp_logstash_gelf_server }}"'
       - 'port => "{{ opensrp_logstash_gelf_port }}"'
       - 'sender => "%{host}"'
 opensrp_nginx_logstash_log: "{{ opensrp_nginx_log_dir }}/{{ opensrp_https_site }}-ssl-access.log"
 opensrp_logstash_custom_inputs:
-  - input: 'file'
+  - input: "file"
     lines:
       - 'path => ["{{ opensrp_nginx_logstash_log }}"]'
       - 'start_position => "end"'
-      - 'add_field => {'
-      - '  ssl => true'
-      - '  nginx_access => true'
-      - '  from_nginx => true'
+      - "add_field => {"
+      - "  ssl => true"
+      - "  nginx_access => true"
+      - "  from_nginx => true"
       - '  from_host => "%{host}"'
       - '  from_domain => "{{ opensrp_site_name }}"'
-      - '  from_{{ opensrp_system_user }} => true'
+      - "  from_{{ opensrp_system_user }} => true"
       - '  git_version => "{{ opensrp_version }}"'
-      - '}'
+      - "}"
 opensrp_whitelabeling_copy_files: []
+
+# RDS
+ca_bundle_url: ""
