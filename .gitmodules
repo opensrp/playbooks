@@ -22,3 +22,9 @@
 [submodule "roles/postgresql"]
 	path = roles/postgresql
 	url = https://github.com/onaio/ansible-postgresql.git
+[submodule "roles/onaio.backup"]
+	path = roles/onaio.backup
+	url = https://github.com/onaio/ansible-backup.git
+[submodule "roles/onaio.gpg-import"]
+	path = roles/onaio.gpg-import
+	url = https://github.com/onaio/ansible-gpg-import.git
