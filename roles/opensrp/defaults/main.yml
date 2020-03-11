@@ -125,7 +125,7 @@ opensrp_aws_secret_access_key: ""
 opensrp_aws_region: ""
 opensrp_s3_bucket_name: ""
 opensrp_s3_bucket_folder_path: ""
-opensrp_unique_s3_bucket_folder_path: "{{ opensrp_site_name }}/{{ opensrp_s3_bucket_folder_path }}"
+opensrp_unique_s3_bucket_folder_path: "media/{{ opensrp_site_name }}/{{ opensrp_s3_bucket_folder_path }}"
 
 # multimedia file manager (is file system by default)
 opensrp_multimedia_file_manager: "FileSystemMultimediaFileManager"
