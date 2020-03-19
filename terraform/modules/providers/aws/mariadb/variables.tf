@@ -16,6 +16,12 @@ variable "mariadb_end_date" {
 variable "mariadb_project" {
 }
 
+variable "mariadb_deployment_type" {
+  type        = string
+  default     = "vm"
+  description = "The deployment type the resources brought up by this module are part of."
+}
+
 variable "mariadb_version" {
 }
 

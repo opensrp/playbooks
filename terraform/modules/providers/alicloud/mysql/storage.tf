@@ -13,6 +13,7 @@ resource "alicloud_db_instance" "main" {
     OwnerList       = var.mysql_owner
     EnvironmentList = var.mysql_env
     ProjectList     = var.mysql_project
+    DeploymentType  = var.mysql_deployment_type
     EndDate         = var.mysql_end_date
   }
 }

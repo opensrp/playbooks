@@ -17,6 +17,7 @@ resource "aws_security_group" "ingress_rules" {
     EnvironmentList = var.firewall_env
     EndDate         = var.firewall_end_date
     ProjectList     = var.firewall_project
+    DeploymentType  = var.firewall_deployment_type
   }
 }
 
@@ -39,6 +40,7 @@ resource "aws_security_group" "egress_rules" {
     EnvironmentList = var.firewall_env
     EndDate         = var.firewall_end_date
     ProjectList     = var.firewall_project
+    DeploymentType  = var.firewall_deployment_type
   }
 }
 

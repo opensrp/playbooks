@@ -8,6 +8,7 @@ resource "aws_vpc" "main" {
     EnvironmentList = var.vpc_env
     EndDate         = var.vpc_end_date
     ProjectList     = var.vpc_project
+    DeploymentType  = var.vpc_deployment_type
   }
 }
 
@@ -20,6 +21,7 @@ resource "aws_internet_gateway" "main" {
     EnvironmentList = var.vpc_env
     EndDate         = var.vpc_end_date
     ProjectList     = var.vpc_project
+    DeploymentType  = var.vpc_deployment_type
   }
 }
 
@@ -37,6 +39,7 @@ resource "aws_route_table" "main" {
     EnvironmentList = var.vpc_env
     EndDate         = var.vpc_end_date
     ProjectList     = var.vpc_project
+    DeploymentType  = var.vpc_deployment_type
   }
 }
 
@@ -53,6 +56,7 @@ resource "aws_subnet" "vpc_subnets" {
     EnvironmentList = var.vpc_env
     EndDate         = var.vpc_end_date
     ProjectList     = var.vpc_project
+    DeploymentType  = var.vpc_deployment_type
   }
 }
 

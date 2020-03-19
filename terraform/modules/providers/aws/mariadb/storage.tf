@@ -25,6 +25,7 @@ resource "aws_db_instance" "main" {
     OwnerList       = var.mariadb_owner
     EnvironmentList = var.mariadb_env
     ProjectList     = var.mariadb_project
+    DeploymentType  = var.mariadb_deployment_type
     EndDate         = var.mariadb_end_date
   }
 }
@@ -43,6 +44,7 @@ resource "aws_db_parameter_group" "main" {
     OwnerList       = var.mariadb_owner
     EnvironmentList = var.mariadb_env
     ProjectList     = var.mariadb_project
+    DeploymentType  = var.mariadb_deployment_type
     EndDate         = var.mariadb_end_date
   }
 }
@@ -54,6 +56,7 @@ resource "aws_kms_key" "main" {
     OwnerList       = var.mariadb_owner
     EnvironmentList = var.mariadb_env
     ProjectList     = var.mariadb_project
+    DeploymentType  = var.mariadb_deployment_type
     EndDate         = var.mariadb_end_date
   }
 }

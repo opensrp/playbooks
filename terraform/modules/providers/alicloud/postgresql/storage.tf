@@ -13,6 +13,7 @@ resource "alicloud_db_instance" "main" {
     OwnerList       = var.postgresql_owner
     EnvironmentList = var.postgresql_env
     ProjectList     = var.postgresql_project
+    DeploymentType  = var.postgresql_deployment_type
     EndDate         = var.postgresql_end_date
   }
 }
