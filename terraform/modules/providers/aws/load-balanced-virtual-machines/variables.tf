@@ -55,7 +55,7 @@ variable "lbvm_lb_listener_rules" {
 }
 
 variable "lbvm_lb_ssl_policy" {
-  default = "ELBSecurityPolicy-2016-08"
+  default = "ELBSecurityPolicy-TLS-1-2-2017-01"
 }
 
 variable "lbvm_domain_zone_name" {
