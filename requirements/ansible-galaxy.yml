@@ -38,3 +38,8 @@
   name: onaio.gpg-import
   version: c5bb983d5b4bc5fec82a03d71543fefbe2ddd06e
   scm: git
+
+- src: https://github.com/onaio/ansible-java.git
+  name: onaio.ansible-java
+  version: f0b9b4c1e4388f5f5ea99b7643bdae2c4f9e9cbc
+  scm: git
