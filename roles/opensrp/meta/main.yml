@@ -7,6 +7,13 @@ dependencies: # noqa 701
   swap_swappiness: "{{ opensrp_swap_swappiness }}"
   when: opensrp_install_swap
 
+- role: onaio.ansible-java
+  java_packages: "{{ opensrp_java_packages }}"
+  become: true
+  become_user: "root"
+  tags:
+    - java
+    
 - role: tomcat7
   install_tomcat_service: false
   tomcat_system_user: "{{ opensrp_system_user }}"
@@ -54,13 +61,6 @@ dependencies: # noqa 701
   become: True
   tags:
     - collectd
-
-- role: onaio.ansible-java
-  java_packages: "{{ opensrp_java_packages }}"
-  become: true
-  become_user: "root"
-  tags:
-    - java
 
 - role: onaio.logstash
   become: true
