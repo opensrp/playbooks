@@ -18,6 +18,12 @@ variable "tls_certificate_owner" {
 variable "tls_certificate_project" {
 }
 
+variable "tls_certificate_deployment_type" {
+  type        = string
+  default     = "vm"
+  description = "The deployment type the resources brought up by this module are part of."
+}
+
 variable "tls_certificate_end_date" {
 }
 

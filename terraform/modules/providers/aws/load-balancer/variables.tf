@@ -7,6 +7,12 @@ variable "lb_owner" {
 variable "lb_project" {
 }
 
+variable "lb_deployment_type" {
+  type        = string
+  default     = "vm"
+  description = "The deployment type the resources brought up by this module are part of."
+}
+
 variable "lb_end_date" {
 }
 

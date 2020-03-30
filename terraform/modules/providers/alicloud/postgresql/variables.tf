@@ -22,6 +22,12 @@ variable "postgresql_project" {
   type = string
 }
 
+variable "postgresql_deployment_type" {
+  type        = string
+  default     = "vm"
+  description = "The deployment type the resources brought up by this module are part of."
+}
+
 variable "postgresql_vpc_id" {
   type = string
 }

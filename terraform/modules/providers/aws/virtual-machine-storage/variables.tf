@@ -7,6 +7,11 @@ variable "vms_owner" {
 variable "vms_project" {
   type = string
 }
+variable "vms_deployment_type" {
+  type        = string
+  default     = "vm"
+  description = "The deployment type the resources brought up by this module are part of."
+}
 variable "vms_end_date" {
   type = string
 }

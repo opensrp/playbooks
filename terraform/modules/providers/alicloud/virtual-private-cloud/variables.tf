@@ -22,6 +22,12 @@ variable "vpc_project" {
   type = string
 }
 
+variable "vpc_deployment_type" {
+  type        = string
+  default     = "vm"
+  description = "The deployment type the resources brought up by this module are part of."
+}
+
 variable "vpc_availability_zones" {
   type = list(string)
 }

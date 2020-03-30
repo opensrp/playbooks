@@ -9,6 +9,7 @@ resource "aws_acm_certificate" "main" {
     EnvironmentList = var.tls_certificate_env
     EndDate         = var.tls_certificate_end_date
     ProjectList     = var.tls_certificate_project
+    DeploymentType  = var.tls_certificate_deployment_type
   }
 
   lifecycle {
