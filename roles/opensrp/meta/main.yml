@@ -55,7 +55,7 @@ dependencies: # noqa 701
   tags:
     - collectd
 
-- role: geerlingguy.java
+- role: onaio.ansible-java
   java_packages: "{{ opensrp_java_packages }}"
   become: true
   become_user: "root"
