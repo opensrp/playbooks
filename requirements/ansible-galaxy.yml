@@ -43,3 +43,9 @@
   name: onaio.ansible-java
   version: f0b9b4c1e4388f5f5ea99b7643bdae2c4f9e9cbc
   scm: git
+
+- src: robertdebock.tomcat
+  version: 4.3.5
+
+- src: robertdebock.service
+  version: 2.4.6

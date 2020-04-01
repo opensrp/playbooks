@@ -26,8 +26,25 @@ dependencies: # noqa 701
   tomcat_max_filesize: "{{ opensrp_tomcat_max_filesize }}"
   tomcat_fsize_threshold: "{{ opensrp_tomcat_fsize_threshold }}"
   tomcat_ajp_port: "{{ opensrp_tomcat_ajp_port }}"
+  when: opensrp_version is match('v1.\d.\d.\w+')
   tags:
     - tomcat7
+
+- role: robertdebock.tomcat
+  become: true
+  become_user: root
+  tomcat_directory: "{{ opensrp_user_home }}"
+  tomcat_instances:
+    - name: "{{ opensrp_tomcat_instance }}"
+      version: 9
+      shutdown_port: "{{ opensrp_tomcat_shutdown_port }}"
+      non_ssl_connector_port: "{{ opensrp_tomcat_http_port }}"
+      ajp_port: "{{ opensrp_tomcat_ajp_port }}"
+      user: "{{ opensrp_system_user }}"
+      group: "{{ tomcat_group }}"
+  when: opensrp_version is match('v2.\d.\d.\w+')
+  tags:
+    - tomcat9
 
 - role: onaio.certbot
   become: true
