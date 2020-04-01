@@ -22,3 +22,6 @@
 [submodule "roles/postgresql"]
 	path = roles/postgresql
 	url = https://github.com/onaio/ansible-postgresql.git
+[submodule "roles/onaio.react"]
+	path = roles/onaio.react
+	url = https://github.com/onaio/ansible-react.git
