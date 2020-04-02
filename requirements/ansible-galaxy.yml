@@ -44,8 +44,12 @@
   version: f0b9b4c1e4388f5f5ea99b7643bdae2c4f9e9cbc
   scm: git
 
-- src: robertdebock.tomcat
-  version: 4.3.5
+- src: https://github.com/onaio/ansible-role-tomcat.git
+  name: onaio.ansible-role-tomcat
+  version: 1a2a4f96ec4dad469a7ab2ba0a430c684df16f6a
+  scm: git
 
-- src: robertdebock.service
-  version: 2.4.6
+- src: https://github.com/onaio/ansible-role-service.git
+  name: onaio.ansible-role-service
+  version: 76f8cab25c21835c408b7200e20bc6a7a8db0b6e
+  scm: git
