@@ -1,10 +1,10 @@
 ---
 dependencies: # noqa 701
-- role: onaio.ansible-role-tomcat
-  become: true
-  become_user: root
-  tomcat_directory: "{{ tomcat_user_home }}"
-  tomcat_instances:
+ - role: onaio.ansible-role-tomcat
+   become: true
+   become_user: root
+   tomcat_directory: "{{ tomcat_user_home }}"
+   tomcat_instances:
     - name: "{{ tomcat_instance }}"
       description: "{{ tomcat_instance }} Tomcat Service"
       version: 9
@@ -18,11 +18,11 @@ dependencies: # noqa 701
       restart_mode: "always"
       restart_seconds: "15"
       java_opts:
-          - name: CATALINA_OPTS
-            value: "{{ catalina_ops }}"
-          - name: JAVA_HOME
-            value: "/usr/lib/jvm/java-11-openjdk-amd64"
-  tags:
+        - name: CATALINA_OPTS
+          value: "{{ catalina_ops }}"
+        - name: JAVA_HOME
+          value: "/usr/lib/jvm/java-11-openjdk-amd64"
+   tags:
     - tomcat9
  
  - role: collectd

@@ -1,3 +1,3 @@
 ---
-tomcat_logs_dir: "/var/log/tomcat9"
-tomcat_logrotate_conf_dest: "/etc/logrotate.d/tomcat9"
+tomcat_logs_dir: "{{ tomcat_user_home }}/{{ tomcat_instance }}/logs"
+tomcat_logrotate_conf_dest: "/etc/logrotate.d/{{ tomcat_instance }}"
