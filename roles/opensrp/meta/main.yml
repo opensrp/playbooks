@@ -30,23 +30,16 @@ dependencies: # noqa 701
   tags:
     - tomcat7
 
-- role: onaio.ansible-role-tomcat
-  become: true
-  become_user: root
-  tomcat_directory: "{{ opensrp_user_home }}"
-  tomcat_instances:
-    - name: "{{ opensrp_tomcat_instance }}"
-      description: "{{ opensrp_tomcat_instance }} Tomcat Service"
-      version: 9
-      shutdown_port: "{{ opensrp_tomcat_shutdown_port }}"
-      non_ssl_connector_port: "{{ opensrp_tomcat_http_port }}"
-      ajp_port: "{{ opensrp_tomcat_ajp_port }}"
-      user: "{{ opensrp_system_user }}"
-      service_type: "forking"
-      group: "{{ tomcat_group }}"
-      start_after: "network.target"
-      restart_mode: "always"
-      restart_seconds: "15"
+- role: tomcat9
+  tomcat_system_user: "{{ opensrp_system_user }}"
+  tomcat_system_group: "{{ tomcat_group }}"
+  tomcat_user_home: "{{ opensrp_user_home }}"
+  tomcat_instance: "{{ opensrp_tomcat_instance }}"
+  tomcat_http_port: "{{ opensrp_tomcat_http_port }}"
+  tomcat_shutdown_port: "{{ opensrp_tomcat_shutdown_port }}"
+  tomcat_max_filesize: "{{ opensrp_tomcat_max_filesize }}"
+  tomcat_fsize_threshold: "{{ opensrp_tomcat_fsize_threshold }}"
+  tomcat_ajp_port: "{{ opensrp_tomcat_ajp_port }}"
   when: opensrp_version is match('v2.\d.\d.\w+')
   tags:
     - tomcat9

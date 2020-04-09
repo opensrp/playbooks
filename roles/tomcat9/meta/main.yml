@@ -3,7 +3,7 @@ dependencies: # noqa 701
 - role: onaio.ansible-role-tomcat
   become: true
   become_user: root
-  tomcat_directory: "{{ tomcat_home_dir }}"
+  tomcat_directory: "{{ tomcat_user_home }}"
   tomcat_instances:
     - name: "{{ tomcat_instance }}"
       description: "{{ tomcat_instance }} Tomcat Service"
@@ -11,9 +11,9 @@ dependencies: # noqa 701
       shutdown_port: "{{ tomcat_shutdown_port }}"
       non_ssl_connector_port: "{{ tomcat_http_port }}"
       ajp_port: "{{ tomcat_ajp_port }}"
-      user: "{{ tomcat_user }}"
+      user: "{{ tomcat_system_user }}"
       service_type: "forking"
-      group: "{{ tomcat_group }}"
+      group: "{{ tomcat_system_group }}"
       start_after: "network.target"
       restart_mode: "always"
       restart_seconds: "15"
