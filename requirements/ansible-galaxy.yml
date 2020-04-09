@@ -46,7 +46,7 @@
 
 - src: https://github.com/onaio/ansible-role-tomcat.git
   name: onaio.ansible-role-tomcat
-  version: fd3247dcf522089737c9b6815f8e232e8e617339
+  version: 797558acec01ad62e736e0f6079eaa735a8cb7ba
   scm: git
 
 - src: https://github.com/onaio/ansible-role-service.git
