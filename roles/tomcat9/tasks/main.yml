@@ -1,0 +1,15 @@
+---
+# Required variables:
+#  install_tomcat_service
+- name: Delete webapps
+  file:
+    state: absent
+    path: "{{ item }}"
+    with_items:
+      - "{{ tomcat_home_dir }}/{{ tomcat_instance }}/webapps/docs"
+      - "{{ tomcat_home_dir }}/{{ tomcat_instance }}/webapps/examples"
+      - "{{ tomcat_home_dir }}/{{ tomcat_instance }}/webapps/manager"
+      - "{{ tomcat_home_dir }}/{{ tomcat_instance }}/webapps/host-manager"
+
+- name: Configure Logrotate
+  include_tasks: logrotate.yml

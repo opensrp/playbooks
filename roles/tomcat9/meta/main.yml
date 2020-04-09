@@ -1,0 +1,33 @@
+---
+dependencies: # noqa 701
+- role: onaio.ansible-role-tomcat
+  become: true
+  become_user: root
+  tomcat_directory: "{{ tomcat_home_dir }}"
+  tomcat_instances:
+    - name: "{{ tomcat_instance }}"
+      description: "{{ tomcat_instance }} Tomcat Service"
+      version: 9
+      shutdown_port: "{{ tomcat_shutdown_port }}"
+      non_ssl_connector_port: "{{ tomcat_http_port }}"
+      ajp_port: "{{ tomcat_ajp_port }}"
+      user: "{{ tomcat_user }}"
+      service_type: "forking"
+      group: "{{ tomcat_group }}"
+      start_after: "network.target"
+      restart_mode: "always"
+      restart_seconds: "15"
+      java_opts:
+          - name: CATALINA_OPTS
+            value: "{{ catalina_ops }}"
+          - name: JAVA_HOME
+            value: "/usr/lib/jvm/java-11-openjdk-amd64"
+  tags:
+    - tomcat9
+ 
+ - role: collectd
+   collectd_deployed_app_name: "tomcat9"
+   collectd_deployed_app_version: "{{ tomcat_service_version }}"
+   become: True
+   tags:
+      - collectd

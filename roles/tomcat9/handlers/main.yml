@@ -1,0 +1,5 @@
+- name: restart tomcat9 instance
+  systemd:
+    name: "{{ tomcat_instance }}"
+    state: restarted
+  become: yes
