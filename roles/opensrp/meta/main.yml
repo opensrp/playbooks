@@ -7,7 +7,7 @@ dependencies: # noqa 701
   swap_swappiness: "{{ opensrp_swap_swappiness }}"
   when: opensrp_install_swap
 
-- role: onaio.ansible-java
+- role: openjdk-11
   java_packages: "{{ opensrp_java_packages }}"
   become: true
   become_user: "root"

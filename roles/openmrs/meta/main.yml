@@ -55,7 +55,7 @@ dependencies: # noqa 701
   tags:
     - collectd
 
-- role: geerlingguy.java
+- role: openjdk-11
   java_packages: "{{ openmrs_java_packages }}"
   become: true
   become_user: "root"

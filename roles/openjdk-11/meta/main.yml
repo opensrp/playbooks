@@ -1,0 +1,8 @@
+---
+dependencies: # noqa 701
+ - role: onaio.ansible-java
+   java_packages: "{{ opensrp_java_packages }}"
+   become: true
+   become_user: "root"
+   tags:
+    - java
