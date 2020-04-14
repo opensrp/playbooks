@@ -50,6 +50,7 @@ dependencies: # noqa 701
 - role: collectd
   collectd_deployed_app_name: "openmrs"
   collectd_deployed_app_version: "{{ openmrs_version }}"
+  collectd_version: "{{ server_collectd_version }}"
   become: True
   tags:
     - collectd
