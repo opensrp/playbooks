@@ -1,0 +1,30 @@
+---
+- name: Change keystore to JKS
+  become: yes
+  become_user: "root"
+  replace:
+    path: /etc/java-11-openjdk/security/java.security
+    regexp: 'keystore.type=pkcs12'
+    replace: 'keystore.type=jks'
+    backup: yes
+  register: changeKeystoreType
+  tags:
+   - java
+   
+- name: Delete CA certificates
+  become: yes
+  become_user: "root"
+  file:
+    state: absent
+    path: "/etc/ssl/certs/java/cacerts"
+  when: changeKeystoreType.changed
+  tags:
+    - java
+
+- name: Recreate certificates
+  become: yes
+  become_user: "root"
+  command: "/var/lib/dpkg/info/ca-certificates-java.postinst configure"
+  when: changeKeystoreType.changed
+  tags:
+   - java
