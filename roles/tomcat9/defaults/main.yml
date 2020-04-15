@@ -19,4 +19,4 @@ tomcat_rotated_logs:
   - "{{ tomcat_logs_dir }}/catalina.out"
 
 #Logstash
-tomcat_collectd_version: "5.7.*"
+tomcat_collectd_version: "5.5.*"
