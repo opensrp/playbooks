@@ -13,7 +13,7 @@ dependencies: # noqa 701
   become_user: "root"
   tags:
     - java
-    
+
 - role: tomcat7
   install_tomcat_service: false
   tomcat_system_user: "{{ opensrp_system_user }}"
