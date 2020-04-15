@@ -1,6 +1,6 @@
 ---
 dependencies: # noqa 701
- - role: onaio.ansible-role-tomcat
+ - role: onaio.tomcat
    become: true
    become_user: root
    tomcat_directory: "{{ tomcat_user_home }}"

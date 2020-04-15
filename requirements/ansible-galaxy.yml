@@ -40,16 +40,16 @@
   scm: git
 
 - src: https://github.com/onaio/ansible-java.git
-  name: onaio.ansible-java
+  name: onaio.java
   version: f0b9b4c1e4388f5f5ea99b7643bdae2c4f9e9cbc
   scm: git
 
 - src: https://github.com/onaio/ansible-role-tomcat.git
-  name: onaio.ansible-role-tomcat
-  version: 4cf628d28ce803762323911e4c5bf9c5f4ec6e3c
+  name: onaio.tomcat
+  version: a3261b16a62ea8a530cf625c4adf453c8a90a7f7
   scm: git
 
 - src: https://github.com/onaio/ansible-role-service.git
   name: robertdebock.service
-  version: 76f8cab25c21835c408b7200e20bc6a7a8db0b6e
+  version: a129fa51580e1183bf31d441c0c0f8c25aa946a8
   scm: git
