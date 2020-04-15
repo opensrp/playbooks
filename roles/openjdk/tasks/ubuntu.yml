@@ -7,24 +7,26 @@
     regexp: 'keystore.type=pkcs12'
     replace: 'keystore.type=jks'
     backup: yes
-  register: changeKeystoreType
+  notify:
+    - Delete CA certificates
+    - Recreate CA certificates
   tags:
    - java
-   
-- name: Delete CA certificates
-  become: yes
-  become_user: "root"
-  file:
+handlers:
+ - name: Delete CA certificates
+   become: yes
+   become_user: "root"
+   file:
     state: absent
     path: "/etc/ssl/certs/java/cacerts"
-  when: changeKeystoreType.changed
-  tags:
+   when: changeKeystoreType.changed
+   tags:
     - java
 
-- name: Recreate certificates
-  become: yes
-  become_user: "root"
-  command: "/var/lib/dpkg/info/ca-certificates-java.postinst configure"
-  when: changeKeystoreType.changed
-  tags:
+ - name: Recreate CA certificates
+   become: yes
+   become_user: "root"
+   command: "/var/lib/dpkg/info/ca-certificates-java.postinst configure"
+   when: changeKeystoreType.changed
+   tags:
    - java
