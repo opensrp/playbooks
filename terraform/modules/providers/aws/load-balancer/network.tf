@@ -35,6 +35,7 @@ resource "aws_alb" "main" {
     EnvironmentList = var.lb_env
     EndDate         = var.lb_end_date
     ProjectList     = var.lb_project
+    DeploymentType  = var.lb_deployment_type
   }
 }
 
@@ -81,6 +82,7 @@ resource "aws_alb_target_group" "https" {
     EnvironmentList = var.lb_env
     EndDate         = var.lb_end_date
     ProjectList     = var.lb_project
+    DeploymentType  = var.lb_deployment_type
   }
 }
 
@@ -223,6 +225,7 @@ resource "aws_security_group" "firewall_rule" {
     EnvironmentList = var.lb_env
     EndDate         = var.lb_end_date
     ProjectList     = var.lb_project
+    DeploymentType  = var.lb_deployment_type
   }
 }
 

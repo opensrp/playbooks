@@ -8,6 +8,7 @@ resource "alicloud_vpc" "main" {
     EnvironmentList = var.vpc_env
     EndDate         = var.vpc_end_date
     ProjectList     = var.vpc_project
+    DeploymentType  = var.vpc_deployment_type
   }
 }
 
@@ -28,6 +29,7 @@ resource "alicloud_route_table" "main" {
     EnvironmentList = var.vpc_env
     EndDate         = var.vpc_end_date
     ProjectList     = var.vpc_project
+    DeploymentType  = var.vpc_deployment_type
   }
 }
 
@@ -44,6 +46,7 @@ resource "alicloud_vswitch" "vpc_vswitches" {
     EnvironmentList = var.vpc_env
     EndDate         = var.vpc_end_date
     ProjectList     = var.vpc_project
+    DeploymentType  = var.vpc_deployment_type
   }
 }
 

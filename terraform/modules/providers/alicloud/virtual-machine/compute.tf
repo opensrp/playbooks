@@ -26,6 +26,7 @@ resource "alicloud_instance" "main" {
     EnvironmentList = var.vm_env
     EndDate         = var.vm_end_date
     ProjectList     = var.vm_project
+    DeploymentType  = var.vm_deployment_type
   }
 
   volume_tags = {
@@ -35,5 +36,6 @@ resource "alicloud_instance" "main" {
     EnvironmentList = var.vm_env
     EndDate         = var.vm_end_date
     ProjectList     = var.vm_project
+    DeploymentType  = var.vm_deployment_type
   }
 }

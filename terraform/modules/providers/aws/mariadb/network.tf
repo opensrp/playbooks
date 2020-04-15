@@ -30,6 +30,7 @@ resource "aws_security_group" "firewall_rule" {
     EnvironmentList = var.mariadb_env
     EndDate         = var.mariadb_end_date
     ProjectList     = var.mariadb_project
+    DeploymentType  = var.mariadb_deployment_type
   }
 }
 
@@ -42,6 +43,7 @@ resource "aws_db_subnet_group" "main" {
     OwnerList       = var.mariadb_owner
     EnvironmentList = var.mariadb_env
     ProjectList     = var.mariadb_project
+    DeploymentType  = var.mariadb_deployment_type
     EndDate         = var.mariadb_end_date
   }
 }
