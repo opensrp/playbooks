@@ -13,6 +13,12 @@ variable "vm_owner" {
 variable "vm_project" {
 }
 
+variable "vm_deployment_type" {
+  type        = string
+  default     = "vm"
+  description = "The deployment type the resources brought up by this module are part of."
+}
+
 variable "vm_end_date" {
 }
 

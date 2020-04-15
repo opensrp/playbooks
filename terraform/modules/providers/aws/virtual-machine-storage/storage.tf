@@ -9,6 +9,7 @@ resource "aws_ebs_volume" "volume" {
     Name            = "${var.vms_name}-${count.index}"
     OwnerList       = var.vms_owner
     ProjectList     = var.vms_project
+    DeploymentType  = var.vms_deployment_type
     EndDate         = var.vms_end_date
     EnvironmentList = var.vms_env
   }

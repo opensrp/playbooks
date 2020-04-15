@@ -21,6 +21,12 @@ variable "firewall_end_date" {
 variable "firewall_project" {
 }
 
+variable "firewall_deployment_type" {
+  type        = string
+  default     = "vm"
+  description = "The deployment type the resources brought up by this module are part of."
+}
+
 variable "firewall_name" {
 }
 

@@ -22,6 +22,12 @@ variable "mysql_project" {
   type = string
 }
 
+variable "mysql_deployment_type" {
+  type        = string
+  default     = "vm"
+  description = "The deployment type the resources brought up by this module are part of."
+}
+
 variable "mysql_vpc_id" {
   type = string
 }
