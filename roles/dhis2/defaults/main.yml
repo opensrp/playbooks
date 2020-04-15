@@ -121,3 +121,6 @@ dhis_logstash_custom_inputs:
       - '  from_{{ dhis_system_user }} => true'
       - '  git_version => "{{ dhis_version }}"'
       - '}'
+
+#Collectd
+dhis2_collectd_version: "5.5.*"

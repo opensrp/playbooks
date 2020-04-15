@@ -10,3 +10,5 @@ mysql_backup_connection_host: "127.0.0.1"
 mysql_root_user: "root"
 mysql_root_password:
 mysql_root_user_allowed_host_regex: "{{ mysql_bind_address }}"
+
+mysql_collectd_version: "5.5.*"

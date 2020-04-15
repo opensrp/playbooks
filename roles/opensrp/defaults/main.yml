@@ -244,3 +244,7 @@ opensrp_logstash_custom_inputs:
       - '  git_version => "{{ opensrp_version }}"'
       - '}'
 opensrp_whitelabeling_copy_files: []
+
+
+#Collectd
+opensrp_collectd_version: "5.5.*"

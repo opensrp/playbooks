@@ -28,7 +28,7 @@ dependencies: # noqa 701
  - role: collectd
    collectd_deployed_app_name: "tomcat9"
    collectd_deployed_app_version: "{{ tomcat_service_version }}"
-   collectd_version: "{{ server_collectd_version }}"
+   collectd_version: "{{ tomcat_collectd_version }}"
    become: True
    tags:
       - collectd

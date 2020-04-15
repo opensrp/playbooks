@@ -17,3 +17,6 @@ tomcat_logs_archives_to_keep: 7
 # logs that will be rotated using logrotate
 tomcat_rotated_logs:
   - "{{ tomcat_logs_dir }}/catalina.out"
+
+#Logstash
+tomcat_collectd_version: "5.7.*"

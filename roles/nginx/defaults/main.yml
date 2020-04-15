@@ -5,3 +5,4 @@ certs_from_letsencrypt: false
 ssl_chain: "{{ ssl_cert }}"
 ssl_playbooks_dir: "files/tls/"
 nginx_version: "1.10.3*"
+nginx_collectd_version: "5.5.*"

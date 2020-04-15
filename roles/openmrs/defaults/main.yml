@@ -164,3 +164,6 @@ openmrs_logstash_custom_inputs:
       - '  from_{{ openmrs_system_user }} => true'
       - '  git_version => "{{ openmrs_version }}"'
       - '}'
+
+#Logstash
+openmrs_collectd_version: "5.5.*"
