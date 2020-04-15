@@ -22,3 +22,6 @@
 [submodule "roles/postgresql"]
 	path = roles/postgresql
 	url = https://github.com/onaio/ansible-postgresql.git
+[submodule "terraform/modules/providers/aws/virtual-machine-storage"]
+	path = terraform/modules/providers/aws/virtual-machine-storage
+	url = https://github.com/onaio/terraform-aws-ebs-volume.git
