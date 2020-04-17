@@ -19,7 +19,7 @@
   become: yes
   become_user: root
   command: "update-ca-certificates"
-  when: (opensrp_postgres_ca_bundle_url|length > 0 and downloaded_ca_bundle) is changed
+  when: (opensrp_postgres_ca_bundle_url|length > 0 and downloaded_ca_bundle is changed)
 
 - name: Copy the Postgres CA certificate bundle to postgres default location
   become: yes
