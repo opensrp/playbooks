@@ -248,5 +248,5 @@ opensrp_logstash_custom_inputs:
       - '}'
 opensrp_whitelabeling_copy_files: []
 
-# RDS
-ca_bundle_url: ""
+# Postgres CA Bundle url
+postgres_ca_bundle_url: ""

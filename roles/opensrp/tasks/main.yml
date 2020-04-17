@@ -63,22 +63,6 @@
     owner: "{{ opensrp_system_user }}"
     group: "{{ tomcat_group }}"
 
-- name: Download CA certificate bundle
-  become: yes
-  become_user: root
-  get_url:
-    url: "{{ ca_bundle_url }}"
-    dest: "/usr/local/share/ca-certificates/ca-bundle.crt"
-    force: yes
-  register: downloaded_ca_bundle
-  when: ca_bundle_url|length > 0
-
-- name: Update CA certificates
-  become: yes
-  become_user: root
-  command: "update-ca-certificates"
-  when: (ca_bundle_url|length > 0 and downloaded_ca_bundle) is changed
-
 - include_tasks: postgresql.yml
   when: opensrp_psql_as_primary_database
   tags:
