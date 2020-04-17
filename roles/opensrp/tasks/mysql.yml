@@ -9,11 +9,28 @@
     - mysql-client
     - python-mysqldb
 
+- name: Download MySQL CA certificate bundle
+  become: yes
+  become_user: root
+  get_url:
+    url: "{{ opensrp_mysql_ca_bundle_url }}"
+    dest: "/usr/local/share/ca-certificates/mysql-ca-bundle.crt"
+    force: yes
+  register: downloaded_mysql_ca_bundle
+  when: opensrp_mysql_ca_bundle_url|length > 0
+
+- name: Update MySQL CA certificates
+  become: yes
+  become_user: root
+  command: "update-ca-certificates"
+  when: (opensrp_mysql_ca_bundle_url|length > 0 and downloaded_mysql_ca_bundle is changed)
+
 - name: Create the OpenSRP MySQL databases
   mysql_db:
     login_host: "{{ opensrp_mysql_host }}"
     login_user: "{{ opensrp_mysql_root_user }}"
     login_password: "{{ opensrp_mysql_root_password }}"
+    ca_cert: "/etc/ssl/certs/java/cacerts"
     name: "{{ item }}"
     state: present
   with_items:
