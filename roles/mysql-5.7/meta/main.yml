@@ -12,7 +12,6 @@ dependencies: # noqa 701
  - role: collectd
    collectd_deployed_app_name: "mysql"
    collectd_deployed_app_version: "{{ mysql_server_version }}"
-   collectd_version: "{{ mysql_collectd_version }}"
    become: True
    when: mysql_install_server
    tags:

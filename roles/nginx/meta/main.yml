@@ -4,7 +4,6 @@ dependencies:
    collectd_deployed_app_name: "nginx"
    collectd_deployed_app_version: "{{ nginx_version }}"
    collectd_scripts: ["nginx"]
-   collectd_version: "{{ nginx_collectd_version }}"
    become: True
    tags: 
     - collectd

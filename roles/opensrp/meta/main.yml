@@ -73,7 +73,6 @@ dependencies: # noqa 701
 - role: collectd
   collectd_deployed_app_name: "opensrp"
   collectd_deployed_app_version: "{{ opensrp_version }}"
-  collectd_version: "{{ opensrp_collectd_version }}"
   become: True
   tags:
     - collectd

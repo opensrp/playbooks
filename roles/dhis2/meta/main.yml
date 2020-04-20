@@ -73,7 +73,6 @@ dependencies: # noqa 701
 - role: collectd
   collectd_deployed_app_name: "dhis2"
   collectd_deployed_app_version: "{{ dhis_version }}"
-  collectd_version: "{{ dhis_collectd_version }}"
   become: True
   tags:
     - collectd

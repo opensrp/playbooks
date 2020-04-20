@@ -30,7 +30,6 @@
       collectd_server_hostname: "{{ _hostname_to_use if server_monitoring_set_hostname else server_monitoring_hostname }}"
       collectd_server_type: "{{ server_monitoring_server_type }}"
       collectd_server_owner: "{{ server_monitoring_owner }}"
-      collectd_version: "{{ server_collectd_version }}"
       tags:
         - monitoring
         - collectd
