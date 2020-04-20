@@ -12,3 +12,5 @@
     - Recreate CA certificates
   tags:
    - java
+
+- meta: flush_handlers
