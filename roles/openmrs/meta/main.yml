@@ -19,8 +19,23 @@ dependencies: # noqa 701
   tomcat_max_filesize: "{{ openmrs_tomcat_max_filesize }}"
   tomcat_fsize_threshold: "{{ openmrs_tomcat_fsize_threshold }}"
   tomcat_ajp_port: "{{ openmrs_tomcat_ajp_port }}"
+  when: openmrs_tomcat_version == '7'
   tags:
     - tomcat7
+
+- role: tomcat9
+  tomcat_system_user: "{{ openmrs_system_user }}"
+  tomcat_system_group: "{{ tomcat_group }}"
+  tomcat_user_home: "{{ openmrs_tomcat_user_home }}"
+  tomcat_instance: "{{ openmrs_tomcat_instance }}"
+  tomcat_http_port: "{{ openmrs_tomcat_http_port }}"
+  tomcat_shutdown_port: "{{ openmrs_tomcat_shutdown_port }}"
+  tomcat_max_filesize: "{{ openmrs_tomcat_max_filesize }}"
+  tomcat_fsize_threshold: "{{ openmrs_tomcat_fsize_threshold }}"
+  tomcat_ajp_port: "{{ openmrs_tomcat_ajp_port }}"
+  when: openmrs_tomcat_version == '9'
+  tags:
+    - tomcat9
 
 - role: onaio.certbot
   become: true
