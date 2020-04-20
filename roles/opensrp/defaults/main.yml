@@ -46,7 +46,7 @@ allowed_couchdb_hosts: []
 mysql_backups_to_s3: false
 tomcat_user: "tomcat7"
 tomcat_group: "tomcat7"
-opensrp_tomcat_version: 7
+opensrp_tomcat_version: 9
 opensrp_tomcat_http_port: 8082
 opensrp_tomcat_shutdown_port: 8007
 opensrp_tomcat_ajp_port: 8012
