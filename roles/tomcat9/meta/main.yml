@@ -18,8 +18,8 @@ dependencies: # noqa 701
       start_after: "network.target"
       restart_mode: "always"
       restart_seconds: "15"
-      xmx: "{{ tomcat_xmx}}"
-      xms: "{{ tomcat_xms}}"
+      xmx: "{{ tomcat_xmx }}"
+      xms: "{{ tomcat_xms }}"
       java_opts:
         - name: CATALINA_OPTS
           value: "{{ catalina_ops }}"
