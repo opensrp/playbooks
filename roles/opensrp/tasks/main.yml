@@ -7,7 +7,7 @@
 - include_tasks: compile.yml
 
 - include_tasks: mysql.yml
-  when: opensrp_mysql_database is defined and opensrp_version is match('v1.\d.\d.\w+')
+  when: opensrp_mysql_database is defined
 
 - name: Create OpenSRP resource directory
   become: yes
