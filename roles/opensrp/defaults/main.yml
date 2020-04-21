@@ -13,7 +13,7 @@ opensrp_mysql_password: "opensrp"
 opensrp_openmrs_url: "https://{{ openmrs_site_name }}/{{ openmrs_install_name }}/"
 opensrp_install_name: "opensrp"
 opensrp_resource_dir: "/var/lib/OpenSRP"
-opensrp_version: "v1.6.0-SNAPSHOT"
+opensrp_version: "v2.0.0-SNAPSHOT"
 opensrp_openmrs_user: "admin"
 opensrp_openmrs_password: "admin"
 opensrp_openmrs_tomcat_user_home: "/home/openmrs"
@@ -46,6 +46,7 @@ allowed_couchdb_hosts: []
 mysql_backups_to_s3: false
 tomcat_user: "tomcat7"
 tomcat_group: "tomcat7"
+opensrp_tomcat_version: 9
 opensrp_tomcat_http_port: 8082
 opensrp_tomcat_shutdown_port: 8007
 opensrp_tomcat_ajp_port: 8012
@@ -83,7 +84,7 @@ opensrp_mybatis_install_dir: "/opt/mybatis"
 opensrp_mybatis_env: "deployment"
 opensrp_mybatis_migration_extra_args: ""
 opensrp_java_packages:
-  - openjdk-8-jre
+  - openjdk-11-jre
 opensrp_multimedia_parent_directory: "{{ opensrp_openmrs_tomcat_user_home }}/.OpenMRS"
 
 # List of profiles to be activated. Only the specified profiles will

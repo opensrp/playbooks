@@ -1,0 +1,16 @@
+---
+ - name: Delete CA certificates
+   become: yes
+   become_user: "root"
+   file:
+    state: absent
+    path: "/etc/ssl/certs/java/cacerts"
+   tags:
+    - java
+
+ - name: Recreate CA certificates
+   become: yes
+   become_user: "root"
+   command: "/var/lib/dpkg/info/ca-certificates-java.postinst configure"
+   tags:
+   - java

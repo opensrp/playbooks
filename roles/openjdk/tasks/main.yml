@@ -1,0 +1,6 @@
+---
+- include_tasks: ubuntu.yml
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version == '16.04'
+    - java_packages == 'openjdk-11-jre'
