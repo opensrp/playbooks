@@ -6,7 +6,7 @@ Files herein relate to using the deployment scripts in this repository within Go
 
 Here's the proposed directory structure for the .gocd directory
 
-```
+```shell
 .gocd/
 ├── pipelines
 │   └── opensrp-web

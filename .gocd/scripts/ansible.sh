@@ -18,9 +18,8 @@ rolesDir="$2"
 ansibleArgs="$3"
 rootDir="."
 
-
 virtualenv "${venvDir}"
 source "${venvDir}/bin/activate"
 pip install -r "${rootDir}/requirements/base.pip"
 ansible-galaxy install -r "${rootDir}/requirements/ansible-galaxy.yml" -p "${rolesDir}"
-ansible-playbook ${ansibleArgs}
+ansible-playbook "${ansibleArgs}"

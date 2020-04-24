@@ -24,8 +24,7 @@ vaultUser="$4"
 vaultKeyPath="$5"
 
 curDir="$PWD"
-keyFile=`openssl rand -hex 3`
-
+keyFile=$(openssl rand -hex 3)
 
 mkdir -p "${keysDir}"
 mkdir -p "${installDir}"
@@ -36,8 +35,8 @@ unzip vault.zip
 cd "${curDir}"
 
 ssh-keygen -t ed25519 -f "${keysDir}/${keyFile}" -N ""
-${installDir}/vault login -method=aws
-${installDir}/vault write -field=signed_key "${vaultKeyPath}/sign/$vaultUser" public_key="@${keysDir}/${keyFile}.pub" > "${keysDir}/${keyFile}-cert.pub"
-eval `ssh-agent -s`
+"${installDir}/vault" login -method=aws
+"${installDir}/vault" write -field=signed_key "${vaultKeyPath}/sign/$vaultUser" public_key="@${keysDir}/${keyFile}.pub" > "${keysDir}/${keyFile}-cert.pub"
+eval $(ssh-agent -s)
 ssh-add "${keysDir}/${keyFile}"
-ln -sf $SSH_AUTH_SOCK $agentFile
+ln -sf "$SSH_AUTH_SOCK" "$agentFile"
