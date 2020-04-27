@@ -8,6 +8,7 @@ tomcat_user: "tomcat"
 tomcat_group: "tomcat"
 tomcat_user_home: /opt
 tomcat_instance: tomcat
+tomcat_catalina_ops: ""
 # The number of days to keep Tomcat logs before deleting them
 tomcat_logs_max_age_days: 90
 # The maximum file size of Tomcat logs before rotating them
