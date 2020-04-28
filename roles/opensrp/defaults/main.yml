@@ -79,6 +79,8 @@ opensrp_mysql_root_password: ""
 opensrp_postgres_superuser: postgres
 opensrp_postgres_superuser_password: ""
 opensrp_postgresql_user_role_attr_flags: "LOGIN"
+opensrp_postgres_enable_ssl: true
+opensrp_postgres_sslmode: "verify-ca"
 opensrp_mybatis_version: "3.3.1"
 opensrp_mybatis_install_dir: "/opt/mybatis"
 opensrp_mybatis_env: "deployment"
@@ -131,6 +133,7 @@ opensrp_unique_s3_bucket_folder_path: "{% if opensrp_s3_bucket_folder_path_prefi
 
 # multimedia file manager (is file system by default)
 opensrp_multimedia_file_manager: "FileSystemMultimediaFileManager"
+
 
 #Schedules interval Configuration in milliseconds
 opensrp_event_add_serverversion_interval: 180000
@@ -245,3 +248,6 @@ opensrp_logstash_custom_inputs:
       - '  git_version => "{{ opensrp_version }}"'
       - '}'
 opensrp_whitelabeling_copy_files: []
+
+# Postgres CA Bundle url
+opensrp_postgres_ca_bundle_url: ""
