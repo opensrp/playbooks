@@ -52,7 +52,7 @@ jdbc.backend=MYSQL
 jdbc.driverClassName=com.mysql.jdbc.Driver
 jdbc.username={{ opensrp_mysql_user }}
 jdbc.password={{ opensrp_mysql_password }}
-jdbc.url=jdbc:mysql://{{ opensrp_mysql_host }}:{{ opensrp_mysql_port }}/{{ opensrp_mysql_database }}?createDatabaseIfNotExist=true
+jdbc.url=jdbc:mysql://{{ opensrp_mysql_host }}:{{ opensrp_mysql_port }}/{{ opensrp_mysql_database }}?createDatabaseIfNotExist=true{% if opensrp_mysql_enable_ssl %}&verifyServerCertificate={{ opensrp_mysql_verify_certificate }}&useSSL=true&requireSSL=true{% endif %}
 ##jdbc url with server and port but without database
 jdbc.url-wo-db=jdbc:mysql://{{ opensrp_mysql_host }}:{{ opensrp_mysql_port }}
 

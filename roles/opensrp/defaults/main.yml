@@ -10,6 +10,8 @@ opensrp_motech_database: "motechquartz"
 opensrp_mysql_user: "opensrp"
 opensrp_mysql_app_host: "localhost"
 opensrp_mysql_password: "opensrp"
+opensrp_mysql_enable_ssl: true
+opensrp_mysql_verify_certificate: true
 opensrp_openmrs_url: "https://{{ openmrs_site_name }}/{{ openmrs_install_name }}/"
 opensrp_install_name: "opensrp"
 opensrp_resource_dir: "/var/lib/OpenSRP"
@@ -249,5 +251,7 @@ opensrp_logstash_custom_inputs:
       - '}'
 opensrp_whitelabeling_copy_files: []
 
+# MySQL CA Bundle url
+opensrp_mysql_ca_bundle_url: ""
 # Postgres CA Bundle url
 opensrp_postgres_ca_bundle_url: ""
