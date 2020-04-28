@@ -18,6 +18,7 @@ dhis_tomcat_ajp_port: 8012
 dhis_tomcat_https_port: 8443
 dhis_tomcat_max_filesize: "52428800"
 dhis_tomcat_fsize_threshold: "10485760"
+dhis_tomcat_version: 7
 
 # PostgreSQL
 dhis_postgresql_user: dhis

@@ -1,0 +1,16 @@
+---
+- name: Change keystore to JKS
+  become: yes
+  become_user: "root"
+  replace:
+    path: /etc/java-11-openjdk/security/java.security
+    regexp: 'keystore.type=pkcs12'
+    replace: 'keystore.type=jks'
+    backup: yes
+  notify:
+    - Delete CA certificates
+    - Recreate CA certificates
+  tags:
+   - java
+
+- meta: flush_handlers

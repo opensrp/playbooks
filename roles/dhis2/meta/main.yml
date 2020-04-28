@@ -28,8 +28,25 @@ dependencies: # noqa 701
   tomcat_ajp_port: "{{ dhis_tomcat_ajp_port }}"
   tomcat_https_port: "{{ dhis_tomcat_https_port }}"
   catalina_ops: "{{ dhis_java_ops }}"
+  when: dhis_tomcat_version == '7'
   tags:
     - tomcat7
+
+- role: tomcat9
+  tomcat_system_user: "{{ dhis_system_user }}"
+  tomcat_system_group: "{{ dhis_system_group }}"
+  tomcat_user_home: "{{ dhis_user_home }}"
+  tomcat_instance: "{{ dhis_tomcat_instance }}"
+  tomcat_http_port: "{{ dhis_tomcat_http_port }}"
+  tomcat_shutdown_port: "{{ dhis_tomcat_shutdown_port }}"
+  tomcat_max_filesize: "{{ dhis_tomcat_max_filesize }}"
+  tomcat_fsize_threshold: "{{ dhis_tomcat_fsize_threshold }}"
+  tomcat_ajp_port: "{{ dhis_tomcat_ajp_port }}"
+  tomcat_https_port: "{{ dhis_tomcat_https_port }}"
+  catalina_ops: "{{ dhis_java_ops }}"
+  when: dhis_tomcat_version == '9'
+  tags:
+    - tomcat9
 
 - role: onaio.certbot
   certbot_create_certs: "{{ dhis_certbot_create_certs }}"

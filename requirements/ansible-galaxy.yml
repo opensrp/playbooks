@@ -31,10 +31,25 @@
 
 - src: git+https://github.com/onaio/ansible-react
   name: onaio.react
-  version: v0.0.2
+  version: master
   scm: git
 
 - src: https://github.com/onaio/ansible-gpg-import.git
   name: onaio.gpg-import
   version: c5bb983d5b4bc5fec82a03d71543fefbe2ddd06e
+  scm: git
+
+- src: https://github.com/onaio/ansible-java.git
+  name: onaio.java
+  version: f0b9b4c1e4388f5f5ea99b7643bdae2c4f9e9cbc
+  scm: git
+
+- src: https://github.com/onaio/ansible-role-tomcat.git
+  name: onaio.tomcat
+  version: a3261b16a62ea8a530cf625c4adf453c8a90a7f7
+  scm: git
+
+- src: https://github.com/onaio/ansible-role-service.git
+  name: robertdebock.service
+  version: a129fa51580e1183bf31d441c0c0f8c25aa946a8
   scm: git

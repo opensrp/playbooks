@@ -15,7 +15,7 @@ opensrp_mysql_verify_certificate: true
 opensrp_openmrs_url: "https://{{ openmrs_site_name }}/{{ openmrs_install_name }}/"
 opensrp_install_name: "opensrp"
 opensrp_resource_dir: "/var/lib/OpenSRP"
-opensrp_version: "v1.6.0-SNAPSHOT"
+opensrp_version: "v2.0.0-SNAPSHOT"
 opensrp_openmrs_user: "admin"
 opensrp_openmrs_password: "admin"
 opensrp_openmrs_tomcat_user_home: "/home/openmrs"
@@ -48,6 +48,7 @@ allowed_couchdb_hosts: []
 mysql_backups_to_s3: false
 tomcat_user: "tomcat7"
 tomcat_group: "tomcat7"
+opensrp_tomcat_version: 9
 opensrp_tomcat_http_port: 8082
 opensrp_tomcat_shutdown_port: 8007
 opensrp_tomcat_ajp_port: 8012
@@ -80,12 +81,14 @@ opensrp_mysql_root_password: ""
 opensrp_postgres_superuser: postgres
 opensrp_postgres_superuser_password: ""
 opensrp_postgresql_user_role_attr_flags: "LOGIN"
+opensrp_postgres_enable_ssl: true
+opensrp_postgres_sslmode: "verify-ca"
 opensrp_mybatis_version: "3.3.1"
 opensrp_mybatis_install_dir: "/opt/mybatis"
 opensrp_mybatis_env: "deployment"
 opensrp_mybatis_migration_extra_args: ""
 opensrp_java_packages:
-  - openjdk-8-jre
+  - openjdk-11-jre
 opensrp_multimedia_parent_directory: "{{ opensrp_openmrs_tomcat_user_home }}/.OpenMRS"
 
 # List of profiles to be activated. Only the specified profiles will
@@ -132,6 +135,7 @@ opensrp_unique_s3_bucket_folder_path: "{% if opensrp_s3_bucket_folder_path_prefi
 
 # multimedia file manager (is file system by default)
 opensrp_multimedia_file_manager: "FileSystemMultimediaFileManager"
+
 
 #Schedules interval Configuration in milliseconds
 opensrp_event_add_serverversion_interval: 180000
@@ -249,3 +253,5 @@ opensrp_whitelabeling_copy_files: []
 
 # MySQL CA Bundle url
 opensrp_mysql_ca_bundle_url: ""
+# Postgres CA Bundle url
+opensrp_postgres_ca_bundle_url: ""
