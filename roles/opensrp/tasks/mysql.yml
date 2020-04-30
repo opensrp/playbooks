@@ -30,7 +30,7 @@
     login_host: "{{ opensrp_mysql_host }}"
     login_user: "{{ opensrp_mysql_root_user }}"
     login_password: "{{ opensrp_mysql_root_password }}"
-    ca_cert: "/etc/ssl/certs/java/cacerts"
+    ca_cert: "/usr/local/share/ca-certificates/mysql-ca-bundle.crt"
     name: "{{ item }}"
     state: present
   with_items:
