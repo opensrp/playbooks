@@ -3,6 +3,7 @@
         "aws_access_key": "",
         "aws_secret_key": "",
         "env": "staging",
+        "instance_type": "t3.micro",
         "local_user": "{{ env `USER` }}",
         "owner": "",
         "project": "",
@@ -21,7 +22,7 @@
             "secret_key": "{{ user `aws_secret_key` }}",
             "region": "{{ user `region` }}",
             "source_ami": "{{ user `source_ami` }}",
-            "instance_type": "t3.micro",
+            "instance_type": "{{ user `instance_type` }}",
             "ssh_username": "ubuntu",
             "ami_name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}-{{ timestamp }}",
             "tags": {
@@ -53,9 +54,17 @@
     "provisioners": [
         {
             "type": "shell",
+            "scripts": "packer/scripts/ubuntu_avoid_lockout.sh"
+        },
+        {
+            "type": "shell",
             "inline": [
-                "sleep 30",
-                "sudo apt-get update"
+                "sudo apt-get update",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' dist-upgrade",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install python",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' autoremove",
+                "sudo su -c 'echo \"\\\"\\e[A\\\":history-search-backward\" >> /etc/inputrc'",
+                "sudo su -c 'echo \"\\\"\\e[B\\\":history-search-forward\" >> /etc/inputrc'"
             ]
         },
         {
@@ -73,6 +82,13 @@
                 "monitored-servers"
             ],
             "user": "ubuntu"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo systemctl enable apt-daily.timer",
+                "sudo systemctl enable apt-daily-upgrade.timer"
+            ]
         }
     ]
 }
