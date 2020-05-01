@@ -187,7 +187,7 @@ module "tls_certificate" {
 }
 
 resource "aws_security_group" "firewall_rule" {
-  name        = var.lb_name
+  name_prefix = var.lb_name
   description = "Access to ${var.lb_name} load balancer"
   vpc_id      = var.lb_vpc_id
 
