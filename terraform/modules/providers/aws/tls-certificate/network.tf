@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "main" {
-  domain_name               = "${var.tls_certificate_domain_name}.${var.tls_certificate_domain_zone_name}"
+  domain_name               = length(var.tls_certificate_domain_name) > 0 ? "${var.tls_certificate_domain_name}.${var.tls_certificate_domain_zone_name}" : var.tls_certificate_domain_zone_name
   validation_method         = "DNS"
   subject_alternative_names = var.tls_certificate_domain_name_cnames
 
