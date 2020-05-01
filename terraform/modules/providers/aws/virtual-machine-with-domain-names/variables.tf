@@ -43,3 +43,7 @@ variable "vmdns_public_domain_names" {
   default = []
 }
 
+variable "vmdns_root_block_device_encrypted" {
+  type    = bool
+  default = false
+}

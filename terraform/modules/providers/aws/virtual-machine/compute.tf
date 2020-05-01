@@ -16,6 +16,7 @@ resource "aws_instance" "main" {
   associate_public_ip_address = var.vm_associate_public_ip_address
 
   root_block_device {
+    encrypted   = var.vm_root_block_device_encrypted
     volume_size = var.vm_instances[count.index]["volume_size"]
     volume_type = var.vm_instances[count.index]["volume_type"]
   }
