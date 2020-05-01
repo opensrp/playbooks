@@ -81,3 +81,8 @@ variable "mariadb_backup_window" {
   default = "03:30-05:00"
 }
 
+variable "mariadb_storage_encrypted" {
+  type    = bool
+  default = true
+}
+
