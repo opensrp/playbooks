@@ -14,7 +14,7 @@ resource "aws_db_instance" "main" {
   multi_az                  = var.mariadb_multi_az
   port                      = var.mariadb_port
   copy_tags_to_snapshot     = var.mariadb_copy_tags_to_snapshot
-  storage_encrypted         = true
+  storage_encrypted         = var.mariadb_storage_encrypted
   kms_key_id                = aws_kms_key.main.arn
   vpc_security_group_ids    = [aws_security_group.firewall_rule.id]
   final_snapshot_identifier = var.mariadb_name

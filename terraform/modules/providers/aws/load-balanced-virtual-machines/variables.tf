@@ -97,3 +97,7 @@ variable "lbvm_alarm_ok_actions" {
   default     = []
   description = "The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
 }
+variable "lbvm_root_block_device_encrypted" {
+  type    = bool
+  default = false
+}

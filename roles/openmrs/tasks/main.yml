@@ -28,13 +28,32 @@
     priv: "{{ openmrs_mysql_database }}.*:{{ openmrs_mysql_user_privilages }}"
     state: present
 
+- name: ensure openmrs_system_user exists
+  become: yes
+  become_user: root
+  user:
+    name: "{{ openmrs_system_user | default(openmrs) }}"
+    state: present
+    group: "{{ openmrs_system_group | default(openmrs) }}"
+    createhome: yes
+
+- name: ensure instance directory exists
+  become: yes
+  become_user: root
+  file:
+    path: "/home/{{ openmrs_system_user }}"
+    state: directory
+    owner: "{{ openmrs_system_user | default(openmrs) }}"
+    group: "{{ tomcat_group | default(openmrs) }}"
+
+
 - name: Create OpenMRS Config Directory
   become: yes
   become_user: root
   file:
     path: "{{ openmrs_home_directory }}"
     owner: "{{ openmrs_system_user }}"
-    group: "{{ openmrs_system_group }}"
+    group: "{{ tomcat_group }}"
     state: directory
     mode: 0775
 

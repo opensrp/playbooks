@@ -19,7 +19,7 @@ dependencies: # noqa 701
   tomcat_max_filesize: "{{ openmrs_tomcat_max_filesize }}"
   tomcat_fsize_threshold: "{{ openmrs_tomcat_fsize_threshold }}"
   tomcat_ajp_port: "{{ openmrs_tomcat_ajp_port }}"
-  when: openmrs_tomcat_version == '7'
+  when: openmrs_tomcat_version == 7
   tags:
     - tomcat7
 
@@ -33,7 +33,7 @@ dependencies: # noqa 701
   tomcat_max_filesize: "{{ openmrs_tomcat_max_filesize }}"
   tomcat_fsize_threshold: "{{ openmrs_tomcat_fsize_threshold }}"
   tomcat_ajp_port: "{{ openmrs_tomcat_ajp_port }}"
-  when: openmrs_tomcat_version == '9'
+  when: openmrs_tomcat_version == 9
   tags:
     - tomcat9
 

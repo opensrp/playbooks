@@ -40,3 +40,8 @@ variable "vm_firewall_rules" {
 variable "vm_instances" {
   type = list(object({ group = string, parent_image = string, instance_type = string, volume_size = string, volume_type = string }))
 }
+
+variable "vm_root_block_device_encrypted" {
+  type    = bool
+  default = false
+}
