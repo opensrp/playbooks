@@ -1,7 +1,6 @@
 ---
 dependencies: # noqa 701
  - role: onaio.java
-   java_packages: "{{ opensrp_java_packages }}"
    become: true
    become_user: "root"
    tags:
