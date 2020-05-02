@@ -143,8 +143,8 @@ openmrs_logstash_gelf_port: "12204"
 openmrs_logstash_input_config_suffix: "{{ openmrs_site_name }}"
 openmrs_clear_logstash_config: false
 openmrs_logstash_plugins:
-        - name: logstash-output-gelf
-          state: present
+  - name: logstash-output-gelf
+    state: present
 openmrs_logstash_custom_outputs:
   - output: 'gelf'
     lines:
