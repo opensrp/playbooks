@@ -9,7 +9,7 @@
   scm: git
 
 - src: geerlingguy.java
-  version: 1.9.5 
+  version: 1.9.5
 
 - src: https://github.com/onaio/ansible-redis.git
   name: onaio.redis
@@ -26,12 +26,12 @@
 
 - src: https://github.com/onaio/ansible-logstash.git
   name: onaio.logstash
-  version: master
+  version: fb9c0aa8f133c5d48fb832ac29a0814cf02883e3
   scm: git
 
 - src: git+https://github.com/onaio/ansible-react
   name: onaio.react
-  version: master
+  version: 16a94a34469f95bdcf5507d0216d9c41f24b14fc
   scm: git
 
 - src: https://github.com/onaio/ansible-gpg-import.git
