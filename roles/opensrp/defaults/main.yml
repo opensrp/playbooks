@@ -226,8 +226,8 @@ opensrp_logstash_gelf_port: "12204"
 opensrp_logstash_input_config_suffix: "{{ opensrp_site_name }}"
 opensrp_clear_logstash_config: false
 opensrp_logstash_plugins:
-  - logstash-input-file
-  - logstash-output-gelf
+  - name: logstash-output-gelf
+    state: present
 opensrp_logstash_custom_outputs:
   - output: 'gelf'
     lines:
