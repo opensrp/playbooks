@@ -27,4 +27,4 @@
 	url = https://github.com/onaio/terraform-aws-ebs-volume.git
 [submodule "roles/keycloak"]
 	path = roles/keycloak
-	url = git@github.com:onaio/ansible-keycloak.git
+	url = https://github.com/onaio/ansible-keycloak.git
