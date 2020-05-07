@@ -25,3 +25,6 @@
 [submodule "terraform/modules/providers/aws/virtual-machine-storage"]
 	path = terraform/modules/providers/aws/virtual-machine-storage
 	url = https://github.com/onaio/terraform-aws-ebs-volume.git
+[submodule "terraform/modules/providers/aws/load-balancer"]
+	path = terraform/modules/providers/aws/load-balancer
+	url = https://github.com/onaio/terraform-aws-alb.git
