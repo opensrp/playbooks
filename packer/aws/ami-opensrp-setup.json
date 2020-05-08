@@ -94,7 +94,7 @@
                 "opensrp_version={{ user `opensrp_version` }}"
             ],
             "inventory_directory": "{{ user `ansible_inventory` }}",
-            "playbook_file": "deploy_opensrp.yml",
+            "playbook_file": "deploy-opensrp.yml",
             "groups": "{{ user `group_vars` }}",
             "user": "ubuntu"
         },
