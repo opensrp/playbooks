@@ -25,3 +25,6 @@
 [submodule "terraform/modules/providers/aws/virtual-machine-storage"]
 	path = terraform/modules/providers/aws/virtual-machine-storage
 	url = https://github.com/onaio/terraform-aws-ebs-volume.git
+[submodule "roles/keycloak"]
+	path = roles/keycloak
+	url = https://github.com/onaio/ansible-keycloak.git
