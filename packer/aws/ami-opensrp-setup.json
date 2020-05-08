@@ -15,8 +15,7 @@
         "ansible_vault_file": "/path/to/vault/file",
         "ansible_inventory": "sample-inventories/zeir-sample/staging",
         "group_vars": "opensrp-app-servers,opensrp-redis-servers",
-        "opensrp_version": "v2.1.6-SNAPSHOT",
-        "collectd_version": "5.7.*"
+        "opensrp_version": "v2.1.6-SNAPSHOT"
     },
     "builders": [
         {
@@ -79,8 +78,6 @@
                 "ssh_local_user={{ user `local_user` }}",
                 "--extra-vars",
                 "server_monitoring_set_hostname=false",
-                "--extra-vars",
-                "collectd_version={{ user `collectd_version` }}",
                 "-vvv"
             ],
             "inventory_directory": "{{ user `ansible_inventory` }}",
