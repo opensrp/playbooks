@@ -28,3 +28,30 @@
 [submodule "roles/keycloak"]
 	path = roles/keycloak
 	url = https://github.com/onaio/ansible-keycloak.git
+[submodule "roles/onaio.gpg-import"]
+	path = roles/onaio.gpg-import
+	url = git@github.com:onaio/ansible-gpg-import.git
+[submodule "roles/onaio.backup"]
+	path = roles/onaio.backup
+	url = git@github.com:onaio/ansible-backup.git
+[submodule "roles/onaio.react"]
+	path = roles/onaio.react
+	url = git@github.com:onaio/ansible-react.git
+[submodule "roles/onaio.logstash"]
+	path = roles/onaio.logstash
+	url = git@github.com:onaio/ansible-logstash.git
+[submodule "roles/onaio.java"]
+	path = roles/onaio.java
+	url = git@github.com:onaio/ansible-java.git
+[submodule "roles/onaio.tomcat"]
+	path = roles/onaio.tomcat
+	url = git@github.com:onaio/ansible-role-tomcat.git
+[submodule "roles/onaio.certbot"]
+	path = roles/onaio.certbot
+	url = git@github.com:onaio/ansible-certbot.git
+[submodule "roles/onaio.redis"]
+	path = roles/onaio.redis
+	url = git@github.com:onaio/ansible-redis.git
+[submodule "roles/onaio.nginx"]
+	path = roles/onaio.nginx
+	url = git@github.com:onaio/ansible-nginx.git

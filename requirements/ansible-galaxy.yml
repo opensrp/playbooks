@@ -3,51 +3,11 @@
   version: eecf0b28d8ae833f9118132384447ea19f76c802
   scm: git
 
-- src: https://github.com/onaio/ansible-nginx.git
-  name: onaio.nginx
-  version: 8d1f0c6fb82531cfbd804c147bd5a2f3b7e549b3
-  scm: git
-
 - src: geerlingguy.java
   version: 1.9.5
 
-- src: https://github.com/onaio/ansible-redis.git
-  name: onaio.redis
-  version: 8dfde8fbda8d72b0899f4d38e60f80dd7360ac2b
-  scm: git
-
-- src: https://github.com/onaio/ansible-certbot.git
-  name: onaio.certbot
-  version: a19117aa21a497e9c33e06e52902910f4e26fb1e
-  scm: git
-
 - src: geerlingguy.swap
   version: 1.0.0
-
-- src: https://github.com/onaio/ansible-logstash.git
-  name: onaio.logstash
-  version: fb9c0aa8f133c5d48fb832ac29a0814cf02883e3
-  scm: git
-
-- src: git+https://github.com/onaio/ansible-react
-  name: onaio.react
-  version: 16a94a34469f95bdcf5507d0216d9c41f24b14fc
-  scm: git
-
-- src: https://github.com/onaio/ansible-gpg-import.git
-  name: onaio.gpg-import
-  version: c5bb983d5b4bc5fec82a03d71543fefbe2ddd06e
-  scm: git
-
-- src: https://github.com/onaio/ansible-java.git
-  name: onaio.java
-  version: f0b9b4c1e4388f5f5ea99b7643bdae2c4f9e9cbc
-  scm: git
-
-- src: https://github.com/onaio/ansible-role-tomcat.git
-  name: onaio.tomcat
-  version: a3261b16a62ea8a530cf625c4adf453c8a90a7f7
-  scm: git
 
 - src: https://github.com/onaio/ansible-role-service.git
   name: robertdebock.service
