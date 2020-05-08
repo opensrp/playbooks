@@ -15,6 +15,7 @@ docutils==0.15.2          # via botocore
 jinja2==2.10.3            # via ansible
 jmespath==0.9.4           # via boto3, botocore
 markupsafe==1.1.1         # via jinja2
+mitogen==0.2.9
 pip-tools==4.3.0
 pycparser==2.19           # via cffi
 python-dateutil==2.8.0    # via botocore

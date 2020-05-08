@@ -33,6 +33,16 @@ mkdir -p ~/.ansible/roles/opensrp
 ansible-galaxy install -r requirements/ansible-galaxy.yml -p ~/.ansible/roles/opensrp
 ```
 
+### Note on Mitogen
+
+We use [Mitogen][8] as the connection backend for Ansible because it is worlds faster than the default Ansible connection backend. This, however, means that we have to install some pip requirements and point Ansible (using the strategy_plugins configuration) to a directory installed by the mitogen pip package. This, therefore, means that the location of this directory is going to be different depending on what your Python virtualenv (if you're using one) is called and what Python version you use. The path to this directory in ansible.cfg is what is in the admin host, since that is where we recommend Ansible to be ran from.
+
+If the Ansible strategy plugin is located in a location other than ~/.virtualenvs/opensrp/lib/python3.6/site-packages/ansible_mitogen/plugins/strategy, override the default Ansible strategy plugin path by exporting ANSIBLE_STRATEGY_PLUGINS.
+
+```sh
+export ANSIBLE_STRATEGY_PLUGINS=<virtualenv_root>/lib/<python_version>/site-packages/ansible_mitogen/plugins/strategy
+```
+
 ## Inventories
 
 Copy over your inventory files into a new directory called `inventories`. Note that we have `inventories` in the .gitignore file. We recommend you track them in a seperate private git repository. Please do not make pull requests to this repository with inventory files that might expose aspects of your infrastructure that you don't want exposed.
@@ -91,3 +101,4 @@ packer build -var-file=inventories/<DevOps client>/<environment>/packer/<name of
 [5]: https://pip.pypa.io/en/stable/
 [6]: https://virtualenvwrapper.readthedocs.io/en/latest/
 [7]: https://packer.io/
+[8]: https://mitogen.networkgenomics.com/ansible_detailed.html
