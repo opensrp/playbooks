@@ -1,0 +1,109 @@
+{
+    "variables": {
+        "aws_access_key": "",
+        "aws_secret_key": "",
+        "env": "staging",
+        "instance_type": "t3.micro",
+        "local_user": "{{ env `USER` }}",
+        "owner": "",
+        "project": "",
+        "end_date": "-",
+        "region": "eu-west-1",
+        "source_ami": "ami-035966e8adab4aaad",
+        "distribution_name": "ubuntu",
+        "distribution_version": "18.04",
+        "ansible_vault_file": "/path/to/vault/file",
+        "ansible_inventory": "sample-inventories/zeir-sample/staging",
+        "group_vars": "opensrp-app-servers,opensrp-redis-servers",
+        "opensrp_version": "v2.1.6-SNAPSHOT"
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "access_key": "{{ user `aws_access_key` }}",
+            "secret_key": "{{ user `aws_secret_key` }}",
+            "region": "{{ user `region` }}",
+            "source_ami": "{{ user `source_ami` }}",
+            "instance_type": "{{ user `instance_type` }}",
+            "ssh_username": "ubuntu",
+            "ami_name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+            "tags": {
+                "Name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}",
+                "OS_Version": "{{ user `distribution_name` }}",
+                "Description": "OpenSRP {{ user `distribution_name` }} {{ user `distribution_version` }}",
+                "Release": "{{ user `distribution_version` }}",
+                "OwnerList": "{{ user `owner` }}",
+                "EnvironmentList": "{{ user `env` }}",
+                "EndDate": "{{ user `end_date` }}",
+                "ProjectList": "{{ user `project` }}"
+            },
+            "run_tags": {
+                "Name": "{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+                "OwnerList": "{{ user `owner` }}",
+                "EnvironmentList": "{{ user `env` }}",
+                "EndDate": "{{ user `end_date` }}",
+                "ProjectList": "{{ user `project` }}"
+            },
+            "run_volume_tags": {
+                "Name": "{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+                "OwnerList": "{{ user `owner` }}",
+                "EnvironmentList": "{{ user `env` }}",
+                "EndDate": "{{ user `end_date` }}",
+                "ProjectList": "{{ user `project` }}"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "scripts": "packer/scripts/ubuntu_avoid_lockout.sh"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo apt-get update",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' dist-upgrade",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install python",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' autoremove",
+                "sudo su -c 'echo \"\\\"\\e[A\\\":history-search-backward\" >> /etc/inputrc'",
+                "sudo su -c 'echo \"\\\"\\e[B\\\":history-search-forward\" >> /etc/inputrc'"
+            ]
+        },
+        {
+            "type": "ansible",
+            "extra_arguments": [
+                "--vault-password-file={{ user `ansible_vault_file` }}",
+                "--module-path=library/",
+                "--extra-vars",
+                "ssh_local_user={{ user `local_user` }}"
+            ],
+            "inventory_directory": "{{ user `ansible_inventory` }}",
+            "playbook_file": "setup-server.yml",
+            "groups": [
+                "all",
+                "monitored-servers"
+            ],
+            "user": "ubuntu"
+        },
+        {
+            "type": "ansible",
+            "extra_arguments": [
+                "--vault-password-file={{ user `ansible_vault_file` }}",
+                "--module-path=library/",
+                "--extra-vars",
+                "opensrp_version={{ user `opensrp_version` }}"
+            ],
+            "inventory_directory": "{{ user `ansible_inventory` }}",
+            "playbook_file": "deploy_opensrp.yml",
+            "groups": "{{ user `group_vars` }}",
+            "user": "ubuntu"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo systemctl enable apt-daily.timer",
+                "sudo systemctl enable apt-daily-upgrade.timer"
+            ]
+        }
+    ]
+}
