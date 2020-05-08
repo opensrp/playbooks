@@ -14,7 +14,8 @@
         "distribution_version": "18.04",
         "ansible_vault_file": "/path/to/vault/file",
         "ansible_inventory": "sample-inventories/zeir-sample/staging",
-        "opensrp_version": "v2.1.6-SNAPSHOT"
+        "opensrp_version": "v2.1.6-SNAPSHOT",
+        "group_vars": "opensrp-app-servers,opensrp-redis-servers"
     },
     "builders": [
         {
@@ -76,8 +77,7 @@
                 "--extra-vars",
                 "ssh_local_user={{ user `local_user` }}",
                 "--extra-vars",
-                "server_monitoring_set_hostname=false",
-                "-vvv"
+                "server_monitoring_set_hostname=false"
             ],
             "inventory_directory": "{{ user `ansible_inventory` }}",
             "playbook_file": "setup-server.yml",
@@ -92,15 +92,15 @@
             "extra_arguments": [
                 "--vault-password-file={{ user `ansible_vault_file` }}",
                 "--module-path=library/",
+                "--skip-tags=certbot,logstash", 
                 "--extra-vars",
-                "opensrp_version={{ user `opensrp_version` }}"
+                "opensrp_version={{ user `opensrp_version` }}",
+                "--extra-vars",
+                "validate_certs=False"
             ],
             "inventory_directory": "{{ user `ansible_inventory` }}",
             "playbook_file": "deploy-opensrp.yml",
-            "groups": [
-                "opensrp-app-servers",
-                "opensrp-redis-servers"
-            ],
+            "groups": "{{ user `group_vars` }}",
             "user": "ubuntu"
         },
         {
