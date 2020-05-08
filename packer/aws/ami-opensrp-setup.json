@@ -14,7 +14,6 @@
         "distribution_version": "18.04",
         "ansible_vault_file": "/path/to/vault/file",
         "ansible_inventory": "sample-inventories/zeir-sample/staging",
-        "group_vars": "opensrp-app-servers,opensrp-redis-servers",
         "opensrp_version": "v2.1.6-SNAPSHOT"
     },
     "builders": [
@@ -98,7 +97,10 @@
             ],
             "inventory_directory": "{{ user `ansible_inventory` }}",
             "playbook_file": "deploy-opensrp.yml",
-            "groups": "{{ user `group_vars` }}",
+            "groups": [
+                "opensrp-app-servers",
+                "opensrp-redis-servers"
+            ],
             "user": "ubuntu"
         },
         {
