@@ -15,7 +15,8 @@
         "ansible_vault_file": "/path/to/vault/file",
         "ansible_inventory": "sample-inventories/zeir-sample/staging",
         "opensrp_version": "v2.1.6-SNAPSHOT",
-        "group_vars": "opensrp-app-servers,opensrp-redis-servers"
+        "group_vars": "opensrp-app-servers,opensrp-redis-servers",
+        "tags_skipped": "certbot,logstash,postgresql"
     },
     "builders": [
         {
@@ -92,7 +93,7 @@
             "extra_arguments": [
                 "--vault-password-file={{ user `ansible_vault_file` }}",
                 "--module-path=library/",
-                "--skip-tags=certbot,logstash,postgresql", 
+                "--skip-tags={{ user `tags_skipped` }}", 
                 "--extra-vars",
                 "opensrp_version={{ user `opensrp_version` }}",
                 "--extra-vars",
