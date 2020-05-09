@@ -92,7 +92,7 @@
             "extra_arguments": [
                 "--vault-password-file={{ user `ansible_vault_file` }}",
                 "--module-path=library/",
-                "--skip-tags=certbot,logstash", 
+                "--skip-tags=certbot,logstash,postgresql", 
                 "--extra-vars",
                 "opensrp_version={{ user `opensrp_version` }}",
                 "--extra-vars",
