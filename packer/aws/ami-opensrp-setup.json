@@ -4,7 +4,6 @@
         "aws_secret_key": "",
         "env": "staging",
         "instance_type": "t3.micro",
-        "local_user": "{{ env `USER` }}",
         "owner": "",
         "project": "",
         "end_date": "-",
@@ -27,30 +26,33 @@
             "source_ami": "{{ user `source_ami` }}",
             "instance_type": "{{ user `instance_type` }}",
             "ssh_username": "ubuntu",
-            "ami_name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+            "ami_name": "opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
             "tags": {
-                "Name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}",
+                "Name": "opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
                 "OS_Version": "{{ user `distribution_name` }}",
-                "Description": "OpenSRP {{ user `distribution_name` }} {{ user `distribution_version` }}",
+                "Description": "OpenSRP Server {{ user `opensrp_version` }} for {{ user `project` }}-{{ user `env` }}",
                 "Release": "{{ user `distribution_version` }}",
                 "OwnerList": "{{ user `owner` }}",
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
-                "ProjectList": "{{ user `project` }}"
+                "ProjectList": "{{ user `project` }}",
+                "DeploymentType": "packer"
             },
             "run_tags": {
-                "Name": "{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+                "Name": "packer-opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
                 "OwnerList": "{{ user `owner` }}",
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
-                "ProjectList": "{{ user `project` }}"
+                "ProjectList": "{{ user `project` }}",
+                "DeploymentType": "packer"
             },
             "run_volume_tags": {
-                "Name": "{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+                "Name": "packer-opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
                 "OwnerList": "{{ user `owner` }}",
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
-                "ProjectList": "{{ user `project` }}"
+                "ProjectList": "{{ user `project` }}",
+                "DeploymentType": "packer"
             }
         }
     ],
@@ -75,8 +77,6 @@
             "extra_arguments": [
                 "--vault-password-file={{ user `ansible_vault_file` }}",
                 "--module-path=library/",
-                "--extra-vars",
-                "ssh_local_user={{ user `local_user` }}",
                 "--extra-vars",
                 "server_monitoring_set_hostname=false"
             ],
