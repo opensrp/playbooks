@@ -255,3 +255,5 @@ opensrp_whitelabeling_copy_files: []
 opensrp_mysql_ca_bundle_url: ""
 # Postgres CA Bundle url
 opensrp_postgres_ca_bundle_url: ""
+
+opensrp_compile_java_home: "/usr/lib/jvm/java-11-openjdk-amd64"
