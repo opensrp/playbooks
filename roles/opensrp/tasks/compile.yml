@@ -49,6 +49,8 @@
   - "context"
 
 - name: Compile the OpenSRP WAR # noqa 301
+  environment:
+    JAVA_HOME: "{{ opensrp_compile_java_home }}"
   shell: "cd {{ opensrp_local_checkout_path }} && mvn package -Dmaven.test.skip=true -P {{ opensrp_maven_package_profiles | join(',') }}"
   delegate_to: 127.0.0.1
 
