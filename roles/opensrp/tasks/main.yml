@@ -9,7 +9,7 @@
 - include_tasks: mysql.yml
   when: 
     - opensrp_mysql_database is defined 
-    - opensrp_configure_mysql
+    - opensrp_configure_mysql|bool
 
 - name: Create OpenSRP resource directory
   become: yes
