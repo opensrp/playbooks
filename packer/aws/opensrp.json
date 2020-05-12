@@ -4,16 +4,18 @@
         "aws_secret_key": "",
         "env": "staging",
         "instance_type": "t3.micro",
-        "local_user": "{{ env `USER` }}",
         "owner": "",
         "project": "",
         "end_date": "-",
         "region": "eu-west-1",
-        "source_ami": "ami-03746875d916becc0",
+        "source_ami": "ami-035966e8adab4aaad",
         "distribution_name": "ubuntu",
-        "distribution_version": "16.04",
+        "distribution_version": "18.04",
         "ansible_vault_file": "/path/to/vault/file",
-        "ansible_inventory": "sample-inventories/zeir-sample/staging"
+        "ansible_inventory": "sample-inventories/zeir-sample/staging",
+        "opensrp_version": "v2.1.6-SNAPSHOT",
+        "group_vars": "opensrp-app-servers,opensrp-redis-servers",
+        "tags_skipped": "certbot,logstash,postgresql"
     },
     "builders": [
         {
@@ -24,30 +26,33 @@
             "source_ami": "{{ user `source_ami` }}",
             "instance_type": "{{ user `instance_type` }}",
             "ssh_username": "ubuntu",
-            "ami_name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+            "ami_name": "opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
             "tags": {
-                "Name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}",
+                "Name": "opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
                 "OS_Version": "{{ user `distribution_name` }}",
-                "Description": "OpenSRP {{ user `distribution_name` }} {{ user `distribution_version` }}",
+                "Description": "OpenSRP Server {{ user `opensrp_version` }} for {{ user `project` }}-{{ user `env` }}",
                 "Release": "{{ user `distribution_version` }}",
                 "OwnerList": "{{ user `owner` }}",
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
-                "ProjectList": "{{ user `project` }}"
+                "ProjectList": "{{ user `project` }}",
+                "DeploymentType": "packer"
             },
             "run_tags": {
-                "Name": "{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+                "Name": "packer-opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
                 "OwnerList": "{{ user `owner` }}",
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
-                "ProjectList": "{{ user `project` }}"
+                "ProjectList": "{{ user `project` }}",
+                "DeploymentType": "packer"
             },
             "run_volume_tags": {
-                "Name": "{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+                "Name": "packer-opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
                 "OwnerList": "{{ user `owner` }}",
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
-                "ProjectList": "{{ user `project` }}"
+                "ProjectList": "{{ user `project` }}",
+                "DeploymentType": "packer"
             }
         }
     ],
@@ -73,7 +78,7 @@
                 "--vault-password-file={{ user `ansible_vault_file` }}",
                 "--module-path=library/",
                 "--extra-vars",
-                "ssh_local_user={{ user `local_user` }}"
+                "server_monitoring_set_hostname=false"
             ],
             "inventory_directory": "{{ user `ansible_inventory` }}",
             "playbook_file": "setup-server.yml",
@@ -81,6 +86,24 @@
                 "all",
                 "monitored-servers"
             ],
+            "user": "ubuntu"
+        },
+        {
+            "type": "ansible",
+            "extra_arguments": [
+                "--vault-password-file={{ user `ansible_vault_file` }}",
+                "--module-path=library/",
+                "--skip-tags={{ user `tags_skipped` }}",
+                "--extra-vars",
+                "opensrp_version={{ user `opensrp_version` }}",
+                "--extra-vars",
+                "validate_certs=False",
+                "--extra-vars",
+                "nginx_install_only=True"
+            ],
+            "inventory_directory": "{{ user `ansible_inventory` }}",
+            "playbook_file": "deploy-opensrp.yml",
+            "groups": "{{ user `group_vars` }}",
             "user": "ubuntu"
         },
         {

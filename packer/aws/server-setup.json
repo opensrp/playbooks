@@ -4,18 +4,15 @@
         "aws_secret_key": "",
         "env": "staging",
         "instance_type": "t3.micro",
-        "local_user": "{{ env `USER` }}",
         "owner": "",
         "project": "",
         "end_date": "-",
         "region": "eu-west-1",
-        "source_ami": "ami-035966e8adab4aaad",
+        "source_ami": "ami-03746875d916becc0",
         "distribution_name": "ubuntu",
-        "distribution_version": "18.04",
+        "distribution_version": "16.04",
         "ansible_vault_file": "/path/to/vault/file",
-        "ansible_inventory": "sample-inventories/zeir-sample/staging",
-        "group_vars": "opensrp-app-servers,opensrp-redis-servers",
-        "opensrp_version": "v2.1.6-SNAPSHOT"
+        "ansible_inventory": "sample-inventories/zeir-sample/staging"
     },
     "builders": [
         {
@@ -26,9 +23,9 @@
             "source_ami": "{{ user `source_ami` }}",
             "instance_type": "{{ user `instance_type` }}",
             "ssh_username": "ubuntu",
-            "ami_name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+            "ami_name": "server-setup-{{ user `distribution_name` }}-{{ user `distribution_version` }}-{{ timestamp }}",
             "tags": {
-                "Name": "opensrp-{{ user `distribution_name` }}-{{ user `distribution_version` }}",
+                "Name": "server-setup-{{ user `distribution_name` }}-{{ user `distribution_version` }}",
                 "OS_Version": "{{ user `distribution_name` }}",
                 "Description": "OpenSRP {{ user `distribution_name` }} {{ user `distribution_version` }}",
                 "Release": "{{ user `distribution_version` }}",
@@ -38,14 +35,14 @@
                 "ProjectList": "{{ user `project` }}"
             },
             "run_tags": {
-                "Name": "{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+                "Name": "packer-server-setup-{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
                 "OwnerList": "{{ user `owner` }}",
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
                 "ProjectList": "{{ user `project` }}"
             },
             "run_volume_tags": {
-                "Name": "{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
+                "Name": "packer-server-setup-{{ user `project` }}-{{ user `env` }}-{{ user `distribution_version` }}-{{ timestamp }}",
                 "OwnerList": "{{ user `owner` }}",
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
@@ -73,9 +70,7 @@
             "type": "ansible",
             "extra_arguments": [
                 "--vault-password-file={{ user `ansible_vault_file` }}",
-                "--module-path=library/",
-                "--extra-vars",
-                "ssh_local_user={{ user `local_user` }}"
+                "--module-path=library/"
             ],
             "inventory_directory": "{{ user `ansible_inventory` }}",
             "playbook_file": "setup-server.yml",
@@ -83,19 +78,6 @@
                 "all",
                 "monitored-servers"
             ],
-            "user": "ubuntu"
-        },
-        {
-            "type": "ansible",
-            "extra_arguments": [
-                "--vault-password-file={{ user `ansible_vault_file` }}",
-                "--module-path=library/",
-                "--extra-vars",
-                "opensrp_version={{ user `opensrp_version` }}"
-            ],
-            "inventory_directory": "{{ user `ansible_inventory` }}",
-            "playbook_file": "deploy-opensrp.yml",
-            "groups": "{{ user `group_vars` }}",
             "user": "ubuntu"
         },
         {

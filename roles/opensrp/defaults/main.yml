@@ -5,6 +5,7 @@ opensrp_resource_sub_dirs:
   - "qr-codes"
 opensrp_mysql_port: 3306
 opensrp_mysql_host: "localhost"
+opensrp_configure_mysql: true
 opensrp_mysql_database: "opensrp"
 opensrp_motech_database: "motechquartz"
 opensrp_mysql_user: "opensrp"
