@@ -36,3 +36,9 @@ variable "vpc_nat_gateway_specification" {
   type    = string
   default = "Small"
 }
+
+variable "vpc_subnet_newbits" {
+  type        = number
+  default     = 8
+  description = "The number of additional bits with which to extend the subnet prefix. For example, if given a prefix ending in /16 and a newbits value of 4, the resulting subnet address will have length /20"
+}

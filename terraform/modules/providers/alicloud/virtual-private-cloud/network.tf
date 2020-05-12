@@ -36,7 +36,7 @@ resource "alicloud_route_table" "main" {
 resource "alicloud_vswitch" "vpc_vswitches" {
   name              = "${var.vpc_name}-${count.index}"
   vpc_id            = alicloud_vpc.main.id
-  cidr_block        = cidrsubnet(alicloud_vpc.main.cidr_block, 8, count.index)
+  cidr_block        = cidrsubnet(alicloud_vpc.main.cidr_block, var.vpc_subnet_newbits, count.index)
   availability_zone = element(var.vpc_availability_zones, count.index)
   count             = length(var.vpc_availability_zones)
 
