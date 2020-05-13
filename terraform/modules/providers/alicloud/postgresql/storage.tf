@@ -1,13 +1,14 @@
 resource "alicloud_db_instance" "main" {
-  engine               = "PostgreSQL"
-  engine_version       = var.postgresql_version
-  instance_type        = var.postgresql_instance_type
-  instance_storage     = var.postgresql_allocated_storage
-  instance_charge_type = "Postpaid"
-  instance_name        = var.postgresql_name
-  vswitch_id           = var.postgresql_vswitch_id
-  zone_id              = "${join(",", var.postgresql_availability_zones)}"
-  security_ips         = var.postgresql_firewall_rule_ingress_cidr_blocks
+  engine                   = "PostgreSQL"
+  engine_version           = var.postgresql_version
+  instance_type            = var.postgresql_instance_type
+  instance_storage         = var.postgresql_allocated_storage
+  instance_charge_type     = "Postpaid"
+  instance_name            = var.postgresql_name
+  vswitch_id               = var.postgresql_vswitch_id
+  zone_id                  = "${join(",", var.postgresql_availability_zones)}"
+  security_ips             = var.postgresql_firewall_rule_ingress_cidr_blocks
+  db_instance_storage_type = var.postgresql_instance_storage_type
   tags = {
     Name            = var.postgresql_name
     OwnerList       = var.postgresql_owner
@@ -19,15 +20,16 @@ resource "alicloud_db_instance" "main" {
 }
 
 resource "alicloud_db_backup_policy" "main" {
-  instance_id      = alicloud_db_instance.main.id
-  retention_period = var.postgresql_backup_retention_period
-  backup_period    = var.postgresql_backup_period
-  backup_time      = var.postgresql_backup_time
+  instance_id             = alicloud_db_instance.main.id
+  backup_retention_period = var.postgresql_backup_retention_period
+  preferred_backup_period = var.postgresql_backup_days
+  backup_time             = var.postgresql_backup_time
 }
 
 resource "alicloud_db_account" "main" {
-  instance_id = alicloud_db_instance.main.id
-  name        = var.postgresql_username
-  password    = var.postgresql_password
-  type        = "Super"
+  instance_id            = alicloud_db_instance.main.id
+  name                   = var.postgresql_username
+  kms_encrypted_password = var.postgresql_kms_encrypted_password
+  kms_encryption_context = var.postgresql_kms_encryption_context
+  type                   = "Super"
 }
