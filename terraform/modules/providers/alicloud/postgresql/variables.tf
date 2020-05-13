@@ -5,7 +5,7 @@ variable "postgresql_name" {
 
 variable "postgresql_env" {
   type        = string
-  description = "The environment this database is in. Possible values are 'staging', 'previw', 'production', and 'shared'."
+  description = "The environment this database is in. Possible values are 'staging', 'preview', 'production', and 'shared'."
 }
 
 variable "postgresql_owner" {
