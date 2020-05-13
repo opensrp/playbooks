@@ -137,3 +137,10 @@ schedule.location.add.serverVersion.interval={{ opensrp_location_add_serverversi
 schedule.openmrs.sync.interval={{ opensrp_openmrs_sync_interval }}
 schedule.openmrs.validate.interval={{ opensrp_openmrs_validate_interval }}
 schedule.dhis2.sync.interval={{ opensrp_dhis2_sync_interval }}
+
+#Allowed MIME Types
+multimedia.allowed.file.types=application/octet-stream,image/jpeg,image/gif,image/png
+
+#keycloak configuration
+keycloak.configuration.endpoint={0}realms/{1}/.well-known/openid-configuration
+keycloak.password.reset.endpoint={0}realms/{1}/account/credentials/password
