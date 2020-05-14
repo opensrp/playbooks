@@ -69,3 +69,18 @@ resource "alicloud_slb_listener" "http" {
   acl_type         = "white"
   acl_id           = alicloud_slb_acl.main.id
 }
+
+resource "alicloud_dns_record" "a" {
+  name        = var.lb_domain_name
+  host_record = var.lb_domain_name_host_record
+  type        = "A"
+  value       = alicloud_slb.main.address
+}
+
+resource "alicloud_dns_record" "cnames" {
+  count       = length(var.lb_domain_name_cnames)
+  name        = var.lb_domain_name_cnames[count.index]
+  host_record = var.lb_domain_name_cnames_host_record
+  type        = "CNAME"
+  value       = var.lb_domain_name
+}

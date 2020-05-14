@@ -16,6 +16,8 @@ module "lb" {
   lb_stickiness_cookie_duration = var.lbvm_lb_stickiness_cookie_duration
   lb_stickiness_enabled         = var.lbvm_lb_stickiness_enabled
   lb_availability_zones         = var.lbvm_availability_zones
+  lb_domain_name                = var.lbvm_lb_domain_name
+  lb_domain_name_cnames         = var.lbvm_lb_domain_name_cnames
 }
 
 resource "alicloud_slb_attachment" "main" {

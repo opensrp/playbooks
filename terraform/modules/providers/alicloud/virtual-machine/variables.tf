@@ -58,3 +58,25 @@ variable "vm_security_enhancement_strategy" {
   type    = string
   default = "Deactive"
 }
+
+variable "vm_private_domain_names" {
+  type    = list(string)
+  default = []
+}
+
+variable "vm_private_domain_names_host_record" {
+  type        = string
+  default     = "@"
+  description = "Host record for the DNS A record for the load balancer."
+}
+
+variable "vm_public_domain_names" {
+  type    = list(string)
+  default = []
+}
+
+variable "vm_public_domain_names_host_record" {
+  type        = string
+  default     = "@"
+  description = "Host record for the DNS A record for the load balancer."
+}
