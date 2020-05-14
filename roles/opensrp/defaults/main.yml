@@ -258,3 +258,7 @@ opensrp_mysql_ca_bundle_url: ""
 opensrp_postgres_ca_bundle_url: ""
 
 opensrp_compile_java_home: "/usr/lib/jvm/java-11-openjdk-amd64"
+
+#Keycloak Configuration
+opensrp_keycloak_ssl_required: "external"
+opensrp_keycloak_confidential_port: 0
