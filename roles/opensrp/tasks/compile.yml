@@ -62,7 +62,8 @@
     after: '</form>'
     before: '</body>'
     regexp: '^(.+)$'
-    replace: "<div style='position:fixed;bottom: 0;right: 20px;font-style: italic;color: gray;'> {{ opensrp_version }} built on {{ ansible_date_time.iso8601_micro }} </div>"
+    replace: "<div style='position:fixed;bottom: 0;right: 20px;font-style: italic;color: gray;'>\
+     {{ opensrp_version }} built on {{ ansible_date_time.iso8601_micro }} </div>"
   delegate_to: 127.0.0.1
 
 - name: Compile the OpenSRP WAR # noqa 301
