@@ -49,6 +49,7 @@
   - "context"
 
 - name: Replace OpenSRP Keycloak configs
+  when: opensrp_keycloak_realm is defined
   template:
     src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/WEB-INF/keycloak.json.j2"
     dest: "{{ opensrp_local_checkout_path }}/src/main/webapp/WEB-INF/keycloak.json"
