@@ -5,7 +5,6 @@ module "lb" {
   lb_end_date                   = var.lbvm_end_date
   lb_project                    = var.lbvm_project
   lb_name                       = var.lbvm_name
-  lb_subnet                     = data.alicloud_vpcs.main.vpcs.0.cidr_block
   lb_instance_port              = var.lbvm_lb_instance_port
   lb_instance_protocol          = var.lbvm_lb_instance_protocol
   lb_health_check_path          = var.lbvm_lb_health_check_path
