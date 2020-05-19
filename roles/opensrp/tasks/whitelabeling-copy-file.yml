@@ -4,7 +4,7 @@
   file:
     path: "{{ current_file.dest }}"
     owner: "{{ opensrp_system_user }}"
-    group: "{{ tomcat_group }}"
+    group: "{{ opensrp_system_group }}"
     state: directory
 
 - name: Copy the file
@@ -14,4 +14,4 @@
     src: "{{ current_file.src }}"
     dest: "{{ current_file.dest }}"
     owner: "{{ opensrp_system_user }}"
-    group: "{{ tomcat_group }}"
+    group: "{{ opensrp_system_group }}"
