@@ -18,14 +18,6 @@ resource "alicloud_slb" "main" {
   }
 }
 
-resource "alicloud_slb_acl" "main" {
-  name       = var.lb_name
-  ip_version = "ipv4"
-  entry_list {
-    entry = var.lb_subnet
-  }
-}
-
 resource "alicloud_slb_listener" "https" {
   load_balancer_id          = alicloud_slb.main.id
   backend_port              = var.lb_instance_port
@@ -49,9 +41,6 @@ resource "alicloud_slb_listener" "https" {
   request_timeout           = var.lb_request_timeout
   tls_cipher_policy         = var.lb_ssl_policy
   server_certificate_id     = var.lb_ssl_certificate_id
-  acl_status                = "on"
-  acl_type                  = "white"
-  acl_id                    = alicloud_slb_acl.main.id
   x_forwarded_for {
     retrive_slb_ip = true
     retrive_slb_id = true
@@ -65,9 +54,6 @@ resource "alicloud_slb_listener" "http" {
   protocol         = "http"
   listener_forward = "on"
   forward_port     = var.lb_https_port
-  acl_status       = "on"
-  acl_type         = "white"
-  acl_id           = alicloud_slb_acl.main.id
 }
 
 resource "alicloud_dns_record" "a" {

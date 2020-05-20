@@ -13,11 +13,6 @@ variable "lb_project" {
   description = "The ID of the project that owns the load balancer."
 }
 
-variable "lb_subnet" {
-  type        = string
-  description = "The CIDR block that will have access to the load balancer."
-}
-
 variable "lb_deployment_type" {
   type        = string
   default     = "vm"
@@ -178,7 +173,7 @@ variable "lb_allowed_cidr" {
 variable "lb_ssl_policy" {
   type        = string
   description = "HTTPS listener TLS cipher policy. Valid values are 'tls_cipher_policy_1_0', 'tls_cipher_policy_1_1', 'tls_cipher_policy_1_2', and 'tls_cipher_policy_1_2_strict'."
-  default     = "tls_cipher_policy_1_2_strict"
+  default     = "tls_cipher_policy_1_2"
 }
 
 variable "lb_ssl_certificate_id" {
