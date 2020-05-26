@@ -47,8 +47,6 @@ couchdb_lucene_version_number: "1.1.0"
 couchdb_backup_database: "opensrp"
 allowed_couchdb_hosts: []
 mysql_backups_to_s3: false
-tomcat_user: "tomcat7"
-tomcat_group: "tomcat7"
 opensrp_tomcat_version: 9
 opensrp_tomcat_http_port: 8082
 opensrp_tomcat_shutdown_port: 8007
@@ -60,6 +58,7 @@ catalina_ops: "-Xms1500M -Xmx1500M"
 ssl_key: "{{ opensrp_site_name }}-key.pem"
 ssl_cert: "{{ opensrp_site_name }}-fullchain.pem"
 opensrp_system_user: "opensrp"
+opensrp_system_group: "tomcat"
 opensrp_tomcat_instance: "tomcat-opensrp"
 opensrp_user_home: "/home/{{ opensrp_system_user }}"
 opensrp_psql_as_primary_database: true
@@ -253,9 +252,9 @@ opensrp_logstash_custom_inputs:
 opensrp_whitelabeling_copy_files: []
 
 # MySQL CA Bundle url
-opensrp_mysql_ca_bundle_url: ""
+opensrp_mysql_ca_bundle_url: "https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem"
 # Postgres CA Bundle url
-opensrp_postgres_ca_bundle_url: ""
+opensrp_postgres_ca_bundle_url: "https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem"
 
 opensrp_compile_java_home: "/usr/lib/jvm/java-11-openjdk-amd64"
 

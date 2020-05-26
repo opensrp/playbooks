@@ -5,6 +5,7 @@ resource "alicloud_instance" "main" {
   system_disk_category          = var.vm_instances[count.index]["volume_type"]
   image_id                      = var.vm_instances[count.index]["parent_image"]
   system_disk_size              = var.vm_instances[count.index]["volume_size"]
+  user_data                     = contains(keys(var.vm_instances[count.index]), "user_data") ? var.vm_instances[count.index]["user_data"] : var.vm_user_data
   instance_name                 = "${var.vm_name}-${count.index}"
   internet_max_bandwidth_out    = var.vm_internet_max_bandwidth_out
   instance_charge_type          = "PostPaid"

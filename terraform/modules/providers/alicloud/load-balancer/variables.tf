@@ -13,11 +13,6 @@ variable "lb_project" {
   description = "The ID of the project that owns the load balancer."
 }
 
-variable "lb_subnet" {
-  type        = string
-  description = "The CIDR block that will have access to the load balancer."
-}
-
 variable "lb_deployment_type" {
   type        = string
   default     = "vm"
@@ -178,7 +173,7 @@ variable "lb_allowed_cidr" {
 variable "lb_ssl_policy" {
   type        = string
   description = "HTTPS listener TLS cipher policy. Valid values are 'tls_cipher_policy_1_0', 'tls_cipher_policy_1_1', 'tls_cipher_policy_1_2', and 'tls_cipher_policy_1_2_strict'."
-  default     = "tls_cipher_policy_1_2_strict"
+  default     = "tls_cipher_policy_1_2"
 }
 
 variable "lb_ssl_certificate_id" {
@@ -190,4 +185,27 @@ variable "lb_bandwidth" {
   type        = number
   description = "Bandwidth peak of Listener. For the public network instance charged per traffic consumed, the Bandwidth on Listener can be set to -1, indicating the bandwidth peak is unlimited. Valid values are [-1, 1-1000] in MB/S."
   default     = -1
+}
+
+variable "lb_domain_name" {
+  type        = string
+  description = "The DNS A record to associate with the load balancer."
+}
+
+variable "lb_domain_name_host_record" {
+  type        = string
+  default     = "@"
+  description = "Host record for the DNS A record for the load balancer."
+}
+
+variable "lb_domain_name_cnames" {
+  type        = list(string)
+  default     = []
+  description = "The DNS CNAME records to associate with the load balancer's A record."
+}
+
+variable "lb_domain_name_cnames_host_record" {
+  type        = string
+  default     = "@"
+  description = "Host record for the DNS CNAME records for the load balancer."
 }

@@ -5,7 +5,6 @@ module "lb" {
   lb_end_date                   = var.lbvm_end_date
   lb_project                    = var.lbvm_project
   lb_name                       = var.lbvm_name
-  lb_subnet                     = data.alicloud_vpcs.main.vpcs.0.cidr_block
   lb_instance_port              = var.lbvm_lb_instance_port
   lb_instance_protocol          = var.lbvm_lb_instance_protocol
   lb_health_check_path          = var.lbvm_lb_health_check_path
@@ -16,6 +15,8 @@ module "lb" {
   lb_stickiness_cookie_duration = var.lbvm_lb_stickiness_cookie_duration
   lb_stickiness_enabled         = var.lbvm_lb_stickiness_enabled
   lb_availability_zones         = var.lbvm_availability_zones
+  lb_domain_name                = var.lbvm_lb_domain_name
+  lb_domain_name_cnames         = var.lbvm_lb_domain_name_cnames
 }
 
 resource "alicloud_slb_attachment" "main" {
