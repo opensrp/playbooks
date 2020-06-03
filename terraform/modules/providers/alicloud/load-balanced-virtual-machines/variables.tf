@@ -44,6 +44,17 @@ variable "lbvm_availability_zones" {
   description = "At least two availability zones to place the ECS instances and load balancer."
 }
 
+variable "lbvm_lb_domain_name" {
+  type        = string
+  description = "The DNS A record to associate with the load balancer."
+}
+
+variable "lbvm_lb_domain_name_cnames" {
+  type        = list(string)
+  default     = []
+  description = "The DNS CNAME records to associate with the load balancer's A record."
+}
+
 variable "lbvm_vm_firewall_rules" {
   type        = list(string)
   description = "The firewall rules to attach to the virtual machines."
