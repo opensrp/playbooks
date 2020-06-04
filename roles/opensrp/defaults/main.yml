@@ -125,14 +125,14 @@ opensrp_cors_max_age: "60"
 #Team module settings
 opensrp_use_opensrp_team_module: false
 
-# S3 configuration (should be populated for deployments using S3 multimedia storage)
-opensrp_aws_access_key_id: ""
-opensrp_aws_secret_access_key: ""
-opensrp_aws_region: ""
-opensrp_s3_bucket_name: ""
-opensrp_s3_bucket_folder_path_prefix: ""
-opensrp_s3_bucket_folder_path_suffix: ""
-opensrp_unique_s3_bucket_folder_path: "{% if opensrp_s3_bucket_folder_path_prefix %}{{opensrp_s3_bucket_folder_path_prefix}}/{% endif %}{{ opensrp_site_name }}{% if opensrp_s3_bucket_folder_path_suffix %}/{{opensrp_s3_bucket_folder_path_suffix}}{% endif %}"
+# Object storage configuration (should be populated for deployments using object storage for multimedia)
+opensrp_object_storage_access_key_id: "dummy"
+opensrp_object_storage_secret_access_key: "dummy"
+opensrp_object_storage_region: "dummy"
+opensrp_object_storage_bucket_name: "dummy"
+opensrp_object_storage_bucket_folder_path_prefix: ""
+opensrp_object_storage_bucket_folder_path_suffix: ""
+opensrp_unique_object_storage_bucket_folder_path: "{% if opensrp_object_storage_bucket_folder_path_prefix %}{{opensrp_object_storage_bucket_folder_path_prefix}}/{% endif %}{{ opensrp_site_name }}{% if opensrp_object_storage_bucket_folder_path_suffix %}/{{opensrp_object_storage_bucket_folder_path_suffix}}{% endif %}"
 
 # multimedia file manager (is file system by default)
 opensrp_multimedia_file_manager: "FileSystemMultimediaFileManager"
