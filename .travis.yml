@@ -2,7 +2,7 @@ language: python
 python:
   - "3.6"
 env:
-  - terraform_version="0.12.1" terraform_os_arch="linux_amd64" packer_version="1.4.2" packer_os_arch="linux_amd64" scversion="stable"
+  - terraform_version="0.12.26" terraform_os_arch="linux_amd64" packer_version="1.4.2" packer_os_arch="linux_amd64" scversion="stable"
 install:
   - pip install -r requirements/base.pip
   - mkdir bin
