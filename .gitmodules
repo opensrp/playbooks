@@ -28,3 +28,6 @@
 [submodule "roles/keycloak"]
 	path = roles/keycloak
 	url = https://github.com/onaio/ansible-keycloak.git
+[submodule "roles/onaio.ssl-certificate"]
+	path = roles/onaio.ssl-certificate
+	url = https://github.com/onaio/ansible-ssl-certificate.git
