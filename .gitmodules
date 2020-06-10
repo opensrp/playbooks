@@ -31,3 +31,6 @@
 [submodule "roles/onaio.ssl-certificate"]
 	path = roles/onaio.ssl-certificate
 	url = https://github.com/onaio/ansible-ssl-certificate.git
+[submodule "roles/onaio.backup"]
+	path = roles/onaio.backup
+	url = https://github.com/onaio/ansible-backup.git
