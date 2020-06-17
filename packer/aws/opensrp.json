@@ -1,0 +1,117 @@
+{
+    "variables": {
+        "aws_access_key": "",
+        "aws_secret_key": "",
+        "env": "staging",
+        "instance_type": "t3.micro",
+        "owner": "",
+        "project": "",
+        "end_date": "-",
+        "region": "eu-west-1",
+        "source_ami": "ami-035966e8adab4aaad",
+        "distribution_name": "ubuntu",
+        "distribution_version": "18.04",
+        "ansible_vault_file": "/path/to/vault/file",
+        "ansible_inventory": "sample-inventories/zeir-sample/staging",
+        "opensrp_version": "v2.1.6-SNAPSHOT",
+        "group_vars": "opensrp-app-servers,opensrp-redis-servers",
+        "tags_skipped": "certbot,logstash,postgresql"
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "access_key": "{{ user `aws_access_key` }}",
+            "secret_key": "{{ user `aws_secret_key` }}",
+            "region": "{{ user `region` }}",
+            "source_ami": "{{ user `source_ami` }}",
+            "instance_type": "{{ user `instance_type` }}",
+            "ssh_username": "ubuntu",
+            "ami_name": "opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
+            "tags": {
+                "Name": "opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
+                "OS_Version": "{{ user `distribution_name` }}",
+                "Description": "OpenSRP Server {{ user `opensrp_version` }} for {{ user `project` }}-{{ user `env` }}",
+                "Release": "{{ user `distribution_version` }}",
+                "OwnerList": "{{ user `owner` }}",
+                "EnvironmentList": "{{ user `env` }}",
+                "EndDate": "{{ user `end_date` }}",
+                "ProjectList": "{{ user `project` }}",
+                "DeploymentType": "packer"
+            },
+            "run_tags": {
+                "Name": "packer-opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
+                "OwnerList": "{{ user `owner` }}",
+                "EnvironmentList": "{{ user `env` }}",
+                "EndDate": "{{ user `end_date` }}",
+                "ProjectList": "{{ user `project` }}",
+                "DeploymentType": "packer"
+            },
+            "run_volume_tags": {
+                "Name": "packer-opensrp-server-{{ user `opensrp_version` }}-{{ user `project` }}-{{ user `env` }}-{{ timestamp }}",
+                "OwnerList": "{{ user `owner` }}",
+                "EnvironmentList": "{{ user `env` }}",
+                "EndDate": "{{ user `end_date` }}",
+                "ProjectList": "{{ user `project` }}",
+                "DeploymentType": "packer"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "scripts": "packer/scripts/ubuntu_avoid_lockout.sh"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo apt-get update",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' dist-upgrade",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install python",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' autoremove",
+                "sudo su -c 'echo \"\\\"\\e[A\\\":history-search-backward\" >> /etc/inputrc'",
+                "sudo su -c 'echo \"\\\"\\e[B\\\":history-search-forward\" >> /etc/inputrc'"
+            ]
+        },
+        {
+            "type": "ansible",
+            "extra_arguments": [
+                "--vault-password-file={{ user `ansible_vault_file` }}",
+                "--module-path=library/",
+                "--extra-vars",
+                "server_monitoring_set_hostname=false"
+            ],
+            "inventory_directory": "{{ user `ansible_inventory` }}",
+            "playbook_file": "setup-server.yml",
+            "groups": [
+                "all",
+                "monitored-servers"
+            ],
+            "user": "ubuntu"
+        },
+        {
+            "type": "ansible",
+            "extra_arguments": [
+                "--vault-password-file={{ user `ansible_vault_file` }}",
+                "--module-path=library/",
+                "--skip-tags={{ user `tags_skipped` }}",
+                "--extra-vars",
+                "opensrp_version={{ user `opensrp_version` }}",
+                "--extra-vars",
+                "validate_certs=False",
+                "--extra-vars",
+                "nginx_install_only=True"
+            ],
+            "inventory_directory": "{{ user `ansible_inventory` }}",
+            "playbook_file": "deploy-opensrp.yml",
+            "groups": "{{ user `group_vars` }}",
+            "user": "ubuntu"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo systemctl enable apt-daily.timer",
+                "sudo systemctl enable apt-daily-upgrade.timer"
+            ]
+        }
+    ]
+}

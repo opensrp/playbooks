@@ -7,7 +7,9 @@
 - include_tasks: compile.yml
 
 - include_tasks: mysql.yml
-  when: opensrp_mysql_database is defined
+  when:
+    - opensrp_mysql_database is defined
+    - opensrp_configure_mysql|bool
 
 - name: Create OpenSRP resource directory
   become: yes
@@ -15,7 +17,7 @@
   file:
     path: "{{ opensrp_resource_dir }}"
     owner: "{{ opensrp_system_user }}"
-    group: "{{ tomcat_group }}"
+    group: "{{ opensrp_system_group }}"
     state: directory
     mode: 0755
 
@@ -25,7 +27,7 @@
   file:
     path: "{{ opensrp_resource_dir }}/{{ item }}"
     owner: "{{ opensrp_system_user }}"
-    group: "{{ tomcat_group }}"
+    group: "{{ opensrp_system_group }}"
     state: directory
     mode: 0755
   with_items: "{{ opensrp_resource_sub_dirs }}"
@@ -33,14 +35,14 @@
 # 1. We expect that the user that owns the directory is the OpenMRS user and not the
 # OpenSRP user (this is why we don't set the user owner for the directory)
 #
-# 2. We expect that the OpenSRP user and the OpenMRS user both belong to the `tomcat_group`
-# group (this is why we allow the tomcat_group group to write to the directory)
+# 2. We expect that the OpenSRP user and the OpenMRS user both belong to the `opensrp_system_group`
+# group (this is why we allow the opensrp_system_group group to write to the directory)
 - name: Create OpenSRP multimedia directory
   become: yes
   become_user: root
   file:
     path: "{{ opensrp_multimedia_parent_directory }}"
-    group: "{{ tomcat_group }}"
+    group: "{{ opensrp_system_group }}"
     state: directory
     mode: 0775
 
@@ -61,7 +63,7 @@
     src: "{{ opensrp_local_package_directory }}/{{ opensrp_version }}.war"
     dest: "{{ opensrp_user_home }}/{{ opensrp_tomcat_instance }}/webapps/{{ opensrp_install_name }}.war"
     owner: "{{ opensrp_system_user }}"
-    group: "{{ tomcat_group }}"
+    group: "{{ opensrp_system_group }}"
 
 - include_tasks: postgresql.yml
   when: opensrp_psql_as_primary_database

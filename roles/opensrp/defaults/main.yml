@@ -5,6 +5,7 @@ opensrp_resource_sub_dirs:
   - "qr-codes"
 opensrp_mysql_port: 3306
 opensrp_mysql_host: "localhost"
+opensrp_configure_mysql: true
 opensrp_mysql_database: "opensrp"
 opensrp_motech_database: "motechquartz"
 opensrp_mysql_user: "opensrp"
@@ -29,6 +30,7 @@ opensrp_couchdb_user: "root"
 opensrp_couchdb_password: "root"
 opensrp_rapidpro_token: ""
 opensrp_nginx_max_filesize: "50M"
+opensrp_nginx_client_header_buffers: "4 32k"
 opensrp_local_checkout_path: "/tmp/{{ lookup('env', 'USER') }}/opensrp"
 opensrp_local_package_directory: "/tmp/{{ lookup('env', 'USER') }}/opensrp-wars"
 opensrp_activemq_host: "127.0.0.1"
@@ -46,8 +48,6 @@ couchdb_lucene_version_number: "1.1.0"
 couchdb_backup_database: "opensrp"
 allowed_couchdb_hosts: []
 mysql_backups_to_s3: false
-tomcat_user: "tomcat7"
-tomcat_group: "tomcat7"
 opensrp_tomcat_version: 9
 opensrp_tomcat_http_port: 8082
 opensrp_tomcat_shutdown_port: 8007
@@ -59,6 +59,7 @@ catalina_ops: "-Xms1500M -Xmx1500M"
 ssl_key: "{{ opensrp_site_name }}-key.pem"
 ssl_cert: "{{ opensrp_site_name }}-fullchain.pem"
 opensrp_system_user: "opensrp"
+opensrp_system_group: "tomcat"
 opensrp_tomcat_instance: "tomcat-opensrp"
 opensrp_user_home: "/home/{{ opensrp_system_user }}"
 opensrp_psql_as_primary_database: true
@@ -124,14 +125,14 @@ opensrp_cors_max_age: "60"
 #Team module settings
 opensrp_use_opensrp_team_module: false
 
-# S3 configuration (should be populated for deployments using S3 multimedia storage)
-opensrp_aws_access_key_id: ""
-opensrp_aws_secret_access_key: ""
-opensrp_aws_region: ""
-opensrp_s3_bucket_name: ""
-opensrp_s3_bucket_folder_path_prefix: ""
-opensrp_s3_bucket_folder_path_suffix: ""
-opensrp_unique_s3_bucket_folder_path: "{% if opensrp_s3_bucket_folder_path_prefix %}{{opensrp_s3_bucket_folder_path_prefix}}/{% endif %}{{ opensrp_site_name }}{% if opensrp_s3_bucket_folder_path_suffix %}/{{opensrp_s3_bucket_folder_path_suffix}}{% endif %}"
+# Object storage configuration (should be populated for deployments using object storage for multimedia)
+opensrp_object_storage_access_key_id: "dummy"
+opensrp_object_storage_secret_access_key: "dummy"
+opensrp_object_storage_region: "dummy"
+opensrp_object_storage_bucket_name: "dummy"
+opensrp_object_storage_bucket_folder_path_prefix: ""
+opensrp_object_storage_bucket_folder_path_suffix: ""
+opensrp_unique_object_storage_bucket_folder_path: "{% if opensrp_object_storage_bucket_folder_path_prefix %}{{opensrp_object_storage_bucket_folder_path_prefix}}/{% endif %}{{ opensrp_site_name }}{% if opensrp_object_storage_bucket_folder_path_suffix %}/{{opensrp_object_storage_bucket_folder_path_suffix}}{% endif %}"
 
 # multimedia file manager (is file system by default)
 opensrp_multimedia_file_manager: "FileSystemMultimediaFileManager"
@@ -252,6 +253,12 @@ opensrp_logstash_custom_inputs:
 opensrp_whitelabeling_copy_files: []
 
 # MySQL CA Bundle url
-opensrp_mysql_ca_bundle_url: ""
+opensrp_mysql_ca_bundle_url: "https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem"
 # Postgres CA Bundle url
-opensrp_postgres_ca_bundle_url: ""
+opensrp_postgres_ca_bundle_content: "{{ lookup('url', 'https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem' }}"
+
+opensrp_compile_java_home: "/usr/lib/jvm/java-11-openjdk-amd64"
+
+#Keycloak Configuration
+opensrp_keycloak_ssl_required: "external"
+opensrp_keycloak_confidential_port: 0

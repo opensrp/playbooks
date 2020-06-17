@@ -58,3 +58,40 @@ variable "vm_security_enhancement_strategy" {
   type    = string
   default = "Deactive"
 }
+
+variable "vm_private_domain_names" {
+  type    = list(string)
+  default = []
+}
+
+variable "vm_private_domain_names_host_record" {
+  type        = string
+  default     = "@"
+  description = "Host record for the DNS A record for the load balancer."
+}
+
+variable "vm_public_domain_names" {
+  type    = list(string)
+  default = []
+}
+
+variable "vm_public_domain_names_host_record" {
+  type        = string
+  default     = "@"
+  description = "Host record for the DNS A record for the load balancer."
+}
+
+variable "vm_user_data" {
+  type        = string
+  description = "The cloud-init user data to be applied to all the virtual machines. 'user_data' key in a VMs object inside the vm_instances variable will take presidence over this value."
+  default     = <<EOF
+#!/bin/bash
+
+set -e
+useradd -c ubuntu -s /bin/bash -m -d /home/ubuntu -U ubuntu -G sudo
+echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/100-cloud-init-ubuntu
+mkdir -p /home/ubuntu/.ssh
+cp /root/.ssh/authorized_keys /home/ubuntu/.ssh/authorized_keys
+chown -R ubuntu:ubuntu /home/ubuntu/.ssh
+EOF
+}

@@ -2,7 +2,7 @@ language: python
 python:
   - "3.6"
 env:
-  - terraform_version="0.12.1" terraform_os_arch="linux_amd64" packer_version="1.4.2" packer_os_arch="linux_amd64"
+  - terraform_version="0.12.26" terraform_os_arch="linux_amd64" packer_version="1.4.2" packer_os_arch="linux_amd64" scversion="stable"
 install:
   - pip install -r requirements/base.pip
   - mkdir bin
@@ -10,11 +10,16 @@ install:
   - unzip bin/terraform.zip -d bin
   - curl -o bin/packer.zip "https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_${packer_os_arch}.zip"
   - unzip bin/packer.zip -d bin
+  - wget -qO- "https://github.com/koalaman/shellcheck/releases/download/${scversion?}/shellcheck-${scversion?}.linux.x86_64.tar.xz" | tar -xJv
+  - cp "shellcheck-${scversion}/shellcheck" bin
 script:
   - ansible-lint deploy-dhis.yml
   - ansible-lint deploy-opensrp.yml
   - ansible-lint deploy-openmrs.yml
   - ansible-lint opensrp-web.yml
+  - ansible-lint deploy-keycloak.yml
   - find terraform -type d -print0 | xargs -n 1 -0 ./bin/terraform fmt -check=true
   - find packer -name *.json -print0 | xargs -n 1 -0 ./bin/packer validate -syntax-only
   - find packer -name *.json -print0 | xargs -I {} -0 bash -c 'diff <(python3 -m json.tool {}) <(cat {})'
+  - shellcheck --version
+  - shellcheck packer/scripts/*.sh

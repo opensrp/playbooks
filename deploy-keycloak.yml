@@ -1,0 +1,5 @@
+---
+- hosts: keycloak-app-servers
+  remote_user: ubuntu
+  roles:
+    - keycloak

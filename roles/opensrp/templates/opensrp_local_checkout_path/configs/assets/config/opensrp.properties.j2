@@ -118,15 +118,15 @@ opensrp.cors.max.age={{ opensrp_cors_max_age }}
 use.opensrp.team.module={{ opensrp_use_opensrp_team_module }}
 
 
-# S3 configuration (should be populated for deployments using S3 multimedia storage)
-aws_access_key_id={{ opensrp_aws_access_key_id  }}
-aws_secret_access_key={{ opensrp_aws_secret_access_key }}
-aws_region={{ opensrp_aws_region }}
-s3_bucket_name={{ opensrp_s3_bucket_name }}
-s3_bucket_folder_path={{ opensrp_unique_s3_bucket_folder_path }}
+# Object storage configuration (should be populated for deployments using object storage multimedia storage)
+object.storage.access.key.id={{ opensrp_object_storage_access_key_id  }}
+object.storage.secret.access.key={{ opensrp_object_storage_secret_access_key }}
+object.storage.region={{ opensrp_object_storage_region }}
+object.storage.bucket.name={{ opensrp_object_storage_bucket_name }}
+object.storage.bucket.folder.path={{ opensrp_unique_object_storage_bucket_folder_path }}
 
 # multimedia file manager (is file system by default)
-multimedia_file_manager={{ opensrp_multimedia_file_manager }}
+multimedia.file.manager={{ opensrp_multimedia_file_manager }}
 
 #Schedules Configuration
 schedule.event.add.serverVersion.interval={{ opensrp_event_add_serverversion_interval }}
@@ -137,3 +137,10 @@ schedule.location.add.serverVersion.interval={{ opensrp_location_add_serverversi
 schedule.openmrs.sync.interval={{ opensrp_openmrs_sync_interval }}
 schedule.openmrs.validate.interval={{ opensrp_openmrs_validate_interval }}
 schedule.dhis2.sync.interval={{ opensrp_dhis2_sync_interval }}
+
+#Allowed MIME Types
+multimedia.allowed.file.types=application/octet-stream,image/jpeg,image/gif,image/png
+
+#keycloak configuration
+keycloak.configuration.endpoint={0}realms/{1}/.well-known/openid-configuration
+keycloak.password.reset.endpoint={0}realms/{1}/account/credentials/password
