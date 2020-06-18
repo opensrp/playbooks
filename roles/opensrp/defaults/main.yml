@@ -255,7 +255,7 @@ opensrp_whitelabeling_copy_files: []
 # MySQL CA Bundle url
 opensrp_mysql_ca_bundle_url: "https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem"
 # Postgres CA Bundle url
-opensrp_postgres_ca_bundle_content: "{{ lookup('url', 'https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem' }}"
+opensrp_postgres_ca_bundle_content: "{{ lookup('url', 'https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem') }}"
 
 opensrp_compile_java_home: "/usr/lib/jvm/java-11-openjdk-amd64"
 
