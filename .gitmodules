@@ -37,3 +37,6 @@
 [submodule "roles/onaio.backup"]
 	path = roles/onaio.backup
 	url = https://github.com/onaio/ansible-backup.git
+[submodule "terraform/modules/providers/aws/opensrp-asg"]
+	path = terraform/modules/providers/aws/opensrp-asg
+	url = https://github.com/OpenSRP/opensrp-terraform-aws-asg.git
