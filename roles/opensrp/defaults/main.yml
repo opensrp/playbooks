@@ -32,7 +32,7 @@ opensrp_couchdb_password: "root"
 opensrp_rapidpro_url: ""
 opensrp_rapidpro_token: ""
 opensrp_nginx_max_filesize: "50M"
-opensrp_nginx_client_header_buffers: "4 32k"
+opensrp_nginx_client_header_buffers: "4 8k"
 opensrp_local_checkout_path: "/tmp/{{ lookup('env', 'USER') }}/opensrp"
 opensrp_local_package_directory: "/tmp/{{ lookup('env', 'USER') }}/opensrp-wars"
 opensrp_activemq_host: "127.0.0.1"
@@ -184,6 +184,7 @@ opensrp_nginx_sites:
       __listen: "443;\n  listen [::]:443;\n"
       server_name: "{{ opensrp_site_name }}"
       client_max_body_size: "{{ opensrp_nginx_max_filesize }}"
+      large_client_header_buffers: "{{ opensrp_nginx_client_header_buffers }}"
       ssl:
         enabled: true
         cert: "{{ opensrp_ssl_cert_file }}"
