@@ -1,0 +1,26 @@
+---
+- name: Installing Superset
+  hosts: superset
+  become: true
+  roles:
+    - role: onaio.logstash
+      tags:
+       - logstash
+
+    - role: redis
+
+    - role: superset
+      tags:
+        - superset
+
+    - role: certbot
+      vars:
+        certbot_create_certs: "{{ superset_certbot_create_certs }}"
+        certbot_site_names:
+          - "{{ superset_discover_server_name }}"
+        certbot_mail_address: "{{ superset_certbot_mail_address }}"
+      when: superset_use_certbot|bool
+
+    - role: nginx
+      vars:
+        enable_ssl: true
