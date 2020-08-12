@@ -50,7 +50,7 @@ openmrs_modules:
   - "uiframework-3.13.0"
   - "registrationcore-1.8.0"
   - "providermanagement-2.10.0"
-  - "teammodule-2.0.0B"
+  - "teammodule-2.0.1"
   - "uicommons-2.6.0"
   - "webservices.rest-2.24.0"
   - "legacyui-1.4.0"
