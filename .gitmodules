@@ -40,3 +40,6 @@
 [submodule "terraform/modules/providers/aws/opensrp-asg"]
 	path = terraform/modules/providers/aws/opensrp-asg
 	url = https://github.com/OpenSRP/opensrp-terraform-aws-asg.git
+[submodule "terraform/modules/providers/uptimerobot/monitor"]
+	path = terraform/modules/providers/uptimerobot/monitor
+	url = https://github.com/onaio/terraform-module-uptimerobot.git
