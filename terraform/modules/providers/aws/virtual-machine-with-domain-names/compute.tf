@@ -10,6 +10,7 @@ module "vm" {
   vm_availability_zones          = var.vmdns_vm_availability_zones
   vm_firewall_rules              = var.vmdns_firewall_rules
   vm_instances                   = var.vmdns_vm_instances
+  vm_user_data                   = var.vmdns_vm_user_data
   vm_root_block_device_encrypted = var.vmdns_root_block_device_encrypted
 }
 

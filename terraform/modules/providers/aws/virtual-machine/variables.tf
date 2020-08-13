@@ -45,3 +45,13 @@ variable "vm_root_block_device_encrypted" {
   type    = bool
   default = false
 }
+
+variable "vm_user_data" {
+  type        = string
+  description = "The cloud-init user data to be applied to all the virtual machines. 'user_data' key in a VMs object inside the vm_instances variable will take presidence over this value."
+  default     = <<EOF
+#!/bin/bash
+
+echo "Instance is up!"
+EOF
+}

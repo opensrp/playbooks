@@ -14,6 +14,7 @@ resource "aws_instance" "main" {
     count.index % length(data.aws_subnet.vpc_subnets),
   )
   associate_public_ip_address = var.vm_associate_public_ip_address
+  user_data                   = contains(keys(var.vm_instances[count.index]), "user_data") ? var.vm_instances[count.index]["user_data"] : var.vm_user_data
 
   root_block_device {
     encrypted   = var.vm_root_block_device_encrypted
