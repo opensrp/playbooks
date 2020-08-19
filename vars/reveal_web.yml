@@ -1,0 +1,38 @@
+---
+reveal_logstash_plugins:
+  - logstash-output-gelf
+reveal_logstash_custom_outputs:
+  - output: 'gelf'
+    lines:
+      - 'host => "{{ graylog_server }}"'
+      - 'port => "{{ graylog_port }}"'
+      - 'sender => "{{ deployed_site_name }}"'
+reveal_logstash_custom_inputs:
+  - input: 'file'
+    lines:
+      - 'path => ["{{ reveal_nginx_log_path }}/{{ deployed_site_name }}-ssl-access.log"]'
+      - 'start_position => "end"'
+      - 'add_field => {'
+      - '  ssl => true'
+      - '  nginx_access => true'
+      - '  from_nginx => true'
+      - '  from_ona => false'
+      - '  from_host => "%{host}"'
+      - '  from_domain => "{{ deployed_site_name }}"'
+      - '  from_reveal => true'
+      - '  git_version => "{{ reveal_react_git_version }}"'
+      - '}'
+  - input: 'file'
+    lines:
+      - 'path => ["{{ reveal_nginx_log_path }}/{{ deployed_site_name }}-access.log"]'
+      - 'start_position => "end"'
+      - 'add_field => {'
+      - '  ssl => false'
+      - '  nginx_access => true'
+      - '  from_nginx => true'
+      - '  from_ona => false'
+      - '  from_host => "%{host}"'
+      - '  from_domain => "{{ deployed_site_name }}"'
+      - '  from_reveal => true'
+      - '  git_version => "{{ reveal_react_git_version }}"'
+      - '}'
