@@ -43,3 +43,21 @@
 [submodule "terraform/modules/providers/uptimerobot/monitor"]
 	path = terraform/modules/providers/uptimerobot/monitor
 	url = https://github.com/onaio/terraform-module-uptimerobot.git
+[submodule "roles/redis"]
+	path = roles/redis
+	url = https://github.com/onaio/ansible-redis.git
+[submodule "roles/superset"]
+	path = roles/superset
+	url = https://github.com/onaio/ansible-superset.git
+[submodule "roles/certbot"]
+	path = roles/certbot
+	url = https://github.com/onaio/ansible-certbot.git
+[submodule "roles/nginx"]
+	path = roles/nginx
+	url = https://github.com/onaio/ansible-nginx.git
+[submodule "roles/react"]
+	path = roles/react
+	url = https://github.com/onaio/ansible-react.git
+[submodule "roles/express"]
+	path = roles/express
+	url = https://github.com/onaio/ansible-express.git
