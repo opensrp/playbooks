@@ -1,0 +1,130 @@
+{
+    "variables": {
+        "aws_access_key": "",
+        "aws_secret_key": "",
+        "env": "stage",
+        "local_user": "{{ env `USER` }}",
+        "devops_client": "",
+        "owner": "",
+        "project": "",
+        "project_id": "",
+        "end_date": "-",
+        "vault_password_file": "~/opensrp/.vault_pass.txt",
+        "region": "",
+        "ansible_inventory": "",
+        "source_ami": "",
+        "software_version": "",
+        "builder_instance_type": "t3.large",
+        "ssh_username": "ubuntu",
+        "OS_version": "Ubuntu",
+        "OS_description": "Ubuntu 20.0.4.LTS",
+        "OS_release": "20.0.4",
+        "superset_group_vars": "all,superset",
+        "reveal_web_group_vars": "all,reveal_web",
+        "server_monitoring_hostname": "reveal",
+        "superset_run_init_commands": "false"
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "access_key": "{{ user `aws_access_key` }}",
+            "secret_key": "{{ user `aws_secret_key` }}",
+            "region": "{{ user `region` }}",
+            "source_ami": "{{ user `source_ami` }}",
+            "instance_type": "{{ user `builder_instance_type` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "ami_name": "reveal-web-superset-{{ user `project`}}-{{ timestamp }}",
+            "tags": {
+                "Name": "Reveal Web Superset -{{ user `project_id` }}-{{ user `env` }}",
+                "OS_Version": "{{ user `OS_version` }}",
+                "Description": "{{ user `OS_description` }}",
+                "Release": "{{ user `OS_release` }}",
+                "Group": "{{ user `project` }}-{{ user `env` }}",
+                "OwnerList": "{{ user `owner` }}",
+                "EnvironmentList": "{{ user `env` }}",
+                "EndDate": "{{ user `end_date` }}",
+                "ProjectList": "{{ user `project_id` }}",
+                "SoftwareVersion": "{{ user `software_version` }}",
+                "DeploymentType": "packer"
+            },
+            "run_tags": {
+                "Name": "Packer Builder Reveal Web Superset-{{ user `project` }}-{{ user `env` }}",
+                "Group": "{{ user `project` }}-{{ user `env` }}",
+                "OwnerList": "{{ user `owner` }}",
+                "EnvironmentList": "{{ user `env` }}",
+                "EndDate": "{{ user `end_date` }}",
+                "ProjectList": "{{ user `project_id` }}",
+                "SoftwareVersion": "{{ user `software_version` }}",
+                "DeploymentType": "packer"
+            },
+            "run_volume_tags": {
+                "Name": "Packer Builder Superset-{{ user `project` }}-{{ user `env` }}",
+                "Group": "{{ user `project` }}-{{ user `env` }}",
+                "OwnerList": "{{ user `owner` }}",
+                "EnvironmentList": "{{ user `env` }}",
+                "EndDate": "{{ user `end_date` }}",
+                "ProjectList": "{{ user `project_id` }}",
+                "SoftwareVersion": "{{ user `software_version` }}",
+                "DeploymentType": "packer"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "scripts": "packer/scripts/ubuntu_avoid_lockout.sh"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sleep 30",
+                "sudo apt-get update",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' dist-upgrade",
+                "[ `lsb_release -rs` = \"20.04\" ] && sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install python-is-python3",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' autoremove",
+                "sudo su -c 'echo \"\\\"\\e[A\\\":history-search-backward\" >> /etc/inputrc'",
+                "sudo su -c 'echo \"\\\"\\e[B\\\":history-search-forward\" >> /etc/inputrc'"
+            ]
+        },
+        {
+            "type": "ansible",
+            "extra_arguments": [
+                "--vault-password-file={{ user `vault_password_file` }}",
+                "--module-path=library/",
+                "--limit=default",
+                "-e slack_notifications=False",
+                "-e nginx_install_only=true",
+                "--extra-vars",
+                "ssh_local_user={{ user `local_user` }} superset_run_init_commands={{ user `superset_run_init_commands` }} certbot_create_certs=false"
+            ],
+            "inventory_directory": "{{ user `ansible_inventory` }}",
+            "playbook_file": "superset.yml",
+            "groups": "{{ user `superset_group_vars` }}",
+            "user": "{{ user `ssh_username`}}"
+        },
+        {
+            "type": "ansible",
+            "extra_arguments": [
+                "--vault-password-file={{ user `vault_password_file` }}",
+                "--module-path=library/",
+                "--limit=default",
+                "-e slack_notifications=False",
+                "-e nginx_install_only=true",
+                "--extra-vars",
+                "ssh_local_user={{ user `local_user` }} certbot_create_certs=false"
+            ],
+            "inventory_directory": "{{ user `ansible_inventory` }}",
+            "playbook_file": "reveal-web.yml",
+            "groups": "{{ user `reveal_web_group_vars` }}",
+            "user": "{{ user `ssh_username`}}"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo systemctl enable apt-daily.timer",
+                "sudo systemctl enable apt-daily-upgrade.timer"
+            ]
+        }
+    ],
+    "description": "Creates an AWS AMI for the Superset app"
+}
