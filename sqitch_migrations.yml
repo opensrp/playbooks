@@ -1,0 +1,17 @@
+---
+- name: Run database migrations using sqitch
+  hosts: sqitch_migrations
+  become: true
+  vars:
+    slack_deployed_app_name: "Sqitch Database Migrations"
+    slack_deployed_app_version: "{{ reveal_migrations_version }}"
+  pre_tasks:
+    - include_tasks: tasks/slack-start.yml
+      when: slack_notifications
+  roles:
+    - role: sqitch_migrations
+      tags:
+        - migrations
+  post_tasks:
+    - include_tasks: tasks/slack-end.yml
+      when: slack_notifications

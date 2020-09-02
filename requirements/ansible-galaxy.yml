@@ -1,3 +1,4 @@
+---
 - src: https://github.com/onaio/postgresql.git
   name: ANXS.postgresql
   version: eecf0b28d8ae833f9118132384447ea19f76c802
@@ -53,3 +54,15 @@
   name: robertdebock.service
   version: a129fa51580e1183bf31d441c0c0f8c25aa946a8
   scm: git
+
+- src: git+https://github.com/onaio/ansible-sqitch
+  name: onaio.sqitch
+  version: v1.0.0
+
+- src: git+https://github.com/onaio/ansible-sqitch-migrations
+  name: sqitch_migrations
+  version: v1.0.0
+
+- name: adamyala.ansible-role-clone-repo
+  src: git+https://github.com/adamyala/ansible-role-clone-repo
+  version: 5de19d460af527a5c80d01326a629208008e7c3d
