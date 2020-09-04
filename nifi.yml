@@ -1,0 +1,113 @@
+---
+# We want to be able to sub-select based on tags - this breaks fact gathering for silly reasons:
+# https://github.com/ansible/ansible/issues/57529 v2.7->2.8 regression?
+- name: nifi facts
+  hosts: nifi
+  gather_facts: yes
+
+- hosts: nifi
+  gather_facts: no
+  become: yes
+  tags:
+    - nifi
+  pre_tasks:
+
+    - include_tasks: tasks/python3-ubuntu.yml
+
+    - name: Ensure git is installed
+      package:
+        name:
+          - git
+      tags:
+        - git-clone
+
+    - name: Add SSH_AUTH_SOCK to sudo user for git clone
+      lineinfile:
+        path: /etc/sudoers
+        regexp: 'SSH_AUTH_SOCK'
+        line: 'Defaults    env_keep += "SSH_AUTH_SOCK"'
+        validate: 'visudo -cf %s'
+      tags:
+        - git-clone
+
+    # Block forces tag on all sub-tasks
+    - block:
+        - include_tasks: tasks/generate-ss-certs.yml
+          vars:
+            self_signed_certificates: "{{ nifi_self_signed_certificates }}"
+      when: nifi_use_self_signed | default(False) | bool
+      tags:
+        - nginx
+        - certificates
+
+  roles:
+    - role: nifi
+
+    - role: linux-config
+      when: ansible_connection != 'docker'
+  
+    - role: certbot
+      vars:
+        certbot_create_certs: "{{ nifi_certbot_create_certs }}"
+        certbot_site_names:
+          - "{{ nifi_server_name }}"
+        certbot_mail_address: "{{ nifi_certbot_mail_address }}"
+      when: nifi_use_certbot
+      tags:
+        - nginx
+        - certificates
+
+    - role: nginx
+      vars:
+        nginx_install_method: package
+        nginx_sites: "{{ nifi_nginx_sites }}"
+        nginx_enabled_sites: "{{ nifi_nginx_enabled_sites }}"
+        enable_ssl: " {{ nifi_enable_ssl }}"
+        nginx_basic_auth_files:
+          - path: "{{ nifi_basic_auth_file }}"
+            users:
+              - username: "{{ nifi_basic_auth_name }}"
+                password: "{{ nifi_password }}"
+                state: "present"
+        apt_default_packages:
+          - ca-certificates
+          - python-passlib
+          - python3-passlib
+      tags:
+        - nginx
+
+  tasks:
+    - block:
+        - include_tasks: tasks/install-ubuntu-18-duplicity-v08.yml
+      when: nifi_backup_enabled is not defined or nifi_backup_enabled == true
+      tags:
+        - nifi-backup
+
+    - name: Install system-wide NiFi dependencies
+      apt:
+        pkg: "{{ item }}"
+        state: latest
+        update_cache: yes
+        cache_valid_time: 600
+      with_items:
+        - python-pkg-resources
+        - python-pip
+
+    - name: Create nifi Group
+      group:
+        name: nifi
+
+    - name: Create nifi user
+      user:
+        name: nifi
+        comment: "NiFi User"
+        system: yes
+        group: nifi
+
+    - name: Download PostgreSQL JDBC drivers
+      get_url:
+        url: https://jdbc.postgresql.org/download/postgresql-42.2.1.jar
+        checksum: sha256:d800ad754c7265b3bc06425d3ea0059a2a3226527226cecfd459f74b0be7d6ed
+        owner: nifi
+        group: nifi
+        dest: "{{ nifi_library_directory }}"

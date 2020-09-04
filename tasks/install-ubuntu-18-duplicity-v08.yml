@@ -1,0 +1,47 @@
+---
+- name: Uninstall current duplicity
+  apt:
+    name: duplicity
+    state: absent
+
+- name: Install duplicity v0.8 prerequisites
+  apt:
+    name:
+      # For Build+Install
+      - python3
+      - python3-setuptools
+      - build-essential
+      - gettext
+      - python3-dev
+      - librsync-dev
+      # Dependencies
+      - python3-fasteners
+      - python3-future
+      # For backends
+      - lftp # ftp
+      - python3-paramiko # scp/sftp
+      - python3-boto # Old S3
+      - python3-boto3 # New S3
+
+- name: Download duplicity v0.8 source package
+  get_url:
+    url: https://code.launchpad.net/duplicity/0.8-series/0.8.12/+download/duplicity-0.8.12.1612.tar.gz
+    dest: "/tmp/duplicity-0.8.12.1612.tar.gz"
+    force: no
+
+- name: Unarchive duplicity v0.8 source package
+  unarchive:
+    src: "/tmp/duplicity-0.8.12.1612.tar.gz"
+    dest: "/tmp"
+    copy: no
+
+- name: Install duplicity v0.8
+  shell:
+    cmd: "python3 setup.py install"
+    chdir: "/tmp/duplicity-0.8.12.1612"
+
+- name: Link duplicity v0.8 as system-level for easier use in cron tasks 
+  file:
+    src: "/usr/local/bin/duplicity"
+    dest: "/usr/bin/duplicity"
+    state: link
