@@ -11,7 +11,6 @@
   tags:
     - nifi
   pre_tasks:
-
     - include_tasks: tasks/python3-ubuntu.yml
 
     - name: Ensure git is installed
@@ -24,9 +23,9 @@
     - name: Add SSH_AUTH_SOCK to sudo user for git clone
       lineinfile:
         path: /etc/sudoers
-        regexp: 'SSH_AUTH_SOCK'
+        regexp: "SSH_AUTH_SOCK"
         line: 'Defaults    env_keep += "SSH_AUTH_SOCK"'
-        validate: 'visudo -cf %s'
+        validate: "visudo -cf %s"
       tags:
         - git-clone
 
@@ -45,7 +44,7 @@
 
     - role: linux-config
       when: ansible_connection != 'docker'
-  
+
     - role: certbot
       vars:
         certbot_create_certs: "{{ nifi_certbot_create_certs }}"
