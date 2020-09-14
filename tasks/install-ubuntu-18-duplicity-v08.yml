@@ -36,11 +36,11 @@
     copy: no
 
 - name: Install duplicity v0.8
-  shell:
-    cmd: "python3 setup.py install"
+  command: "python3 setup.py install"
+  args:
     chdir: "/tmp/duplicity-0.8.12.1612"
 
-- name: Link duplicity v0.8 as system-level for easier use in cron tasks 
+- name: Link duplicity v0.8 as system-level for easier use in cron tasks
   file:
     src: "/usr/local/bin/duplicity"
     dest: "/usr/bin/duplicity"
