@@ -110,3 +110,11 @@
         owner: nifi
         group: nifi
         dest: "{{ nifi_library_directory }}"
+
+    - name: Download mssql JDBC drivers
+      get_url:
+        url: https://repo1.maven.org/maven2/com/microsoft/sqlserver/mssql-jdbc/8.4.1.jre8/mssql-jdbc-8.4.1.jre8.jar
+        owner: nifi
+        group: nifi
+        dest: "{{ nifi_library_directory }}"
+      when: install_mssql_jdbc_drivers|bool
