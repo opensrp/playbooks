@@ -25,11 +25,6 @@
 - src: geerlingguy.swap
   version: 1.0.0
 
-- src: https://github.com/onaio/ansible-logstash.git
-  name: onaio.logstash
-  version: fb9c0aa8f133c5d48fb832ac29a0814cf02883e3
-  scm: git
-
 - src: git+https://github.com/onaio/ansible-react
   name: onaio.react
   version: 16a94a34469f95bdcf5507d0216d9c41f24b14fc
@@ -66,3 +61,6 @@
 - name: adamyala.ansible-role-clone-repo
   src: git+https://github.com/adamyala/ansible-role-clone-repo
   version: 5de19d460af527a5c80d01326a629208008e7c3d
+
+- src: christiangda.amazon_cloudwatch_agent
+  version: 2.0.6

@@ -61,3 +61,12 @@
 [submodule "roles/express"]
 	path = roles/express
 	url = https://github.com/onaio/ansible-express.git
+[submodule "roles/sre-tooling"]
+	path = roles/sre-tooling
+	url = https://github.com/onaio/ansible-sre-tooling.git
+[submodule "roles/fluentd"]
+	path = roles/fluentd
+	url = https://github.com/onaio/ansible-fluentd.git
+[submodule "roles/onaio.logstash"]
+	path = roles/onaio.logstash
+	url = https://github.com/onaio/ansible-logstash.git
