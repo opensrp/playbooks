@@ -93,7 +93,7 @@ opensrp_mybatis_migration_extra_args: ""
 opensrp_java_packages:
   - openjdk-11-jre
 opensrp_multimedia_parent_directory: "{{ opensrp_openmrs_tomcat_user_home }}/.OpenMRS"
-# Whether skip tasks that will involve configuring already running dependancies like
+# Whether to skip tasks that will involve configuring already running dependancies like
 # running the database migrations
 opensrp_install_only: false
 
