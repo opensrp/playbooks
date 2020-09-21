@@ -76,6 +76,7 @@
     port: "{{ opensrp_postgres_port }}"
     login_user: "{{ opensrp_postgres_superuser }}"
     login_password: "{{ opensrp_postgres_superuser_password }}"
+  when: not opensrp_install_only
   tags:
     - postgresql
 
@@ -91,6 +92,7 @@
     encrypted: yes
     priv: ALL
     role_attr_flags: "{{ opensrp_postgresql_user_role_attr_flags }}"
+  when: not opensrp_install_only
   tags:
     - postgresql
 
@@ -115,6 +117,7 @@
 
 - name: Run the Mybatis migrations # noqa 301
   command: "{{ opensrp_mybatis_install_dir }}/mybatis-migrations-{{ opensrp_mybatis_version }}/bin/migrate up --path={{ opensrp_local_checkout_path }}/configs/assets/migrations --env={{ opensrp_mybatis_env }} {{ opensrp_mybatis_migration_extra_args }}" # noqa 204
+  when: not opensrp_install_only
   tags:
     - postgresql
 
@@ -122,5 +125,6 @@
   file:
     state: absent
     path: "{{ opensrp_local_checkout_path }}"
+  when: not opensrp_install_only
   tags:
     - postgresql

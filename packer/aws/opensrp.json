@@ -98,7 +98,9 @@
                 "--extra-vars",
                 "validate_certs=False",
                 "--extra-vars",
-                "nginx_install_only=True"
+                "nginx_install_only=True",
+                "--extra-vars",
+                "opensrp_install_only=True"
             ],
             "inventory_directory": "{{ user `ansible_inventory` }}",
             "playbook_file": "deploy-opensrp.yml",
