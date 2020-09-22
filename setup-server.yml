@@ -39,3 +39,16 @@
       tags:
         - monitoring
         - monit
+    - role: sre-tooling
+      tags:
+        - sre-tooling
+    - role: fluentd
+      when: server_monitoring_enable_fluentd is defined and server_monitoring_enable_fluentd == true
+      tags:
+        - fluentd
+    - role: christiangda.amazon_cloudwatch_agent
+      cwa_conf_json_file_content: "{{ server_monitoring_cwa_conf_json_file_content | default(default_server_monitoring_cwa_conf_json_file_content) }}"
+      cwa_aws_region: "{{ server_monitoring_aws_region | default(default_server_monitoring_aws_region) }}"
+      when: (server_monitoring_enable_cwa is defined and server_monitoring_enable_cwa == true) or (placement is defined and placement.availability_zone is defined)
+      tags:
+        - cloudwatch
