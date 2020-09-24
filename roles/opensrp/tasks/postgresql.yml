@@ -49,14 +49,14 @@
 - name: Ensure checkout directory is empty
   file:
     state: absent
-    path: "{{ opensrp_local_checkout_path }}"
+    path: "{{ opensrp_remote_checkout_path }}"
   tags:
     - postgresql
 
 - name: Checking out codebase
   git:
     repo: "{{ opensrp_git_url }}"
-    dest: "{{ opensrp_local_checkout_path }}"
+    dest: "{{ opensrp_remote_checkout_path }}"
     version: "{{ opensrp_version }}"
     recursive: yes
   tags:
@@ -64,8 +64,8 @@
 
 - name: Copy the OpenSRP migrations environment configs
   template:
-    src: "templates/opensrp_local_checkout_path/configs/assets/migrations/environments/opensrp_mybatis_env.properties.j2"
-    dest: "{{ opensrp_local_checkout_path }}/configs/assets/migrations/environments/{{ opensrp_mybatis_env }}.properties"
+    src: "templates/opensrp_remote_checkout_path/configs/assets/migrations/environments/opensrp_mybatis_env.properties.j2"
+    dest: "{{ opensrp_remote_checkout_path }}/configs/assets/migrations/environments/{{ opensrp_mybatis_env }}.properties"
   tags:
     - postgresql
 
@@ -76,6 +76,7 @@
     port: "{{ opensrp_postgres_port }}"
     login_user: "{{ opensrp_postgres_superuser }}"
     login_password: "{{ opensrp_postgres_superuser_password }}"
+  when: not opensrp_install_only
   tags:
     - postgresql
 
@@ -91,6 +92,7 @@
     encrypted: yes
     priv: ALL
     role_attr_flags: "{{ opensrp_postgresql_user_role_attr_flags }}"
+  when: not opensrp_install_only
   tags:
     - postgresql
 
@@ -114,13 +116,15 @@
     - postgresql
 
 - name: Run the Mybatis migrations # noqa 301
-  command: "{{ opensrp_mybatis_install_dir }}/mybatis-migrations-{{ opensrp_mybatis_version }}/bin/migrate up --path={{ opensrp_local_checkout_path }}/configs/assets/migrations --env={{ opensrp_mybatis_env }} {{ opensrp_mybatis_migration_extra_args }}" # noqa 204
+  command: "{{ opensrp_mybatis_install_dir }}/mybatis-migrations-{{ opensrp_mybatis_version }}/bin/migrate up --path={{ opensrp_remote_checkout_path }}/configs/assets/migrations --env={{ opensrp_mybatis_env }} {{ opensrp_mybatis_migration_extra_args }}" # noqa 204
+  when: not opensrp_install_only
   tags:
     - postgresql
 
 - name: Ensure checkout directory is empty
   file:
     state: absent
-    path: "{{ opensrp_local_checkout_path }}"
+    path: "{{ opensrp_remote_checkout_path }}"
+  when: not opensrp_install_only
   tags:
     - postgresql
