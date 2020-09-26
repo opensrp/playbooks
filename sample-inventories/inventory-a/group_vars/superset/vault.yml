@@ -1,0 +1,9 @@
+---
+vault_superset_postgres_login_password: ""
+vault_superset_postgres_db_pass: ""
+vault_superset_secret_key: ""
+vault_superset_pass: ""
+vault_superset_mapbox_api_key: ""
+vault_sentry_dsn: ""
+vault_superset_opensrp_secret: ""
+vault_superset_oauth_basic_authorization: ""

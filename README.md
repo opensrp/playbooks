@@ -84,6 +84,28 @@ inventories/
     └ ...
 ```
 
+You could alternatively use the included script `scripts/new_inventory.sh` to generate from the sample inventories a specific application. For example:
+
+```console
+./scripts/new_inventory.sh reveal_web demo production
+```
+
+Generates the following inventory files:
+
+```console
+inventories
+├── demo
+│   └── staging
+│       └── group_vars
+│           ├── reveal_web
+│           │   ├── vars.yml
+│           │   └── vault.yml
+│           └── reveal_web_client
+│               └── vars.yml
+```
+
+   ** Note**: the hosts file is not part of the file generated. You will need to generate ypurself, look at the `sample-inventories/inventory-a/hosts` for an example.
+
 Each environment directory contains a `hosts` file that's used to group `host_vars` into `group_vars` and `group_vars` into other `group_vars`. Please avoid setting ansible variables in that file.
 
 ## Packer

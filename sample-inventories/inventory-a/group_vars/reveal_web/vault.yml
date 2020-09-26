@@ -1,0 +1,13 @@
+---
+vault_express_session_secret: ""
+vault_express_opensrp_client_secret: ""
+
+# SSH private key with access to the private git repository
+# Example:
+# vault_express_session_secret: |
+#    -----BEGIN OPENSSH PRIVATE KEY-----
+#    ...
+#    ...
+#
+#    -----END OPENSSH PRIVATE KEY-----
+vault_reveal_react_git_key:

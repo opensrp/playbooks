@@ -1,0 +1,206 @@
+---
+ansible_user: ubuntu
+
+# Server monitoring
+server_monitoring_set_hostname: true
+server_monitoring_hostname_from_ec2_Name_tag: true
+collectd_version: "5.*"
+monit_version: "1:5*"
+collectd_deployed_app_name: "Reveal"
+collectd_deployed_app_version: "{{ reveal_react_git_version }}"
+reveal_monit_scripts: ["openssh-server"]
+
+# reveal-web
+reveal_map_disabled_plan_types: "Dynamic-FI,FI"
+reveal_enabled_plan_types: "Dynamic-FI,FI"
+# react
+reveal_react_system_user_home: "/home/{{ reveal_react_system_user }}"
+reveal_react_codebase_path: "{{ reveal_react_system_user_home }}/react"
+reveal_react_public_dir: "{{ reveal_react_codebase_path }}/build"
+reveal_react_git_url: "http://github.com/onaio/reveal-frontend.git"
+reveal_react_git_version: "master"
+reveal_react_git_key:
+reveal_react_app_settings:
+  GENERATE_SOURCEMAP: "false"
+  SKIP_PREFLIGHT_CHECK: "true"
+  REACT_APP_DOMAIN_NAME: "https://{{ deployed_site_name }}"
+  REACT_APP_WEBSITE_NAME: "{{ app_title }}"
+  REACT_APP_THEME_COLOR: "000000"
+  REACT_APP_GA_CODE: "{{ reveal_app_ga_code }}"
+  REACT_APP_GA_ENV: "{{ app_env }}"
+  REACT_APP_ENABLE_IRS: "false"
+  REACT_APP_ENABLE_FI: "true"
+  REACT_APP_ENABLE_USERS: "false"
+  REACT_APP_ENABLE_ABOUT: "false"
+  REACT_APP_ENABLE_ASSIGN: "false"
+  REACT_APP_ENABLE_TEAMS: "false"
+  REACT_APP_ENABLE_PRACTITIONERS: "false"
+  REACT_APP_DISABLE_LOGIN_PROTECTION: "false"
+  REACT_APP_SUPERSET_API_BASE: "{{ superset_url }}/"
+  REACT_APP_SUPERSET_API_ENDPOINT: slice
+  REACT_APP_SUPERSET_MAX_RECORDS: 15000
+  REACT_APP_SUPERSET_PLANS_SLICE: 239
+  REACT_APP_SUPERSET_GOALS_SLICE: 241
+  REACT_APP_SUPERSET_JURISDICTIONS_SLICE: 243
+  REACT_APP_SUPERSET_STRUCTURES_SLICE: 242
+  REACT_APP_SUPERSET_JURISDICTIONS_DATA_SLICE: 245
+  REACT_APP_SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE: 246
+  REACT_APP_SUPERSET_PLANS_TABLE_SLICE: 247
+  REACT_APP_SUPERSET_TASKS_SLICE: 240
+  REACT_APP_ENABLE_OPENSRP_OAUTH: "true"
+  REACT_APP_OPENSRP_CLIENT_ID: "{{ opensrp_client_id }}"
+  REACT_APP_OPENSRP_ACCESS_TOKEN_URL: "{{ keycloak_url }}/auth/realms/{{ keycloak_realm }}/protocol/openid-connect/token"
+  REACT_APP_OPENSRP_AUTHORIZATION_URL: "{{ keycloak_url }}/auth/realms/{{ keycloak_realm }}/protocol/openid-connect/auth"
+  REACT_APP_OPENSRP_USER_URL: "{{ opensrp_server_url }}/opensrp/user-details"
+  REACT_APP_OPENSRP_API_BASE_URL: "{{ opensrp_server_url }}/opensrp/rest/"
+  REACT_APP_REACT_APP_OPENSRP_OAUTH_STATE: opensrp
+  REACT_APP_ENABLE_ONADATA_OAUTH: "false"
+  REACT_APP_DATE_FORMAT: yyyy-MM-dd
+  REACT_APP_DEFAULT_PLAN_DURATION_DAYS: 20
+  REACT_APP_PLAN_VERSION: 1
+  REACT_APP_ENV: "{{ app_env }}"
+  REACT_APP_EXPRESS_OAUTH_LOGOUT_URL: "https://{{ deployed_site_name }}/logout"
+  REACT_APP_EXPRESS_OAUTH_GET_STATE_URL: "https://{{ deployed_site_name }}/oauth/state"
+  REACT_APP_BACKEND_ACTIVE: "true"
+  REACT_APP_VERSION: "$npm_package_version"
+  REACT_APP_NAME: "$npm_package_name"
+  REACT_APP_ENABLE_MDA_POINT: "false"
+  REACT_APP_OPENSRP_LOGOUT_URL: "{{ opensrp_server_url }}/opensrp/logout.do"
+  REACT_APP_ENABLED_PLAN_TYPES: "{{ reveal_enabled_plan_types }}"
+  REACT_APP_NAVBAR_BRAND_IMG_SRC: "{{ reveal_navbar_brand_img_src }}"
+  REACT_APP_REVEAL_BRAND_IMG_SRC: https://github.com/onaio/reveal-frontend/raw/master/src/assets/images/logo-small.png
+  REACT_APP_SHOW_MDA_SCHOOL_REPORT_LABEL: "false"
+  REACT_APP_ENABLE_JURISDICTION_METADATA_UPLOAD: "false"
+  REACT_APP_ENABLE_CONFIG_FORM: "false"
+  REACT_APP_ENABLE_POPULATION_SERVER_SETTINGS: "false"
+  REACT_APP_OPENSRP_API_V2_BASE_URL: "{{ opensrp_server_url }}/opensrp/rest/v2/"
+  REACT_APP_ENABLE_PLANNING: "false"
+  REACT_APP_SENTRY_DSN: "{{ reveal_sentry_dsn }}"
+  REACT_APP_HIDDEN_PLAN_STATUSES: retired
+  REACT_APP_MAP_DISABLED_PLAN_TYPES: "{{ reveal_map_disabled_plan_types }}"
+  REACT_APP_ASSIGNMENT_PAGE_SHOW_MAP: "false"
+  REACT_APP_GISIDA_MAPBOX_TOKEN:
+  REACT_APP_DIGITAL_GLOBE_CONNECT_ID:
+  REACT_APP_LANGUAGE: "th"
+  REACT_APP_ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS: COVERAGE,POPULATION,RISK,TARGET
+  REACT_APP_KEYCLOAK_LOGOUT_URL: "{{ keycloak_url }}/auth/realms/{{ keycloak_realm }}/protocol/openid-connect/logout"
+
+# express
+reveal_express_system_user: "{{ reveal_react_system_user }}"
+reveal_express_system_user_home: "/home/{{ reveal_express_system_user }}"
+
+# git
+reveal_express_git_url: "https://github.com/onaio/express-server.git"
+reveal_express_git_version: "v1.0.1"
+reveal_express_git_key:
+# app
+reveal_express_app_name: "{{ express_system_user }}"
+reveal_express_codebase_path: "{{ express_system_user_home }}/express"
+reveal_express_app_path: "{{ express_checkout_path }}"
+reveal_express_log_path: "/var/log/{{ express_app_name }}"
+reveal_express_app_settings:
+  NODE_ENV: "{{ app_env }}"
+  EXPRESS_OPENSRP_ACCESS_TOKEN_URL: "{{ keycloak_url }}/auth/realms/{{ keycloak_realm }}/protocol/openid-connect/token"
+  EXPRESS_OPENSRP_AUTHORIZATION_URL: "{{ keycloak_url }}/auth/realms/{{ keycloak_realm }}/protocol/openid-connect/auth"
+  EXPRESS_OPENSRP_USER_URL: "{{ opensrp_server_url }}/opensrp/user-details"
+  EXPRESS_OPENSRP_OAUTH_STATE: "opensrp"
+  EXPRESS_OPENSRP_CALLBACK_URL: "https://{{ deployed_site_name }}/oauth/callback/OpenSRP/"
+  EXPRESS_OAUTH_GET_STATE_URL: "https://{{ deployed_site_name }}/oauth/state"
+  EXPRESS_PORT: "3000"
+  EXPRESS_SESSION_NAME: "reveal-session"
+  EXPRESS_SESSION_SECRET: "{{ vault_express_session_secret }}"
+  EXPRESS_SESSION_PATH: "/"
+  EXPRESS_REACT_BUILD_PATH: "{{ reveal_react_public_dir }}"
+  EXPRESS_SESSION_FILESTORE_PATH: "/tmp/express-sessions"
+  EXPRESS_PRELOADED_STATE_FILE: "/tmp/revealState.json"
+  EXPRESS_SESSION_LOGIN_URL: "/login"
+  EXPRESS_FRONTEND_OPENSRP_CALLBACK_URL: "https://{{ deployed_site_name }}/fe/oauth/callback/opensrp"
+  EXPRESS_OPENSRP_CLIENT_ID: "{{ opensrp_client_id }}"
+  EXPRESS_OPENSRP_CLIENT_SECRET: "{{ vault_express_opensrp_client_secret }}"
+  EXPRESS_FRONTEND_LOGIN_URL: "/fe/login"
+
+# nginx
+nginx_install_only: true
+nginx_version: "1.18.*"
+reveal_nginx_site_names:
+  - "{{ deployed_site_name }}"
+reveal_nginx_site_name: "{{ reveal_nginx_site_names[0] }}"
+reveal_nginx_http_site_name: "{{ deployed_site_name }}-http"
+reveal_nginx_https_site_name: "{{ deployed_site_name }}-https"
+reveal_nginx_access_logs:
+  - name: "timed_combined"
+    format: "'$http_x_forwarded_for - $remote_user [$time_local]  \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_time $upstream_response_time $gzip_ratio $request_length'"
+    options: null
+    filename: "access.log"
+reveal_nginx_enabled_sites:
+  - "{{ reveal_nginx_http_site_name }}"
+  - "{{ reveal_nginx_https_site_name }}"
+reveal_nginx_ssl_dir: /etc/nginx/ssl/{{ deployed_site_name }}
+reveal_nginx_sites:
+  - server:
+      name: "{{ reveal_nginx_http_site_name }}"
+      listen:
+        - "80"
+        - "[::]:80"
+      server_name: "{{ reveal_nginx_site_names|join(' ') }}"
+      access_log: "{{ reveal_nginx_log_path }}/{{ deployed_site_name }}-access.log timed_combined"
+      error_log: "{{ reveal_nginx_log_path }}/{{ deployed_site_name }}-error.log"
+      rewrite: "^(.*) https://{{ reveal_nginx_site_name }}$1 permanent"
+      ssl:
+        enabled: false
+  - server:
+      name: "{{ reveal_nginx_https_site_name }}"
+      listen:
+        - "443 ssl"
+        - "[::]:443 ssl"
+      server_name: "{{ reveal_nginx_site_names|join(' ') }}"
+      access_log: "{{ reveal_nginx_log_path }}/{{ deployed_site_name }}-ssl-access.log timed_combined"
+      error_log: "{{ reveal_nginx_log_path }}/{{ deployed_site_name }}-ssl-error.log"
+      ssl:
+        add_ssl_directive: false
+        access_log_format: "timed_combined"
+        enabled: true
+        remote_src: true
+        create_symlink: true
+        cert: "fullchain.pem"
+        key: "privkey.pem"
+        src_dir: "/etc/letsencrypt/live/{{ deployed_site_name }}"
+        conf: "{{ deployed_site_name }}.conf"
+      # do not cache the service worker
+      location1:
+        name: "/service-worker.js"
+        add_header: 'Cache-Control "no-cache"'
+        proxy_cache_bypass: "$http_pragma"
+        proxy_cache_revalidate: "on"
+        expires: "off"
+        access_log: "off"
+      location2:
+        name: "/"
+        autoindex: "off"
+        charset: "UTF-8"
+        proxy_pass: http://localhost:3000
+        proxy_http_version: 1.1
+        proxy_set_header:
+          - "Upgrade $http_upgrade"
+          - "Connection 'upgrade'"
+          - "Host $host"
+          - "X-Forwarded-Proto https"
+        proxy_cache_bypass: $http_upgrade
+reveal_nginx_monit_protection: false
+reveal_nginx_log_path: "/var/log/nginx/"
+reveal_nginx_large_client_header_buffers: "4 8k"
+reveal_nginx_first_start: true
+
+# certbot
+reveal_use_certbot: true
+reveal_certbot_create_certs: false
+reveal_certbot_renew_certs: false
+reveal_certbot_install_cert: false
+reveal_certbot_package: "python3-certbot-nginx"
+reveal_certbot_version: "0.40.*"
+reveal_certbot_site_names:
+  - "{{ deployed_site_name }}"
+
+slack_deployed_app_name: "{{ app_title }}"
+slack_deployed_app_version: "{{ reveal_react_git_version }}"
+slack_deployed_domain: "{{ deployed_site_name }}"
