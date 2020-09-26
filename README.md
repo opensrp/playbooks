@@ -104,7 +104,9 @@ inventories
 │               └── vars.yml
 ```
 
-   ** Note**: the hosts file is not part of the file generated. You will need to generate ypurself, look at the `sample-inventories/inventory-a/hosts` for an example.
+   **Note**: The hosts file is not part of the file generated. You will need to generate ypurself, look at the `sample-inventories/inventory-a/hosts` for an example.
+
+   **Note**: Most changes would be in the service name `_client` folder, there should be very minimal changes in the service name folder other than the `vault.yml` file.
 
 Each environment directory contains a `hosts` file that's used to group `host_vars` into `group_vars` and `group_vars` into other `group_vars`. Please avoid setting ansible variables in that file.
 
@@ -116,6 +118,45 @@ Each environment directory contains a `hosts` file that's used to group `host_va
 packer build -var-file=inventories/<DevOps client>/<environment>/packer/<name of setup>/<name of variant>.json packer/<name of setup>.json
 ```
 
+## Terraform
+
+[Terraform][9] enables you to use infrastructure as code to provision and manage any cloud, infrastructure, or service.
+
+You can get started quickly by copying one of the sample terraform deployments.
+
+```console
+./scripts/new_terraform.sh reveal-viz demo production
+```
+
+Generates the following Terraform deployment for the Reveal Web and Apache Superset deployed on the same image. Assumes you have built the Packer image using the `packer/aws/reveal-web-superset.json` Packer configuration file.
+
+```console
+terraform/deployments
+├── demo
+│   └── production
+│       └── reveal-viz
+│           ├── init.sh.tpl
+│           ├── main.tf
+│           ├── terraform.tfvars
+│           ├── variables.tf
+│           └── versions.tf
+```
+
+You will need to edit the `terraform.tfvars` and the state management section of `main.tf` before you can make use of the configuration.
+
+```console
+cd terraform/deployments/demo/production/reveal-viz
+
+# initialize the Terraform state
+terraform init
+
+# Verify your plan
+terraform plan
+
+# Apply your changes to create the resources
+terraform apply
+```
+
 [1]: https://www.ansible.com
 [2]: https://pypi.python.org/pypi/pycrypto
 [3]: https://www.virtualbox.org
@@ -124,3 +165,4 @@ packer build -var-file=inventories/<DevOps client>/<environment>/packer/<name of
 [6]: https://virtualenvwrapper.readthedocs.io/en/latest/
 [7]: https://packer.io/
 [8]: https://mitogen.networkgenomics.com/ansible_detailed.html
+[9]: https://www.terraform.io
