@@ -35,10 +35,16 @@
     dest: "/tmp"
     copy: no
 
+- name: Check unarchived.
+  stat:
+    path: /tmp/duplicity-0.8.12.1612
+  register: unarchive_results
+
 - name: Install duplicity v0.8
   command: "python3 setup.py install"
   args:
     chdir: "/tmp/duplicity-0.8.12.1612"
+  when: unarchive_results.stat.exists
 
 - name: Link duplicity v0.8 as system-level for easier use in cron tasks
   file:
