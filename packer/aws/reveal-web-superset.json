@@ -34,6 +34,14 @@
             "instance_type": "{{ user `builder_instance_type` }}",
             "ssh_username": "{{ user `ssh_username` }}",
             "ami_name": "reveal-web-superset-{{ user `project`}}-{{ timestamp }}",
+            "launch_block_device_mappings": [
+                {
+                    "device_name": "/dev/sda1",
+                    "volume_size": 20,
+                    "volume_type": "gp2",
+                    "delete_on_termination": true
+                }
+            ],
             "tags": {
                 "Name": "Reveal Web Superset -{{ user `project_id` }}-{{ user `env` }}",
                 "OS_Version": "{{ user `OS_version` }}",
@@ -111,7 +119,7 @@
                 "-e slack_notifications=False",
                 "-e nginx_install_only=true",
                 "--extra-vars",
-                "ssh_local_user={{ user `local_user` }} certbot_create_certs=false"
+                "ssh_local_user={{ user `local_user` }} certbot_create_certs=false monit_install_only=true"
             ],
             "inventory_directory": "{{ user `ansible_inventory` }}",
             "playbook_file": "reveal-web.yml",
