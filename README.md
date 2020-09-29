@@ -104,7 +104,7 @@ inventories
 │               └── vars.yml
 ```
 
-   **Note**: The hosts file is not part of the file generated. You will need to generate ypurself, look at the `sample-inventories/inventory-a/hosts` for an example.
+   **Note**: The hosts file is not part of the file generated. You will need to generate yourself, look at the `sample-inventories/inventory-a/hosts` for an example.
 
    **Note**: Most changes would be in the service name `_client` folder, there should be very minimal changes in the service name folder other than the `vault.yml` file.
 
