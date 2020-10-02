@@ -55,6 +55,16 @@ variable "nifi_content_repository_vms_name" {
 variable "nifi_content_repository_vms_mount_point" {
   type = string
 }
+# Noticed that the device name specified to the AWS API or on the console
+# might not be the same one that is installed on the host
+variable "nifi_content_repository_vms_console_device_name" {
+  type    = string
+  default = "/dev/sdf"
+}
+variable "nifi_content_repository_vms_host_device_name" {
+  type    = string
+  default = "/dev/nvme1n1"
+}
 
 # NiFi Other Repositories Storage
 variable "nifi_other_repositories_vms_size" {
@@ -65,4 +75,14 @@ variable "nifi_other_repositories_vms_name" {
 }
 variable "nifi_other_repositories_vms_mount_point" {
   type = string
+}
+# Noticed that the device name specified to the AWS API or on the console
+# might not be the same one that is installed on the host
+variable "nifi_other_repositories_vms_console_device_name" {
+  type    = string
+  default = "/dev/sdg"
+}
+variable "nifi_other_repositories_vms_host_device_name" {
+  type    = string
+  default = "/dev/nvme2n1"
 }
