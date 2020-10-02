@@ -117,4 +117,4 @@
         owner: nifi
         group: nifi
         dest: "{{ nifi_library_directory }}"
-      when: install_mssql_jdbc_drivers|bool
+      when: nifi_install_mssql_jdbc_drivers|bool
