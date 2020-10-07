@@ -96,6 +96,7 @@ opensrp_multimedia_parent_directory: "{{ opensrp_openmrs_tomcat_user_home }}/.Op
 # Whether to skip tasks that will involve configuring already running dependancies like
 # running the database migrations
 opensrp_install_only: false
+opensrp_environment: "production"
 
 # List of profiles to be activated. Only the specified profiles will
 # be made active. Read more on OpenSRP Server profiles here:
@@ -255,6 +256,7 @@ opensrp_logstash_custom_inputs:
       - '  from_domain => "{{ opensrp_site_name }}"'
       - '  from_{{ opensrp_system_user }} => true'
       - '  git_version => "{{ opensrp_version }}"'
+      - '  environment => "{{ opensrp_environment }}"'
       - '}'
 opensrp_whitelabeling_copy_files: []
 
