@@ -1,3 +1,30 @@
 ---
 server_monitoring_collectd_scripts: ["graphite", "cpu", "disk", "load", "memory"]
 server_monitoring_monit_scripts: ["monit", "system", "openssh-server"]
+default_server_monitoring_cwa_conf_json_file_content:
+  agent:
+    metrics_collection_interval: 60
+    logfile: "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log"
+    debug: false
+    region: "{{ cwa_aws_region }}"
+  metrics:
+    append_dimensions:
+      AutoScalingGroupName: "${aws:AutoScalingGroupName}"
+      ImageId: "${aws:ImageId}"
+      InstanceId: "${aws:InstanceId}"
+      InstanceType: "${aws:InstanceType}"
+    aggregation_dimensions:
+      - ["InstanceId"]
+      - ["AutoScalingGroupName"]
+    metrics_collected:
+      mem:
+        measurement:
+          - mem_used_percent
+        metrics_collection_interval: 60
+      disk:
+        measurement:
+          - used_percent
+        resources:
+          - "*"
+        metrics_collection_interval: 60
+default_server_monitoring_aws_region: "{{ placement.availability_zone | regex_replace('([a-z]+\\-[a-z]+\\-[0-9])[a-z]', '\\1') }}" # Extract region from availability zone gotten from the aws_ec2 inventory plugin
