@@ -95,7 +95,7 @@ Generates the following inventory files:
 ```console
 inventories
 ├── demo
-│   └── staging
+│   └── production
 │       └── group_vars
 │           ├── reveal_web
 │           │   ├── vars.yml
