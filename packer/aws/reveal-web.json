@@ -78,6 +78,7 @@
                 "sleep 30",
                 "sudo apt-get update",
                 "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' dist-upgrade",
+                "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install python-minimal python3",
                 "[ `lsb_release -rs` = \"20.04\" ] && sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install python-is-python3",
                 "sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' autoremove",
                 "sudo su -c 'echo \"\\\"\\e[A\\\":history-search-backward\" >> /etc/inputrc'",
