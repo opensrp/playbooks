@@ -13,9 +13,6 @@
 [submodule "roles/linux-config"]
 	path = roles/linux-config
 	url = https://github.com/onaio/ansible-linux-config.git
-[submodule "roles/monit"]
-	path = roles/monit
-	url = https://github.com/onaio/ansible-monit.git
 [submodule "terraform/modules/providers/aws/postgresql"]
 	path = terraform/modules/providers/aws/postgresql
 	url = https://github.com/onaio/terraform-aws-postgresql.git
