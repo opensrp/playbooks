@@ -14,7 +14,7 @@
       collectd_scripts: ["nginx", "unixsock"]
       tags:
         - collectd
-    - role: monit
+    - role: onaio.monit
       monit_setup_mode: false
       monit_email_admins: "{{ reveal_monit_email_admins }}"
       monit_scripts: "{{ reveal_monit_scripts }}"
