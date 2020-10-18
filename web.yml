@@ -1,0 +1,59 @@
+---
+- hosts: web
+  serial: 1 # Runs playbook one server at at time (to achieve a rolling update)
+  max_fail_percentage: 0 # Don't continue deploying on other hosts if playbook fails on one
+  gather_facts: true
+  become: true
+  roles:
+    - role: onaio.logstash
+      tags:
+        - logstash
+
+    - role: onaio.collectd
+      collectd_scripts: ["nginx", "unixsock"]
+      tags:
+        - collectd
+
+    - role: onaio.monit
+      monit_setup_mode: false
+      monit_email_admins: "{{ monit_email_admins }}"
+      tags:
+        - monitoring
+        - monit
+
+    - name: "Setup SSL certificates"
+      role: onaio.certbot
+      tags:
+        - install
+        - SSL
+        - certbot
+      when:
+        - use_certbot
+
+    - name: "Setup react"
+      role: onaio.react
+      become: true
+      become_user: "root"
+      tags:
+        - install
+        - react
+
+    - name: "Setup express"
+      role: onaio.express
+      become: true
+      become_user: "root"
+      tags:
+        - install
+        - express
+
+    - name: "Setup nginx"
+      role: onaio.nginx
+      become: true
+      become_user: "root"
+      vars:
+        nginx_install_method: "package"
+        nginx_default_enable: false
+        monit_protection: "{{ nginx_monit_protection }}"
+      tags:
+        - nginx
+        - configure

@@ -40,12 +40,12 @@
         - certificates
 
   roles:
-    - role: nifi
+    - role: onaio.nifi
 
-    - role: linux-config
+    - role: onaio.linux-config
       when: ansible_connection != 'docker'
 
-    - role: certbot
+    - role: onaio.certbot
       vars:
         certbot_create_certs: "{{ nifi_certbot_create_certs }}"
         certbot_site_names:
@@ -56,7 +56,7 @@
         - nginx
         - certificates
 
-    - role: nginx
+    - role: onaio.nginx
       vars:
         nginx_install_method: package
         nginx_sites: "{{ nifi_nginx_sites }}"

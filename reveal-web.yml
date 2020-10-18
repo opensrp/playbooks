@@ -10,10 +10,11 @@
     - role: onaio.logstash
       tags:
         - logstash
-    - role: collectd
+    - role: onaio.collectd
       collectd_scripts: ["nginx", "unixsock"]
       tags:
         - collectd
+
     - role: onaio.monit
       monit_setup_mode: false
       monit_email_admins: "{{ reveal_monit_email_admins }}"
@@ -21,8 +22,9 @@
       tags:
         - monitoring
         - monit
+
     - name: "Setup SSL certificates"
-      role: certbot
+      role: onaio.certbot
       vars:
         site_name: "{{ reveal_certbot_site_names[0] }}"
         certbot_create_certs: "{{ reveal_certbot_create_certs }}"
@@ -41,7 +43,7 @@
         - reveal_use_certbot == True
 
     - name: "Setup react"
-      role: react
+      role: onaio.react
       become: true
       become_user: "root"
       vars:
@@ -57,7 +59,7 @@
         - react
 
     - name: "Setup express"
-      role: express
+      role: onaio.express
       become: true
       become_user: "root"
       vars:
@@ -74,7 +76,7 @@
         - express
 
     - name: "Setup nginx"
-      role: nginx
+      role: onaio.nginx
       become: true
       become_user: "root"
       vars:
