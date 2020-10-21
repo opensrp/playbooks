@@ -1,0 +1,23 @@
+---
+app_env: "preview"
+app_title: "Reveal Web Preview"
+
+deployed_site_name: "reveal-web.example.com"
+
+keycloak_realm: "reveal-web-realm"
+keycloak_url: "https://keycload.example.com"
+
+opensrp_client_id: "reveal-thailand-preview"
+opensrp_server_url: "https://opensrp.example.com"
+
+reveal_app_ga_code:
+reveal_certbot_mail_address:
+reveal_monit_email_admins:
+  - {"Admin User", "replace_me_info@example.com"}
+reveal_react_git_version: "v1.6.0"
+reveal_navbar_brand_img_src: "https://github.com/onaio/reveal-frontend/raw/master/src/assets/images/logo.png"
+reveal_enabled_plan_types: "FI,Dynamic-FI"
+reveal_map_disabled_plan_types: "FI,Dynamic-FI"
+reveal_sentry_dsn:
+
+superset_url: "https://superset.example.com"

@@ -26,3 +26,15 @@ host1
 [mysql:children]
 openmrs-mysql-servers
 opensrp-mysql-servers
+
+[reveal_web]
+host1
+
+[reveal_web_client:children]
+reveal_web
+
+[superset]
+host1
+
+[superset_client:children]
+superset
