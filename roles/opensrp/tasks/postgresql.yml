@@ -47,6 +47,7 @@
     - postgresql
 
 - name: Ensure checkout directory is empty
+  become: yes
   file:
     state: absent
     path: "{{ opensrp_remote_checkout_path }}"
@@ -54,6 +55,7 @@
     - postgresql
 
 - name: Checking out codebase
+  become: yes
   git:
     repo: "{{ opensrp_git_url }}"
     dest: "{{ opensrp_remote_checkout_path }}"
@@ -62,12 +64,20 @@
   tags:
     - postgresql
 
+
 - name: Copy the OpenSRP migrations environment configs
+  become: yes
   template:
     src: "templates/opensrp_remote_checkout_path/configs/assets/migrations/environments/opensrp_mybatis_env.properties.j2"
     dest: "{{ opensrp_remote_checkout_path }}/configs/assets/migrations/environments/{{ opensrp_mybatis_env }}.properties"
   tags:
     - postgresql
+
+- name: Make codebase readable
+  become: yes
+  file:
+    path: "{{ opensrp_remote_checkout_path }}"
+    mode: "0755"
 
 - name: Make sure the OpenSRP PostgreSQL database exists
   postgresql_db:
@@ -122,6 +132,7 @@
     - postgresql
 
 - name: Ensure checkout directory is empty
+  become: yes
   file:
     state: absent
     path: "{{ opensrp_remote_checkout_path }}"
