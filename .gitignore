@@ -1,6 +1,7 @@
-*.iml
-*.retry
 *.DS_Store
+*.iml
+*.log
+*.retry
 .idea
 .sql*
 inventories

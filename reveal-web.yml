@@ -79,7 +79,6 @@
       become_user: "root"
       vars:
         nginx_sites: "{{ reveal_nginx_sites }}"
-        nginx_ssl_dir: "{{ reveal_nginx_ssl_dir }}"
         nginx_access_logs: "{{ reveal_nginx_access_logs }}"
         nginx_install_method: "package"
         nginx_enabled_sites: "{{ reveal_nginx_enabled_sites }}"
