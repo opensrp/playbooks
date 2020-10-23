@@ -11,4 +11,4 @@ opensrp_oauth_dictionary:
     token_validity: access-token-validity
     callback_url: redirect-uri
     roles: authorities
-opensrp_remote_checkout_path: "/tmp/opensrp"
+opensrp_remote_checkout_path: "/opt/opensrp"
