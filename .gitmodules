@@ -73,3 +73,6 @@
 [submodule "roles/onaio.monit"]
 	path = roles/onaio.monit
 	url = https://github.com/onaio/ansible-monit.git
+[submodule "roles/weareinteractive.pm2"]
+	path = roles/weareinteractive.pm2
+	url = git@github.com:weareinteractive/ansible-pm2.git
