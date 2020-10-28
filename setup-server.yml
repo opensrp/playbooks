@@ -8,20 +8,23 @@
     - name: Setup Ansible
       setup:
   roles:
-    - role: ssh
+    - role: onaio.ssh
       tags:
         - ssh
-    - role: linux-config
+
+    - role: onaio.linux-config
       tags:
         - linux-config
-    - role: hostname
+
+    - role: onaio.hostname
       server_hostname: "{{ server_monitoring_hostname }}"
       hostname_from_ec2_Name_tag: "{{ server_monitoring_hostname_from_ec2_Name_tag }}"
       when: server_monitoring_set_hostname == true
       tags:
         - monitoring
         - hostname
-    - role: collectd
+
+    - role: onaio.collectd
       collectd_scripts: "{{ server_monitoring_collectd_scripts }}"
       collectd_graphite_server_ip: "{{ server_monitoring_graphite_server_ip }}"
       collectd_graphite_server_port: "{{ server_monitoring_graphite_server_port }}"
@@ -33,19 +36,23 @@
       tags:
         - monitoring
         - collectd
+
     - role: onaio.monit
       monit_setup_mode: True
       monit_scripts: "{{ server_monitoring_monit_scripts }}"
       tags:
         - monitoring
         - monit
-    - role: sre-tooling
+
+    - role: onaio.sre-tooling
       tags:
         - sre-tooling
-    - role: fluentd
+
+    - role: onaio.fluentd
       when: server_monitoring_enable_fluentd is defined and server_monitoring_enable_fluentd == true
       tags:
         - fluentd
+
     - role: christiangda.amazon_cloudwatch_agent
       cwa_conf_json_file_content: "{{ server_monitoring_cwa_conf_json_file_content | default(default_server_monitoring_cwa_conf_json_file_content) }}"
       cwa_aws_region: "{{ server_monitoring_aws_region | default(default_server_monitoring_aws_region) }}"

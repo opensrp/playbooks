@@ -1,33 +1,18 @@
 [submodule "roles/server-monitoring"]
 	path = roles/server-monitoring
 	url = https://github.com/onaio/ansible-server-monitoring.git
-[submodule "roles/collectd"]
-	path = roles/collectd
-	url = https://github.com/onaio/ansible-collectd.git
 [submodule "roles/hostname"]
 	path = roles/hostname
 	url = https://github.com/onaio/ansible-hostname.git
-[submodule "roles/ssh"]
-	path = roles/ssh
-	url = https://github.com/onaio/ansible-ssh.git
-[submodule "roles/linux-config"]
-	path = roles/linux-config
-	url = https://github.com/onaio/ansible-linux-config.git
 [submodule "terraform/modules/providers/aws/postgresql"]
 	path = terraform/modules/providers/aws/postgresql
 	url = https://github.com/onaio/terraform-aws-postgresql.git
-[submodule "roles/postgresql"]
-	path = roles/postgresql
-	url = https://github.com/onaio/ansible-postgresql.git
 [submodule "terraform/modules/providers/aws/virtual-machine-storage"]
 	path = terraform/modules/providers/aws/virtual-machine-storage
 	url = https://github.com/onaio/terraform-aws-ebs-volume.git
 [submodule "terraform/modules/providers/aws/load-balancer"]
 	path = terraform/modules/providers/aws/load-balancer
 	url = https://github.com/onaio/terraform-aws-alb.git
-[submodule "roles/keycloak"]
-	path = roles/keycloak
-	url = https://github.com/onaio/ansible-keycloak.git
 [submodule "roles/onaio.ssl-certificate"]
 	path = roles/onaio.ssl-certificate
 	url = https://github.com/onaio/ansible-ssl-certificate.git
@@ -40,36 +25,54 @@
 [submodule "terraform/modules/providers/uptimerobot/monitor"]
 	path = terraform/modules/providers/uptimerobot/monitor
 	url = https://github.com/onaio/terraform-module-uptimerobot.git
-[submodule "roles/redis"]
-	path = roles/redis
-	url = https://github.com/onaio/ansible-redis.git
-[submodule "roles/superset"]
-	path = roles/superset
-	url = https://github.com/onaio/ansible-superset.git
-[submodule "roles/certbot"]
-	path = roles/certbot
-	url = https://github.com/onaio/ansible-certbot.git
-[submodule "roles/nginx"]
-	path = roles/nginx
-	url = https://github.com/onaio/ansible-nginx.git
-[submodule "roles/react"]
-	path = roles/react
-	url = https://github.com/onaio/ansible-react.git
-[submodule "roles/express"]
-	path = roles/express
-	url = https://github.com/onaio/ansible-express.git
-[submodule "roles/sre-tooling"]
-	path = roles/sre-tooling
-	url = https://github.com/onaio/ansible-sre-tooling.git
-[submodule "roles/fluentd"]
-	path = roles/fluentd
-	url = https://github.com/onaio/ansible-fluentd.git
 [submodule "roles/onaio.logstash"]
 	path = roles/onaio.logstash
 	url = https://github.com/onaio/ansible-logstash.git
-[submodule "roles/nifi"]
-	path = roles/nifi
-	url = https://github.com/onaio/ansible-nifi.git
 [submodule "roles/onaio.monit"]
 	path = roles/onaio.monit
 	url = https://github.com/onaio/ansible-monit.git
+[submodule "roles/onaio.certbot"]
+	path = roles/onaio.certbot
+	url = https://github.com/onaio/ansible-certbot.git
+[submodule "roles/onaio.react"]
+	path = roles/onaio.react
+	url = https://github.com/onaio/ansible-react.git
+[submodule "roles/onaio.nginx"]
+	path = roles/onaio.nginx
+	url = https://github.com/onaio/ansible-nginx.git
+[submodule "roles/onaio.express"]
+	path = roles/onaio.express
+	url = https://github.com/onaio/ansible-express.git
+[submodule "roles/onaio.collectd"]
+	path = roles/onaio.collectd
+	url = https://github.com/onaio/ansible-collectd.git
+[submodule "roles/onaio.redis"]
+	path = roles/onaio.redis
+	url = https://github.com/onaio/ansible-redis.git
+[submodule "roles/onaio.superset"]
+	path = roles/onaio.superset
+	url = https://github.com/onaio/ansible-superset.git
+[submodule "roles/onaio.ssh"]
+	path = roles/onaio.ssh
+	url = https://github.com/onaio/ansible-ssh.git
+[submodule "roles/onaio.hostname"]
+	path = roles/onaio.hostname
+	url = https://github.com/onaio/ansible-hostname.git
+[submodule "roles/onaio.linux-config"]
+	path = roles/onaio.linux-config
+	url = https://github.com/onaio/ansible-linux-config.git
+[submodule "roles/onaio.sre-tooling"]
+	path = roles/onaio.sre-tooling
+	url = https://github.com/onaio/ansible-sre-tooling.git
+[submodule "roles/onaio.fluentd"]
+	path = roles/onaio.fluentd
+	url = https://github.com/onaio/ansible-fluentd.git
+[submodule "roles/onaio.nifi"]
+	path = roles/onaio.nifi
+	url = https://github.com/onaio/ansible-nifi.git
+[submodule "roles/onaio.postgresql"]
+	path = roles/onaio.postgresql
+	url = https://github.com/onaio/ansible-postgresql.git
+[submodule "roles/onaio.keycloak"]
+	path = roles/onaio.keycloak
+	url = https://github.com/onaio/ansible-keycloak.git

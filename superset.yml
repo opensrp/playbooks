@@ -7,13 +7,13 @@
       tags:
        - logstash
 
-    - role: redis
+    - role: onaio.redis
 
-    - role: superset
+    - role: onaio.superset
       tags:
         - superset
 
-    - role: certbot
+    - role: onaio.certbot
       vars:
         certbot_create_certs: "{{ superset_certbot_create_certs }}"
         certbot_site_names:
@@ -21,6 +21,6 @@
         certbot_mail_address: "{{ superset_certbot_mail_address }}"
       when: superset_use_certbot|bool
 
-    - role: nginx
+    - role: onaio.nginx
       vars:
         enable_ssl: true
