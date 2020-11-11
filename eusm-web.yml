@@ -1,0 +1,93 @@
+---
+- hosts: web
+  serial: 1  # Runs playbook one server at at time (to achieve a rolling update)
+  max_fail_percentage: 0  # Don't continue deploying on other hosts if playbook fails on one
+  gather_facts: true
+  become: true
+  roles:
+  #   - role: onaio.logstash
+  #     tags:
+  #       - logstash
+  #   - role: collectd
+  #     collectd_scripts: ["nginx", "unixsock"]
+  #     tags:
+  #       - collectd
+  #   - role: monit
+  #     monit_setup_mode: false
+  #     monit_email_admins: "{{ eusm_monit_email_admins }}"
+  #     monit_scripts: "{{ eusm_monit_scripts }}"
+  #     tags:
+  #       - monitoring
+  #       - monit
+    - name: "Setup SSL certificates"
+      role: certbot
+      vars:
+        site_name: "{{ eusm_certbot_site_names[0] }}"
+        certbot_create_certs: "{{ eusm_certbot_create_certs }}"
+        certbot_mail_address: "{{ eusm_certbot_mail_address }}"
+        certbot_renew_certs: "{{ eusm_certbot_renew_certs }}"
+        certbot_install_cert: "{{ eusm_certbot_install_cert }}"
+        certbot_webserver_installed: "nginx"
+        certbot_site_names: "{{ eusm_certbot_site_names }}"
+        certbot_package: "{{ eusm_certbot_package }}"
+        certbot_version: "{{ eusm_certbot_version }}"
+      tags:
+        - install
+        - SSL
+        - certbot
+      when:
+        - eusm_use_certbot == True
+
+    - name: "Setup react"
+      role: react
+      become: true
+      become_user: "root"
+      vars:
+        react_system_user: "{{ eusm_react_system_user }}"
+        react_system_user_home: "{{ eusm_react_system_user_home }}"
+        react_codebase_path: "{{ eusm_react_codebase_path }}"
+        react_git_url: "{{ eusm_react_git_url }}"
+        react_git_version: "{{ eusm_react_git_version }}"
+        react_git_key: "{{ eusm_react_git_key }}"
+        react_app_settings: "{{ eusm_react_app_settings }}"
+        react_remote_js_build: false
+      tags:
+        - install
+        - react
+
+    - name: "Setup express"
+      role: express
+      become: true
+      become_user: "root"
+      vars:
+        express_system_user: "{{ eusm_express_system_user }}"
+        express_system_user_home: "{{ eusm_express_system_user_home }}"
+        express_codebase_path: "{{ eusm_express_codebase_path }}"
+        express_git_url: "{{ eusm_express_git_url }}"
+        express_git_version: "{{ eusm_express_git_version }}"
+        express_git_key: "{{ eusm_express_git_key }}"
+        express_app_settings: "{{ eusm_express_app_settings }}"
+        express_app_path: "{{ eusm_express_app_path }}"
+        pm2_express_service_name: "{{ eusm_pm2_express_service_name }}"
+      tags:
+        - install
+        - express
+
+    - name: "Setup nginx"
+      role: nginx
+      become: true
+      become_user: "root"
+      vars:
+        nginx_sites: "{{ eusm_nginx_sites }}"
+        nginx_ssl_dir: "{{ eusm_nginx_ssl_dir }}"
+        nginx_access_logs: "{{ eusm_nginx_access_logs }}"
+        nginx_install_method: "package"
+        nginx_enabled_sites: "{{ eusm_nginx_enabled_sites }}"
+        nginx_default_enable: false
+        monit_protection: "{{ eusm_nginx_monit_protection }}"
+        nginx_log_dir: "{{ eusm_nginx_log_path }}"
+        nginx_large_client_header_buffers: "{{ eusm_nginx_large_client_header_buffers }}"
+        nginx_first_start: "{{ eusm_nginx_first_start }}"
+      tags:
+        - nginx
+        - configure
