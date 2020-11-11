@@ -50,6 +50,7 @@
         react_git_version: "{{ web_react_git_version }}"
         react_git_key: "{{ web_react_git_key }}"
         react_app_settings: "{{ web_react_app_settings }}"
+        react_local_app_path: "{{web_react_local_app_path}}"
         react_remote_js_build: false
       tags:
         - install
