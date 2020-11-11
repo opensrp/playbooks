@@ -82,3 +82,6 @@
 [submodule "roles/rabbitmq"]
 	path = roles/rabbitmq
 	url = https://github.com/onaio/ansible-rabbitmq.git
+[submodule "roles/weareinteractive.pm2"]
+	path = roles/weareinteractive.pm2
+	url = git@github.com:weareinteractive/ansible-pm2.git
