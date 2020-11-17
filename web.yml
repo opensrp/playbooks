@@ -52,6 +52,8 @@
         react_app_settings: "{{ web_react_app_settings }}"
         react_local_app_path: "{{web_react_local_app_path}}"
         react_remote_js_build: false
+        react_transpile_packages: "{{ web_react_transpile_packages }}"
+
       tags:
         - install
         - react
