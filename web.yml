@@ -71,7 +71,7 @@
         express_git_key: "{{ web_express_git_key }}"
         express_app_settings: "{{ web_express_app_settings }}"
         express_app_path: "{{ web_express_app_path }}"
-        pm2_express_service_name: "{{ web_pm2_express_service_name }}"
+        express_service_name: "{{ web_pm2_express_service_name }}"
       tags:
         - install
         - express
