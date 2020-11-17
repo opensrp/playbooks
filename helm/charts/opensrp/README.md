@@ -1,27 +1,22 @@
 # OpenSRP
+
 OpenSRP is short for "Open Smart Register Platform". It is an open-source, mobile-first platform, built to enable data-driven decision making at all levels of the health system.
 
 ## Introduction
 
 This chart bootstraps an [OpenSRP](https://smartregister.org/) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-## TL;DR;
-
-```bash
-$ helm install stable/opensrp-server-web
-```
-
 ## Prerequisites
 
-- Kubernetes 1.9+ with Beta APIs enabled
-- PV provisioner support in the underlying infrastructure (Only when persisting data)
+-   Kubernetes 1.9+ with Beta APIs enabled
+-   PV provisioner support in the underlying infrastructure (Only when persisting data)
 
 ## Installing the Chart
 
 To install the chart with the release name `my-release`:
 
-```bash
-$ helm install --name my-release stable/opensrp-server-web
+```sh
+helm install --name my-release stable/opensrp-server-web
 ```
 
 The command deploys OpenSRP server on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -32,13 +27,14 @@ The command deploys OpenSRP server on the Kubernetes cluster in the default conf
 
 To uninstall/delete the `my-release` deployment:
 
-```bash
-$ helm delete my-release
+```sh
+helm delete my-release
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 ## Configuration
+
 The following is a list of the configurable parameters of the OpenSRP chart and their default values.
 
 ```yaml
@@ -164,7 +160,9 @@ keycloak_json:
     secret: ""
   confidential-port: 0
 ```
+
 You can override the an entire object such as
+
 ```yaml
 postgres:
   host: "postgres.mydomain.com"
@@ -173,4 +171,5 @@ postgres:
   password: "mypassword"
   database: "opensrp"
 ```
+
 or you can can set an individual parameter like `postgres.password: passwordManagedBySecrets`
