@@ -1,0 +1,181 @@
+# Default values for opensrp.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: opensrp/opensrp-server-web
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+postgres:
+  host: "db"
+  port: 5432
+  username: "opensrp"
+  password: "password"
+  database: "opensrp"
+time_zone: "GMT+0:00"
+mybatis:
+  core_tablespace: "pg_default"
+  error_tablespace: "pg_default"
+  schedule_tablespace: "pg_default"
+  feed_tablespace: "pg_default"
+  form_tablespace: "pg_default"
+
+opensrp:
+  sms_can_be_sent: false
+  number_of_audit_messages: 1000
+  #Team module settings
+  use_opensrp_team_module: false
+  plan_evaluation_enabled: false
+  #Multimedia
+  multimedia_directory_name:  "/opt/multimedia"
+  # multimedia file manager (is file system by default)
+  multimedia_file_manager: FileSystemMultimediaFileManager
+  #Allowed MIME Types
+  multimedia_allowed_file_types: application/octet-stream,image/jpeg,image/gif,image/png
+  #files upload
+  file_max_upload_size: 20971520
+  #CORS allowed source domain
+  cors_allowed_source: ""
+  cors_max_age: 60
+  #search for missing clients
+  sync_search_missing_client: false
+  #duration in seconds to cache authetication time to live
+  authencation_cache_ttl: 600
+  #Global unique ID settings
+  config_global_id: OPENSRP_ID
+# OpenMRS configuration
+openmrs:
+  url: "http://localhost:8080/openmrs/"
+  username: admin
+  password: Admin123
+  idgen_url: "/module/idgen/exportIdentifiers.form"
+  idgen_initial_batchsize: 300000
+  idgen_batchsize: 100
+  idgen_idsource: 1
+  #supported versions 1.11x and 2x
+  version: "2.1.3"
+  # make REST calls and push data while testing on the server specified above
+  test_make_rest_call: false
+  scheduletracker_syncer_interval_min: 2
+
+dhis2:
+  url: "http://dhis2-url/api/"
+  username: path
+  password: Path@123
+
+couchdb:
+  server: localhost
+  port: 5984
+  username: rootuser
+  password: adminpass
+  atomfeed_db_revision_limit: 2
+
+  #RapidPro settings
+rapidpro:
+  url: "https://rapidpro.ona.io"
+  token: YOUR_AUTH_TOKEN
+
+redis:
+  host: redis
+  port: 6379
+  password: ""
+  pool_max_connections: 25
+
+  # Object storage configuration (should be populated for deployments using object storage multimedia storage)
+object_storage:
+  access_key_id: dummy
+  secret_access_key: dummy
+  region: dummy
+  bucket_name: dummy
+  bucket_folder_path: dummy
+
+schedule:
+  event_add_serverVersion_interval: 180000
+  view_add_serverVersion_interval: 120000
+  task_add_serverVersion_interval: 120000
+  location_add_serverVersion_interval: 120000
+  openmrs_sync_interval: 300000
+  openmrs_validate_interval: 420000
+  dhis2_sync_interval: 600000
+
+keycloak:
+  configuration_endpoint: "{0}realms/{1}/.well-known/openid-configuration"
+  password_reset_endpoint: "{0}realms/{1}/account/credentials/password"
+  users_endpoint: "{0}/admin/realms/{1}/users"
+keycloak_json:
+  realm: ""
+  auth-server-url: "https://keycloak-url/auth/"
+  ssl-required: "external"
+  resource: ""
+  credentials:
+    secret: ""
+  confidential-port: 0
+
+rabbitmq:
+  host: localhost
+  virtualhost: /
+  port: 5672
+  username: ""
+  password: ""
+  exchange: "exchange"
+  queue: "task.queue"
+  routingkey: "rabbitmq.routingkey"
+  reply_timeout: 60000
+  concurrent_consumers: 1
+  max_concurrent_consumers: 1
