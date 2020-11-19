@@ -1,7 +1,7 @@
 apiVersion: v2
 name: opensrp
 description: OpenSRP is an open-source, mobile-first platform, built to enable data-driven decision making at all levels of the health system.
-
+icon: https://avatars2.githubusercontent.com/u/7898027?s=200&v=4
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
