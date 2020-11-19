@@ -89,14 +89,14 @@ opensrp:
   #Allowed MIME Types
   multimedia_allowed_file_types: application/octet-stream,image/jpeg,image/gif,image/png
   #files upload
-  file_max_upload_size: 20971520
+  file_max_upload_size: "20971520"
   #CORS allowed source domain
-  cors_allowed_source: ""
+  cors_allowed_source:
   cors_max_age: 60
   #search for missing clients
   sync_search_missing_client: false
   #duration in seconds to cache authetication time to live
-  authencation_cache_ttl: 600
+  authencation_cache_ttl: 120
   #Global unique ID settings
   config_global_id: OPENSRP_ID
 # OpenMRS configuration
