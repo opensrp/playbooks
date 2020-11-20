@@ -5,20 +5,6 @@
   gather_facts: true
   become: true
   roles:
-    #   - role: onaio.logstash
-    #     tags:
-    #       - logstash
-    #   - role: collectd
-    #     collectd_scripts: ["nginx", "unixsock"]
-    #     tags:
-    #       - collectd
-    #   - role: monit
-    #     monit_setup_mode: false
-    #     monit_email_admins: "{{ web_monit_email_admins }}"
-    #     monit_scripts: "{{ web_monit_scripts }}"
-    #     tags:
-    #       - monitoring
-    #       - monit
     - name: "Setup SSL certificates"
       role: certbot
       vars:
@@ -50,10 +36,10 @@
         react_git_version: "{{ web_react_git_version }}"
         react_git_key: "{{ web_react_git_key }}"
         react_app_settings: "{{ web_react_app_settings }}"
-        react_local_app_path: "{{web_react_local_app_path}}"
-        react_remote_js_build: false
+        react_local_app_path: "{{web_react_local_app_path | react_local_app_path}}"
+        react_app_path: "{{ web_react_app_path | react_app_path }}"
+        react_remote_js_build: "{{web_react_remote_js_build}}"
         react_transpile_packages: "{{ web_react_transpile_packages }}"
-
       tags:
         - install
         - react
@@ -71,7 +57,7 @@
         express_git_key: "{{ web_express_git_key }}"
         express_app_settings: "{{ web_express_app_settings }}"
         express_app_path: "{{ web_express_app_path }}"
-        express_service_name: "{{ web_pm2_express_service_name }}"
+        pm2_express_service_name: "{{ web_pm2_express_service_name }}"
       tags:
         - install
         - express
