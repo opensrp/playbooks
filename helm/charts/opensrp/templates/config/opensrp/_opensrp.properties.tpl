@@ -6,7 +6,7 @@ use.opensrp.team.module={{ .Values.opensrp.use_opensrp_team_module}}
 
 plan.evaluation.enabled={{ .Values.opensrp.plan_evaluation_enabled }}
 #x
-multimedia.directory.name={{ .Values.opensrp.multimedia_directory_name }}
+multimedia.directory.name=/opt/multimedia
 # multimedia file manager (is file system by default)
 multimedia.file.manager={{ .Values.opensrp.multimedia_file_manager }}
 #Allowed MIME Types

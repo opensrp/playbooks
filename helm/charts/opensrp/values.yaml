@@ -82,10 +82,8 @@ opensrp:
   #Team module settings
   use_opensrp_team_module: false
   plan_evaluation_enabled: false
-  #Multimedia
-  multimedia_directory_name:  "/opt/multimedia"
-  # multimedia file manager (is file system by default)
-  multimedia_file_manager: FileSystemMultimediaFileManager
+  # multimedia file manager (S3 by default)
+  multimedia_file_manager: S3MultimediaFileManager
   #Allowed MIME Types
   multimedia_allowed_file_types: application/octet-stream,image/jpeg,image/gif,image/png
   #files upload
