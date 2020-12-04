@@ -23,7 +23,7 @@ chmod 700 get_helm.sh
 To create a Chart named `crunch`:
 
 ```bash
-$ helm create charts/crunch
+helm create charts/crunch
 ```
 
 This command creates the `crunch` Helm Chart in the `helm/charts` folder.
@@ -33,7 +33,7 @@ This command creates the `crunch` Helm Chart in the `helm/charts` folder.
 To install the Chart `crunch`:
 
 ```bash
-$ helm upgrade --values=helm/releases/mango.dev.k8s.onalabs.org/default/crunch/vaules.yaml --install crunch ./helm/charts/crunch
+helm upgrade --values=helm/releases/mango.dev.k8s.onalabs.org/default/crunch/vaules.yaml --install crunch ./helm/charts/crunch
 ```
 
 ## Testing a Chart
@@ -41,7 +41,7 @@ $ helm upgrade --values=helm/releases/mango.dev.k8s.onalabs.org/default/crunch/v
 Test your release:
 
 ```bash
-$ helm test crunch
+helm test crunch
 ```
 
 ### Make sure your Chart is linted
@@ -49,11 +49,10 @@ $ helm test crunch
 Use the `helm lint` command to lint your Chart.
 
 ```bash
-$ helm lint helm/charts/crunch
+helm lint helm/charts/crunch
 ```
 
 To Learn more about testing and writing tests see [Helm Chart Tests](https://helm.sh/docs/topics/chart_tests/).
-
 
 ## Lessons
 
@@ -66,29 +65,30 @@ There are [lessons](./FAQ.md) learned while starting on Kubernetes and Helm. Doc
 Create the namespace for cert-manager.
 
 ```console
-$ kubectl create namespace cert-manager
+kubectl create namespace cert-manager
 ```
 
 Add the jetstack Helm repository and update your chart repository cache.
 
 ```console
-$ helm repo add jetstack https://charts.jetstack.io
-$ helm repo update
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
 ```
 
 Install cert-manager with CRDs.
 
 ```console
-$  helm install \
+ helm install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
   --version v0.15.1 \
   --set installCRDs=true
 ```
+
 Or
 
 ```console
-$  helm install \
+ helm install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
   --version v0.15.1 \
@@ -98,7 +98,7 @@ $  helm install \
 Verify the installation, you should have `cert-manager`, `cert-manager-cainjector` and `cert-manager-webhook` pods running.
 
 ```console
-$ kubectl get pods --namespace cert-manager
+kubectl get pods --namespace cert-manager
 NAME                                       READY   STATUS    RESTARTS   AGE
 cert-manager-9b8969d86-vkl9h               1/1     Running   0          72m
 cert-manager-cainjector-8545fdf87c-fbkh9   1/1     Running   0          72m
@@ -110,8 +110,8 @@ cert-manager-webhook-8c5db9fb6-bgvxq       1/1     Running   0          72m
 You need to create your first [issuer](https://cert-manager.io/docs/configuration/) in order to issue certificates. It is advised you test with staging issuer before trying on production issuer.
 
 ```console
-$ kubectl create -f helm/releases/mango.dev.k8s.onalabs.org/staging-clusterissuer-letsencrypt-staging.yaml
-$ kubectl create -f helm/releases/mango.dev.k8s.onalabs.org/production-clusterissuer-letsencrypt-production.yaml
+kubectl create -f helm/releases/mango.dev.k8s.onalabs.org/staging-clusterissuer-letsencrypt-staging.yaml
+kubectl create -f helm/releases/mango.dev.k8s.onalabs.org/production-clusterissuer-letsencrypt-production.yaml
 ```
 
 ### Configure your Chart ingress to use the ClusterIssuers configured above
@@ -146,7 +146,7 @@ ingress:
 Once you `helm install` your service you should have a certificate ready attached to your service which will by default be redirected to https.
 
 ```console
-$ kubectl get certificate
+kubectl get certificate
 NAME                    READY   SECRET                  AGE
 demo-example-com-tls    True    demo-example-com-tls   60m
 ```
@@ -156,7 +156,7 @@ You can see the certificate details with the command `kubectl describe certifica
 **Tip**: Check the cert-manager pod for any debug information incase you are having challenges with SSL certificates. Use the `kubectl log` command e.g.
 
 ```console
-$ kubectl logs -f -n cert-manager cert-manager-9b8969d86-vkl9h
+kubectl logs -f -n cert-manager cert-manager-9b8969d86-vkl9h
 ```
 
 ## Managing Secrets
