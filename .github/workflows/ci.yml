@@ -1,0 +1,62 @@
+---
+name: CI
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6]
+        terraform-version: ["0.14.3"]
+        terraform-os-arch: ["linux_amd64"]
+        packer-version: ["1.4.2"]
+        packer-os-arch: ["linux_amd64"] 
+        sc-version: ["stable"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements/base.pip
+          mkdir bin
+          curl -o bin/terraform.zip "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_${terraform_os_arch}.zip"
+          unzip bin/terraform.zip -d bin
+          curl -o bin/packer.zip "https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_${packer_os_arch}.zip"
+          unzip bin/packer.zip -d bin
+          wget -qO- "https://github.com/koalaman/shellcheck/releases/download/${sc_version}/shellcheck-${sc_version}.linux.x86_64.tar.xz" | tar -xJv
+          cp "shellcheck-${sc_version}/shellcheck" bin
+          curl -fsSL -o bin/get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod +x bin/get_helm.sh && ./bin/get_helm.sh
+        env:
+          terraform_version: ${{ matrix.terraform-version }}
+          terraform_os_arch: ${{ matrix.terraform-os-arch }}
+          packer_version: ${{ matrix.packer-version }}
+          packer_os_arch: ${{ matrix.packer-os-arch }}
+          sc_version: ${{ matrix.sc-version }}
+
+      - name: Run tests
+        run: |
+          ansible-lint deploy-dhis.yml
+          ansible-lint deploy-opensrp.yml
+          ansible-lint deploy-openmrs.yml
+          ansible-lint opensrp-web.yml
+          ansible-lint deploy-keycloak.yml
+          find terraform -type d -print0 | xargs -n 1 -0 ./bin/terraform fmt -check=true
+          find packer -name *.json -print0 | xargs -n 1 -0 ./bin/packer validate -syntax-only
+          find packer -name *.json -print0 | xargs -I {} -0 bash -c 'diff <(python3 -m json.tool {}) <(cat {})'
+          shellcheck --version
+          shellcheck packer/scripts/*.sh
+          find helm/charts -maxdepth 1 -type d -exec helm lint {} \;

@@ -6,7 +6,7 @@ resource "alicloud_db_instance" "main" {
   instance_charge_type     = "Postpaid"
   instance_name            = var.postgresql_name
   vswitch_id               = var.postgresql_vswitch_id
-  zone_id                  = "${join(",", var.postgresql_availability_zones)}"
+  zone_id                  = join(",", var.postgresql_availability_zones)
   security_ips             = var.postgresql_firewall_rule_ingress_cidr_blocks
   db_instance_storage_type = var.postgresql_instance_storage_type
   tags = {
