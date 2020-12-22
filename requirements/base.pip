@@ -4,9 +4,9 @@
 #
 #    pip-compile --output-file=requirements/base.pip requirements/base.in
 #
-ansible-lint==4.1.0
-ansible==2.8
-boto3==1.10.28
+ansible-lint==4.1.0       # via -r requirements/base.in
+ansible==2.9              # via -r requirements/base.in, ansible-lint
+boto3==1.10.28            # via -r requirements/aws.pip
 botocore==1.13.28         # via boto3, s3transfer
 cffi==1.13.2              # via cryptography
 click==7.0                # via pip-tools
@@ -15,8 +15,8 @@ docutils==0.15.2          # via botocore
 jinja2==2.10.3            # via ansible
 jmespath==0.9.4           # via boto3, botocore
 markupsafe==1.1.1         # via jinja2
-mitogen==0.2.9
-pip-tools==4.3.0
+mitogen==0.2.9            # via -r requirements/base.in
+pip-tools==4.3.0          # via -r requirements/base.in
 pycparser==2.19           # via cffi
 python-dateutil==2.8.0    # via botocore
 pyyaml==5.1.2             # via ansible, ansible-lint
