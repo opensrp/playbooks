@@ -1,9 +1,9 @@
 data "aws_vpc" "main" {
-  id = "${var.nifi_vpc_id}"
+  id = var.nifi_vpc_id
 }
 
 data "aws_subnet_ids" "main" {
-  vpc_id = "${var.nifi_vpc_id}"
+  vpc_id = var.nifi_vpc_id
 }
 
 data "template_file" "init" {
