@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "opensrp.fullname" . }}
+  labels:
+    {{- include "opensrp.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "opensrp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "opensrp.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "opensrp.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: opensrp-server-config-properties
+          configMap:
+            name: {{ include "opensrp.fullname" . }}
+        - name: opensrp-server-config-context
+          configMap:
+            name: {{ include "opensrp.fullname" . }}
+        - name: opensrp-server-config-keycloak
+          configMap:
+            name: {{ include "opensrp.fullname" . }}
+        - name: opensrp-server-mybatis-properties
+          configMap:
+            name: {{ include "opensrp.fullname" . }}
+      initContainers:
+        - name: {{ .Chart.Name }}-mybatis
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: opensrp-server-mybatis-properties
+              mountPath: /migrations/environments/deployment.properties
+              subPath: mybatis.properties
+          command: ["/opt/mybatis/mybatis-migrations-3.3.4/bin/migrate", "up", "--path=/migrations", "--env=deployment"]
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: opensrp-server-config-properties
+              mountPath: /usr/local/tomcat/webapps/opensrp/WEB-INF/classes/opensrp.properties
+              subPath: opensrp.properties
+            - name: opensrp-server-config-context
+              mountPath: /usr/local/tomcat/webapps/opensrp/META-INF/context.xml
+              subPath: opensrp.context.xml
+            - name: opensrp-server-config-keycloak
+              mountPath: /usr/local/tomcat/webapps/opensrp/WEB-INF/keycloak.json
+              subPath: opensrp.keycloak.json
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /opensrp
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /opensrp
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

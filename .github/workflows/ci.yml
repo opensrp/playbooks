@@ -38,6 +38,8 @@ jobs:
           unzip bin/packer.zip -d bin
           wget -qO- "https://github.com/koalaman/shellcheck/releases/download/${sc_version}/shellcheck-${sc_version}.linux.x86_64.tar.xz" | tar -xJv
           cp "shellcheck-${sc_version}/shellcheck" bin
+          curl -fsSL -o bin/get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod +x bin/get_helm.sh && ./bin/get_helm.sh
         env:
           terraform_version: ${{ matrix.terraform-version }}
           terraform_os_arch: ${{ matrix.terraform-os-arch }}
@@ -57,3 +59,4 @@ jobs:
           find packer -name *.json -print0 | xargs -I {} -0 bash -c 'diff <(python3 -m json.tool {}) <(cat {})'
           shellcheck --version
           shellcheck packer/scripts/*.sh
+          find helm/charts -maxdepth 1 -type d -exec helm lint {} \;
