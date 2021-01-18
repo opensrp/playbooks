@@ -23,10 +23,9 @@ time_zone={{ .Values.time_zone }}
 
 ## JDBC connection properties.
 driver=org.postgresql.Driver
-driver_path=/migrations/drivers/postgresql-42.2.1.jar
-url="jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}"
-username="{{ .Values.postgres.username }}"
-password="{{ .Values.postgres.password }}"
+url=jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}
+username={{ .Values.postgres.username }}
+password={{ .Values.postgres.password }}
 
 #
 # A NOTE ON STORED PROCEDURES AND DELIMITERS

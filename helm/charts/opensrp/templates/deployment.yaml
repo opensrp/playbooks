@@ -73,10 +73,12 @@ spec:
             httpGet:
               path: /opensrp
               port: http
+            initialDelaySeconds: 60
           readinessProbe:
             httpGet:
               path: /opensrp
               port: http
+            initialDelaySeconds: 60
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
