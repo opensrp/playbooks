@@ -1,0 +1,26 @@
+- hosts: pgbouncer-app-servers, pgbouncer-postgres-servers
+  gather_facts: False
+  pre_tasks:
+    - include_tasks: tasks/python3-ubuntu.yml
+    - name: Setup Ansible
+      setup:
+  roles:
+    - common
+    - weareinteractive.ufw
+
+- hosts: pgbouncer-postgresql-servers
+  become: true
+  become_user: "root"
+  roles:
+    - postgresql
+  tags:
+    - pgbouncer-postgresql
+    - pgbouncer-postgres
+
+- hosts: pgbouncer-app-servers
+  serial: 1 # Runs playbook one server at at time (to achieve a rolling update)
+  max_fail_percentage: 0
+  roles:
+    - onaio.pgbouncer
+  tags:
+    - pgbouncer

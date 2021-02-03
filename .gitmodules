@@ -73,3 +73,6 @@
 [submodule "roles/onaio.monit"]
 	path = roles/onaio.monit
 	url = https://github.com/onaio/ansible-monit.git
+[submodule "roles/onaio.pgbouncer"]
+	path = roles/onaio.pgbouncer
+	url = https://github.com/onaio/ansible-pgbouncer.git
