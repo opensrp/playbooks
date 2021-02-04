@@ -73,3 +73,9 @@
 [submodule "roles/onaio.monit"]
 	path = roles/onaio.monit
 	url = https://github.com/onaio/ansible-monit.git
+[submodule "roles/onaio.graphite-api"]
+	path = roles/onaio.graphite-api
+	url = https://github.com/onaio/ansible-graphite-api.git
+[submodule "roles/onaio.influxdb"]
+	path = roles/onaio.influxdb
+	url = https://github.com/onaio/ansible-influxdb.git
