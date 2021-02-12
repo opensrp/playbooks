@@ -144,3 +144,16 @@ multimedia.allowed.file.types=application/octet-stream,image/jpeg,image/gif,imag
 #keycloak configuration
 keycloak.configuration.endpoint={0}realms/{1}/.well-known/openid-configuration
 keycloak.password.reset.endpoint={0}realms/{1}/account/credentials/password
+
+#RabbitMQ Configuration
+rabbitmq.host={{ opensrp_rabbitmq_host }}
+rabbitmq.virtualhost={{ opensrp_rabbitmq_virtualhost }}
+rabbitmq.port={{ opensrp_rabbitmq_port }}
+rabbitmq.username={{ opensrp_rabbitmq_username }}
+rabbitmq.password={{ opensrp_rabbitmq_password }}
+rabbitmq.exchange={{ opensrp_rabbitmq_exchange }}
+rabbitmq.queue={{ opensrp_rabbitmq_task_queue }}
+rabbitmq.routingkey={{ opensrp_rabbitmq_routingkey }}
+rabbitmq.reply.timeout={{ opensrp_rabbitmq_reply_timeout }}
+rabbitmq.concurrent.consumers={{ opensrp_rabbitmq_concurrent_consumers }}
+rabbitmq.max.concurrent.consumers={{ opensrp_rabbitmq_max_concurrent_consumers }}
