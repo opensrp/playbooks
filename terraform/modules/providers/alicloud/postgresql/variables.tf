@@ -100,5 +100,5 @@ variable "postgresql_instance_storage_type" {
 
 variable "password" {
   description = "Unencrypted Superuser password"
-  type = string
+  type        = string
 }
