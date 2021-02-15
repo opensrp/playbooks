@@ -36,8 +36,8 @@ variable "mysql_vswitch_id" {
   type = string
 }
 
-variable "mysql_availability_zones" {
-  type        = list(string)
+variable "mysql_availability_zone" {
+  type        = string
   description = "The availability zones the database should be part of. The provided mysql_vswitch_id should be in one of the availablility zones."
 }
 
