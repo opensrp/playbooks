@@ -278,7 +278,7 @@ opensrp_rabbitmq_port: 5672
 opensrp_rabbitmq_username: "opensrp"
 opensrp_rabbitmq_password: ""
 opensrp_rabbitmq_exchange: "rabbitmq.exchange"
-opensrp_rabbitmq_queue: "rabbitmq.task.queue"
+opensrp_rabbitmq_task_queue: "rabbitmq.task.queue"
 opensrp_rabbitmq_routingkey: "rabbitmq.routingkey"
 opensrp_rabbitmq_reply_timeout: 60000
 opensrp_rabbitmq_concurrent_consumers: 1
