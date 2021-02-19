@@ -1,4 +1,4 @@
-- hosts: opensrp-app-servers, opensrp-couchdb-servers, opensrp-mysql-servers, opensrp-redis-servers, opensrp-activemq-servers, opensrp-postgresql-servers, opensrp-rabbitmq-servers
+- hosts: opensrp-app-servers, opensrp-couchdb-servers, opensrp-mysql-servers, opensrp-redis-servers, opensrp-postgresql-servers, opensrp-rabbitmq-servers
   gather_facts: False
   pre_tasks:
     - include_tasks: tasks/python3-ubuntu.yml
@@ -28,14 +28,6 @@
     - onaio.redis
   tags:
     - opensrp-redis
-
-- hosts: opensrp-activemq-servers
-  become: true
-  become_user: "root"
-  roles:
-    - activemq
-  tags:
-    - opensrp-activemq
 
 - hosts: opensrp-postgresql-servers
   become: true
