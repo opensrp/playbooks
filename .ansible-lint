@@ -1,0 +1,26 @@
+skip_list:
+  - 106
+  - 208
+exclude_paths:
+  - roles/server-monitoring
+  - roles/collectd
+  - roles/hostname
+  - roles/ssh
+  - roles/linux-config
+  - roles/postgresql
+  - roles/keycloak
+  - roles/onaio.ssl-certificate
+  - roles/onaio.backup
+  - roles/redis
+  - roles/superset
+  - roles/certbot
+  - roles/nginx
+  - roles/react
+  - roles/express
+  - roles/sre-tooling
+  - roles/fluentd
+  - roles/onaio.logstash
+  - roles/nifi
+  - roles/onaio.monit
+  - roles/onaio.graphite-api
+  - roles/onaio.influxdb

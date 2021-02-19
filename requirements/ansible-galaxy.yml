@@ -1,8 +1,12 @@
 ---
+collections:
+  - name: community.grafana
+    version: 1.1.0
+
 roles:
   - src: https://github.com/onaio/postgresql.git
     name: ANXS.postgresql
-    version: eecf0b28d8ae833f9118132384447ea19f76c802
+    version: 26493277bf692128bf70b9a2a50d4a32b6db23f4
     scm: git
 
   - src: https://github.com/onaio/ansible-nginx.git
@@ -11,7 +15,7 @@ roles:
     scm: git
 
   - src: geerlingguy.java
-    version: 1.9.5
+    version: 1.10.0
 
   - src: https://github.com/onaio/ansible-redis.git
     name: onaio.redis
@@ -65,4 +69,14 @@ roles:
 
   - src: christiangda.amazon_cloudwatch_agent
     version: 2.0.6
+
   - src: Asymmetrik.nifi
+
+  - src: Graylog2.graylog-ansible-role
+    version: 3.2.0
+
+  - src: elastic.elasticsearch
+    version: 7.6.2
+
+  - src: cloudalchemy.grafana
+    version: 0.17.0
