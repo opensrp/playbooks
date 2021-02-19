@@ -79,3 +79,6 @@
 [submodule "roles/onaio.influxdb"]
 	path = roles/onaio.influxdb
 	url = https://github.com/onaio/ansible-influxdb.git
+[submodule "roles/rabbitmq"]
+	path = roles/rabbitmq
+	url = https://github.com/onaio/ansible-rabbitmq.git

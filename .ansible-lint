@@ -24,3 +24,4 @@ exclude_paths:
   - roles/onaio.monit
   - roles/onaio.graphite-api
   - roles/onaio.influxdb
+  - roles/rabbitmq
