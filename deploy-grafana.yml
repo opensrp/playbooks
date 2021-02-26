@@ -1,0 +1,40 @@
+---
+- hosts: grafana-app-servers, grafana-graphite-api-servers, grafana-postgresql-servers
+  gather_facts: false
+  pre_tasks:
+    - include_tasks: tasks/python3-ubuntu.yml
+    - name: Setup Ansible
+      setup:
+  roles:
+    - common
+
+- hosts: grafana-graphite-api-servers
+  become: true
+  roles:
+    - onaio.graphite-api
+
+- hosts: grafana-postgresql-servers
+  become: true
+  roles:
+    - postgresql
+
+- hosts: grafana-app-servers
+  any_errors_fatal: true
+  become: true
+  roles:
+    - role: cloudalchemy.grafana
+      tags:
+        - grafana
+    - role: certbot
+      tags:
+        - certbot
+      when: grafana_use_certbot is not defined or grafana_use_certbot
+    - role: nginx
+      tags:
+        - nginx
+      when: grafana_use_nginx is not defined or grafana_use_nginx
+  post_tasks:
+    - import_tasks: tasks/install-grafana-dashboard.yml
+      tags:
+        - grafana-dashboard
+      when: grafana_dashboard_install is defined and grafana_dashboard_install

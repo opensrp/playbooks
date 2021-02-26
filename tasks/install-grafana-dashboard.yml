@@ -1,0 +1,25 @@
+---
+- name: Set variables
+  set_fact:
+    grafana_dashboard_dest_filename: "grafana-dashboard-{{ ansible_date_time['epoch'] }}.json"
+  tags:
+    - grafana-dashboard
+
+- name: copy Grafana dashboard template
+  template:
+    src: "{{ grafana_dashboard_template }}"
+    dest: "/tmp/{{ grafana_dashboard_dest_filename }}"
+  tags:
+    - grafana-dashboard
+
+- name: Import Grafana dashboard
+  community.grafana.grafana_dashboard:
+    grafana_url: "{{ grafana_dashboard_grafana_url }}"
+    grafana_user: "{{ grafana_dashboard_user }}"
+    grafana_password: "{{ grafana_dashboard_password }}"
+    folder: "{{ grafana_dashboard_folder }}"
+    state: present
+    overwrite: true
+    path: "/tmp/{{ grafana_dashboard_dest_filename }}"
+  tags:
+    - grafana-dashboard
