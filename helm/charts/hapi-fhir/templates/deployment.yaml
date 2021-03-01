@@ -40,22 +40,24 @@ spec:
           volumeMounts:
             - name: hapi-fhir-application-properties
               mountPath: /data/hapi-fhir/config/application.yaml
-              subPath: application.yaml
+              subPath: hapi.application.yaml
           env:
             - name: SPRING_CONFIG_LOCATION
               value: /data/hapi-fhir/config/application.yaml
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /
               port: http
+            initialDelaySeconds: 60
           readinessProbe:
             httpGet:
               path: /
               port: http
+            initialDelaySeconds: 60
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

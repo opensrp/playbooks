@@ -5,5 +5,5 @@ metadata:
   labels:
   {{- include "hapi-fhir.labels" . | nindent 4 }}
 data:
-  hapi.server.yaml: |
+  hapi.application.yaml: |
     {{- include "config.server.application.yaml" . | nindent 4 }}
