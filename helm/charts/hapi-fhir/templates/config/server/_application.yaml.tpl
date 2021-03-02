@@ -13,7 +13,7 @@ spring:
       hibernate.format_sql: false
       hibernate.show_sql: false
       hibernate.dialect: org.hibernate.dialect.h2dialect
-      hibernate.hbm2ddl.auto: create
+      hibernate.hbm2ddl.auto: update
 #      hibernate.jdbc.batch_size: 20
 #      hibernate.cache.use_query_cache: false
 #      hibernate.cache.use_second_level_cache: false

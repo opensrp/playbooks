@@ -31,8 +31,20 @@ spec:
         - name: hapi-fhir-application-properties
           configMap:
             name: {{ include "hapi-fhir.fullname" . }}
+       - name: hapi-fhir-initial-scripts
+          configMap:
+            name: {{ include "hapi-fhir.fullname" . }}     
+      initContainers:
+        - name: {{ .Chart.Name }}-initial-scripts
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: hapi-fhir-initial-scripts
+              mountPath: /data/initial-scripts/create_database.sh
+              subPath: hapi.create_database.sh
+          command: ["/data/initial-scripts/create_database.sh"]        
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Chart.Name }}-
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

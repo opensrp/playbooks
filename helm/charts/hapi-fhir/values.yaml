@@ -8,7 +8,7 @@ image:
   repository: hapiproject/hapi
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v5.2.1"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -80,7 +80,7 @@ affinity: {}
 
 postgres:
   port: 5432
-  host: "postgres-postgresql.default.svc.cluster.local"
-  username: "postgres"
-  password: "secretpassword"
-  database: "hapi"
+  host: "db"
+  username: "hapi_fhir"
+  password: "password"
+  database: "hapi_fhir"

@@ -7,3 +7,5 @@ metadata:
 data:
   hapi.application.yaml: |
     {{- include "config.server.application.yaml" . | nindent 4 }}
+  hapi.create_database.sh: |
+    {{- include "config.initial-scripts.initscript.sh" . | nindent 4 }}
