@@ -4,13 +4,11 @@
 #
 #    pip-compile --output-file=requirements/base.pip requirements/base.in
 #
--e git+https://github.com/mitogen-hq/mitogen@v0.3.0-rc.0#egg=mitogen
-    # via -r requirements/base.in
 ansible-base==2.10.5
     # via ansible
 ansible-lint==4.3.0
     # via -r requirements/base.in
-ansible==2.10.0
+ansible==2.10.6
     # via
     #   -r requirements/base.in
     #   ansible-lint
@@ -34,6 +32,8 @@ jmespath==0.10.0
     #   botocore
 markupsafe==1.1.1
     # via jinja2
+mitogen==v0.3.0rc1
+    # via -r requirements/base.in
 packaging==20.9
     # via ansible-base
 pip-tools==5.5.0
