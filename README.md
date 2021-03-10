@@ -29,8 +29,8 @@ pip install -r requirements/base.pip
 Install the [Ansible Galaxy](https://docs.ansible.com/ansible/latest/reference_appendices/galaxy.html) requirements using these commands:
 
 ```sh
-mkdir -p ~/.ansible/roles/opensrp
-ansible-galaxy install -r requirements/ansible-galaxy.yml -p ~/.ansible/roles/opensrp
+ansible-galaxy role install -r requirements/ansible-galaxy.yml -p ~/.ansible/roles/opensrp
+ansible-galaxy collection install -r requirements/ansible-galaxy.yml -p ~/.ansible/collections/opensrp
 ```
 
 ### Note on Mitogen

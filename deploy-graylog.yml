@@ -1,0 +1,47 @@
+---
+- hosts: graylog-app-servers, graylog-es-servers
+  gather_facts: false
+  pre_tasks:
+    - include_tasks: tasks/python3-ubuntu.yml
+    - name: Setup Ansible
+      setup:
+  roles:
+    - common
+
+- name: Install Graylog server
+  hosts: graylog-app-servers
+  become: true
+  vars:
+    graylog_install_elasticsearch: false
+    graylog_install_nginx: false
+    graylog_install_java: false
+    graylog_root_password_sha2: "{{ graylog_root_password | hash('sha256') }}"
+    graylog_plugin_dir: "/usr/share/graylog-server/plugin"
+  roles:
+    - role: geerlingguy.java
+      java_packages:
+        - openjdk-8-jdk
+
+    - role: "Graylog2.graylog-ansible-role"
+      tags: graylog
+
+    - role: certbot
+      when: graylog_use_certbot
+      tags:
+        - certbot
+
+    - role: nginx
+      tags:
+        - nginx
+
+- name: Install Elasticsearch
+  hosts: graylog-es-servers
+  become: true
+  roles:
+    - role: elastic.elasticsearch
+
+    - role: certbot
+      when: es_use_certbot
+
+    - role: nginx
+      when: es_use_nginx is not defined or es_use_nginx

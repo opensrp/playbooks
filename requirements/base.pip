@@ -4,23 +4,60 @@
 #
 #    pip-compile --output-file=requirements/base.pip requirements/base.in
 #
-ansible-lint==4.1.0       # via -r requirements/base.in
-ansible==2.9              # via -r requirements/base.in, ansible-lint
-boto3==1.10.28            # via -r requirements/aws.pip
-botocore==1.13.28         # via boto3, s3transfer
-cffi==1.13.2              # via cryptography
-click==7.0                # via pip-tools
-cryptography==2.8         # via ansible
-docutils==0.15.2          # via botocore
-jinja2==2.10.3            # via ansible
-jmespath==0.9.4           # via boto3, botocore
-markupsafe==1.1.1         # via jinja2
-mitogen==0.2.9            # via -r requirements/base.in
-pip-tools==4.3.0          # via -r requirements/base.in
-pycparser==2.19           # via cffi
-python-dateutil==2.8.0    # via botocore
-pyyaml==5.1.2             # via ansible, ansible-lint
-ruamel.yaml==0.16.5       # via ansible-lint
-s3transfer==0.2.1         # via boto3
-six==1.13.0               # via ansible-lint, cryptography, pip-tools, python-dateutil
-urllib3==1.25.7           # via botocore
+ansible-base==2.10.5
+    # via ansible
+ansible-lint==4.3.0
+    # via -r requirements/base.in
+ansible==2.10.6
+    # via
+    #   -r requirements/base.in
+    #   ansible-lint
+boto3==1.17.1
+    # via -r requirements/aws.pip
+botocore==1.20.1
+    # via
+    #   boto3
+    #   s3transfer
+cffi==1.14.4
+    # via cryptography
+click==7.1.2
+    # via pip-tools
+cryptography==3.3.1
+    # via ansible-base
+jinja2==2.11.3
+    # via ansible-base
+jmespath==0.10.0
+    # via
+    #   boto3
+    #   botocore
+markupsafe==1.1.1
+    # via jinja2
+mitogen==v0.3.0rc1
+    # via -r requirements/base.in
+packaging==20.9
+    # via ansible-base
+pip-tools==5.5.0
+    # via -r requirements/base.in
+pycparser==2.20
+    # via cffi
+pyparsing==2.4.7
+    # via packaging
+python-dateutil==2.8.1
+    # via botocore
+pyyaml==5.4.1
+    # via
+    #   ansible-base
+    #   ansible-lint
+ruamel.yaml==0.16.12
+    # via ansible-lint
+s3transfer==0.3.4
+    # via boto3
+six==1.15.0
+    # via
+    #   cryptography
+    #   python-dateutil
+urllib3==1.26.3
+    # via botocore
+
+# The following packages are considered to be unsafe in a requirements file:
+# pip
