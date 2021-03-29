@@ -1,0 +1,84 @@
+---
+- hosts: web
+  serial: 1  # Runs playbook one server at at time (to achieve a rolling update)
+  max_fail_percentage: 0  # Don't continue deploying on other hosts if playbook fails on one
+  gather_facts: true
+  become: true
+  roles:
+    - name: "Setup SSL certificates"
+      role: certbot
+      vars:
+        site_name: "{{ web_certbot_site_names[0] }}"
+        certbot_create_certs: "{{ web_certbot_create_certs }}"
+        certbot_mail_address: "{{ web_certbot_mail_address }}"
+        certbot_renew_certs: "{{ web_certbot_renew_certs }}"
+        certbot_install_cert: "{{ web_certbot_install_cert }}"
+        certbot_webserver_installed: "nginx"
+        certbot_site_names: "{{ web_certbot_site_names }}"
+        certbot_package: "{{ web_certbot_package }}"
+        certbot_version: "{{ web_certbot_version }}"
+      tags:
+        - install
+        - SSL
+        - certbot
+      when:
+        - web_use_certbot == True
+
+    - name: "Setup react"
+      role: react
+      become: true
+      become_user: "root"
+      vars:
+        react_system_user: "{{ web_react_system_user }}"
+        react_system_user_home: "{{ web_react_system_user_home }}"
+        react_codebase_path: "{{ web_react_codebase_path }}"
+        react_git_url: "{{ web_react_git_url }}"
+        react_git_version: "{{ web_react_git_version }}"
+        react_git_key: "{{ web_react_git_key }}"
+        react_app_settings: "{{ web_react_app_settings }}"
+        react_local_app_path: "{{web_react_local_app_path | default(omit)}}"
+        react_app_path: "{{ web_react_app_path | default(omit) }}"
+        react_remote_js_build: "{{web_react_remote_js_build}}"
+        react_build_cmds:
+          - cmd: lerna:prepublish
+            path: "{{ react_local_checkout_path }}"
+      tags:
+        - install
+        - react
+
+    - name: "Setup express"
+      role: express
+      become: true
+      become_user: "root"
+      vars:
+        express_system_user: "{{ web_express_system_user }}"
+        express_system_user_home: "{{ web_express_system_user_home }}"
+        express_codebase_path: "{{ web_express_codebase_path }}"
+        express_git_url: "{{ web_express_git_url }}"
+        express_git_version: "{{ web_express_git_version }}"
+        express_git_key: "{{ web_express_git_key }}"
+        express_app_settings: "{{ web_express_app_settings }}"
+        express_app_path: "{{ web_express_app_path }}"
+        pm2_express_service_name: "{{ web_pm2_express_service_name }}"
+      tags:
+        - install
+        - express
+
+    - name: "Setup nginx"
+      role: nginx
+      become: true
+      become_user: "root"
+      vars:
+        nginx_sites: "{{ web_nginx_sites }}"
+        nginx_ssl_dir: "{{ web_nginx_ssl_dir }}"
+        nginx_access_logs: "{{ web_nginx_access_logs }}"
+        nginx_install_method: "package"
+        nginx_enabled_sites: "{{ web_nginx_enabled_sites }}"
+        nginx_default_enable: false
+        monit_protection: "{{ web_nginx_monit_protection }}"
+        nginx_log_dir: "{{ web_nginx_log_path }}"
+        nginx_large_client_header_buffers: "{{ web_nginx_large_client_header_buffers }}"
+        nginx_first_start: "{{ web_nginx_first_start }}"
+      tags:
+        - nginx
+        - configure
