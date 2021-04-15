@@ -5,24 +5,16 @@ We use Ansible's recommended [alternative directory layout][4].
 
 ## Setup
 
-To run the stuff herein, you need Ansible. To use [Ansible][1] you might need [pycrypto][2].
-To build pycrypto, you need the latest python (2.1 <= ver <= 3.3) development libs & headers.
-Stick with python v2.7 for now. It's the current status quo.
-In a nutshell, if you're using debian/ubuntu :- `apt-get install python-dev`
-
-For local "dev" deployments, you will need to install [Virtualbox][3]. You'll need the password
-used to encrypt sensitive info in this repo.
-
 Clone this repository with its Git submodules:
 
 ```sh
 git clone --recursive git@github.com:opensrp/playbooks.git && cd playbooks
 ```
 
-Make sure all [pip][5] requirements are installed by running the following command. We recommend
-you do this in a dedicated [Python virtual env][6]:
+This repository requires that you have Python 3 installed on the host you will be running Ansible. Make sure all [pip][5] requirements are installed by running the following command. We recommend you do this in a dedicated [Python 3 virtual env][6]:
 
 ```sh
+python --version # confirm that your active python version is 3
 pip install -r requirements/base.pip
 ```
 
