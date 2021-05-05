@@ -34,8 +34,8 @@ variable "postgresql_vswitch_id" {
   description = "The virtual switch ID to launch DB instances in one VPC."
 }
 
-variable "postgresql_availability_zones" {
-  type        = list(string)
+variable "postgresql_availability_zone" {
+  type        = string
   description = "The availability zones the database should be part of. The provided postgresql_vswitch_id should be in one of the availablility zones."
 }
 
@@ -88,7 +88,7 @@ variable "postgresql_kms_encrypted_password" {
 }
 
 variable "postgresql_kms_encryption_context" {
-  type        = string
+  type        = map
   description = "The KMS encryption context used to decrypt postgresql_kms_encrypted_password."
 }
 
@@ -96,4 +96,9 @@ variable "postgresql_instance_storage_type" {
   type        = string
   description = "The storage type of the instance. Valid values: ['local_ssd', 'cloud_ssd', 'cloud_essd', 'cloud_essd3', 'cloud_essd3']."
   default     = "local_ssd"
+}
+
+variable "password" {
+  description = "Unencrypted Superuser password"
+  type        = string
 }

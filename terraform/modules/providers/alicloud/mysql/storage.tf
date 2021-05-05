@@ -6,7 +6,7 @@ resource "alicloud_db_instance" "main" {
   instance_charge_type = "Postpaid"
   instance_name        = var.mysql_name
   vswitch_id           = var.mysql_vswitch_id
-  zone_id              = join(",", var.mysql_availability_zones)
+  zone_id              = var.mysql_availability_zone
   security_ips         = var.mysql_firewall_rule_ingress_cidr_blocks
   tags = {
     Name            = var.mysql_name
