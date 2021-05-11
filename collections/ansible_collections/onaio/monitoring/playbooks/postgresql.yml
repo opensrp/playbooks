@@ -1,0 +1,14 @@
+---
+- hosts: monitoring_postgresql
+  gather_facts: false
+  become: true
+  collections:
+    - onaio.monitoring
+  pre_tasks:
+    - name: load in monitoring vars
+      include_vars:
+        file: "vars/main.yml" 
+    - include_tasks: tasks/python3-ubuntu.yml
+    - name: Setup Ansible         
+  roles:
+    - role: onaio.monitoring.postgresql

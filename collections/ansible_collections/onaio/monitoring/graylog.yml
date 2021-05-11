@@ -1,0 +1,52 @@
+---
+- name: Install Graylog server
+  hosts: graylog
+  become: true
+  vars:
+    graylog_install_elasticsearch: false
+    graylog_install_nginx: false
+    graylog_install_java: false
+    graylog_root_password_sha2: "{{ graylog_root_password | hash('sha256') }}"
+    graylog_plugin_dir: "/usr/share/graylog-server/plugin"
+    slack_deployed_app_name: "Graylog"
+    slack_deployed_app_version: "{{ graylog_version | default('latest') }}"
+    slack_deployed_domain: "{{ graylog_domain }}"
+  pre_tasks:
+    - include_tasks: tasks/slack-start.yml
+      when: slack_notifications
+  roles:
+    - role: geerlingguy.java
+      java_packages:
+        - openjdk-8-jdk
+
+    - role: "Graylog2.graylog-ansible-role"
+      tags: graylog
+
+    - role: certbot
+      when: graylog_use_certbot == true
+      tags:
+        - certbot
+
+    - role: nginx
+      tags:
+        - nginx
+
+  post_tasks:
+    - name: Install Graylog plugins
+      get_url:
+        url: "{{ item.url }}"
+        dest: "{{ graylog_plugin_dir }}/{{ item.name }}"
+        owner: root
+        group: root
+        mode: 0644
+      with_items: "{{ graylog_plugins }}"
+      when: graylog_plugins is defined
+      notify:
+        - restart graylog-server
+      tags:
+        - graylog
+        - graylog-plugins
+
+    - include_tasks: tasks/upload-graylog-contentpacks.yml
+    - include_tasks: tasks/slack-end.yml
+      when: slack_notifications

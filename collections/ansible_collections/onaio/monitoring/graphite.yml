@@ -1,0 +1,15 @@
+---
+- hosts: graphite
+  gather_facts: false
+  become: true
+  pre_tasks:
+    - include_tasks: tasks/python3-ubuntu.yml
+    - name: Setup Ansible
+      setup:
+    - include_tasks: tasks/slack-start.yml
+      when: slack_notifications
+  roles:
+    - onaio.graphite-api
+  post_tasks:
+    - include_tasks: tasks/slack-end.yml
+      when: slack_notifications
