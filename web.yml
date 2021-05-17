@@ -38,10 +38,8 @@
         react_app_settings: "{{ web_react_app_settings }}"
         react_local_app_path: "{{web_react_local_app_path | default(omit)}}"
         react_app_path: "{{ web_react_app_path | default(omit) }}"
-        react_remote_js_build: "{{web_react_remote_js_build}}"
-        react_build_cmds:
-          - cmd: lerna:prepublish
-            path: "{{ react_local_checkout_path }}"
+        react_remote_js_build: "{{ web_react_remote_js_build }}"
+        react_build_cmds: "{{ web_react_build_cmds }}"
       tags:
         - install
         - react
