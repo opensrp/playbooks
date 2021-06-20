@@ -1,5 +1,10 @@
 ---
 dependencies: # noqa 701
+ - role: geerlingguy.mysql
+   become: true
+   mysql_root_username: "{{ mysql_root_user }}"
+   when: mysql_install_server
+
  - role: mysql-backup
    when: mysql_install_server and mysql_setup_database_backups
    mysql_host: "{{ mysql_backup_connection_host }}"

@@ -83,3 +83,6 @@ roles:
 
   - src: cloudalchemy.grafana
     version: 0.17.0
+
+  - src: geerlingguy.mysql
+    version: 3.3.1
