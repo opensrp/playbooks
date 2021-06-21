@@ -1,5 +1,5 @@
 ---
-- hosts: monitoring_postgresql
+- hosts: monitoring_graylog
   gather_facts: false
   become: true
   collections:
@@ -12,4 +12,13 @@
     - name: Setup Ansible
       setup:
   roles:
-    - role: onaio.monitoring.postgresql
+    - role: onaio.monitoring.java
+      java_home: "/usr/lib/jvm/java-8-openjdk-amd64/jre"
+      java_packages:
+        - openjdk-8-jdk
+
+    - role: "Graylog2.graylog-ansible-role"
+
+    - role: onaio.monitoring.certbot
+
+    - role: onaio.monitoring.nginx

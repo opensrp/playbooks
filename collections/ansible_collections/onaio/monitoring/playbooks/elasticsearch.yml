@@ -1,5 +1,5 @@
 ---
-- hosts: monitoring_postgresql
+- hosts: monitoring_elasticsearch
   gather_facts: false
   become: true
   collections:
@@ -12,4 +12,10 @@
     - name: Setup Ansible
       setup:
   roles:
-    - role: onaio.monitoring.postgresql
+    - role: elastic.elasticsearch
+
+    - role: onaio.monitoring.certbot
+      when: es_use_certbot
+
+    - role: onaio.monitoring.nginx
+      when: es_use_nginx

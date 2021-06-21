@@ -1,0 +1,276 @@
+---
+# Sentry
+sentry_db_user: "sentry"
+sentry_db_password: "{{ monitoring_sentry_db_password }}"
+sentry_db_name: "sentry"
+sentry_db_host: "127.0.0.1"
+sentry_db_port: 5432
+sentry_broker_url: "redis://127.0.0.1:6379"
+sentry_domain: "{{ monitoring_sentry_domain }}"
+
+# Redis
+redis_version: "3.2.10"
+redis_bind_address: "127.0.0.1"
+redis_backup_enabled: false
+
+# Grafana
+grafana_domain: "{{ monitoring_grafana_domain }}"
+grafana_db_user: "grafana"
+grafana_db_password: "{{ monitoring_grafana_db_password }}"
+grafana_db_name: "grafana"
+grafana_db_host: 127.0.0.1
+grafana_db_port: 5432
+grafana_version: latest
+grafana_address: "127.0.0.1"
+grafana_port: 3000
+grafana_url: "https://{{ grafana_domain }}"
+grafana_security:
+  admin_user: admin
+  admin_password: '{{ monitoring_grafana_admin_password }}'
+grafana_auth:
+  github:
+    scopes: "user:email,read:org"
+    auth_url: "https://github.com/login/oauth/authorize"
+    token_url: "https://github.com/login/oauth/access_token"
+    api_url: "https://api.github.com/user"
+    team_ids: ""
+    allowed_organizations: "onaio"
+    allow_sign_up: true
+    enabled: true
+    client_id: "{{ grafana_github_client_id }}"
+    client_secret: "{{ grafana_github_client_secret }}"
+grafana_github_client_id: "f1a9ae6eb6c2d8a0c690"
+grafana_github_client_secret: "{{ monitoring_grafana_github_client_secret }}"
+grafana_database:
+  type: postgres
+  host: "{{ grafana_db_host }}:{{ grafana_db_port }}"
+  name: "{{ grafana_db_name }}"
+  user: "{{ grafana_db_user }}"
+  password: "{{ grafana_db_password }}"
+grafana_datasources:
+  - name: "InfluxDB"
+    type: "influxdb"
+    access: "proxy"
+    database: "graphite"
+    user: "graphite"
+    password: "{{ graphite_api_influxdb_graphite_pass }}"
+    url: "http://127.0.0.1:8086"
+    jsonData:
+      httpMode: "GET"
+grafana_use_certbot: false # TODO: figure out
+grafana_dashboards: []
+
+# Graphite API
+graphite_api_graphite_protocol: "tcp"
+graphite_api_install_api: false
+graphite_api_influxdb_admin_pass: "{{ monitoring_graphite_api_influxdb_admin_pass }}"
+
+# Elasticsearch
+es_graylog_password: "{{ monitoring_es_graylog_password }}"
+es_major_version: "6.x"
+es_version: "6.8.8"
+es_api_host: "127.0.0.1"
+es_heap_size: "{{ (ansible_memtotal_mb * 0.25) | round | int }}m"
+es_cluster_name: "monitoring-cluster"
+es_instance_name: "master_node"
+es_config:
+  cluster.name: "{{ es_cluster_name }}"
+  node.name: "{{ es_instance_name }}"
+  discovery.zen.ping.unicast.hosts: "elastic02:9300"
+  http.port: 9200
+  http.host: "{{ es_api_host }}"
+  transport.tcp.port: 9300
+  bootstrap.memory_lock: false
+es_use_nginx: false # TODO: delete
+es_use_certbot: false # TODO: delete
+
+# Graphite/InfluxDB
+graphite_api_influxdb_graphite_pass: "{{ monitoring_graphite_api_influxdb_graphite_pass }}"
+
+# Graylog
+graylog_domain: "{{ monitoring_graylog_domain }}"
+graylog_bind_address: "127.0.0.1"
+graylog_bind_port: 9001
+graylog_http_bind_address: "{{ graylog_bind_address }}:{{ graylog_bind_port }}"
+graylog_http_publish_uri: "http://{{ graylog_http_bind_address }}/"
+graylog_install_nginx: false
+graylog_install_elasticsearch: false
+graylog_install_java: false
+graylog_version: "3.3"
+graylog_full_version: "3.3.1*"
+graylog_password_secret: "{{ monitoring_graylog_password_secret }}"
+graylog_root_username: "admin"
+graylog_root_password: "{{ monitoring_graylog_root_password }}"
+graylog_es_host: "127.0.0.1"
+graylog_es_port: 9200
+graylog_mongodb_version: "4.2"
+graylog_http_external_uri: "https://{{ graylog_domain }}/"
+graylog_plugins:
+  - name: "graylog-plugin-slack-notification.jar"
+    url: "https://github.com/sportalliance/graylog-plugin-slack-notification/releases/download/1.0.5/graylog-plugin-slack-notification-1.0.5.jar"
+  - name: "graylog-plugin-opsgenie-alerts.jar"
+    url: "https://github.com/opsgenie/opsgenie-graylog-plugin/releases/download/v1.3.12/opsgenie-graylog-alarmcallback-1.3.12-RELEASE.jar"
+
+# PostgreSQL
+postgresql_monit_scripts: ['postgres']
+postgresql_enable_ssl: false
+postgresql_slack_deployed_domain: "{{ ansible_hostname }}"
+postgresql_version: 9.6
+postgresql_users:
+  - name: "{{ sentry_db_user }}"
+    pass: "{{ sentry_db_password }}"
+    encrypted: true
+  - name: "{{ grafana_db_user }}"
+    pass: "{{ grafana_db_password }}"
+postgresql_databases:
+  - name: "{{ sentry_db_name }}"
+    owner: "{{ sentry_db_user }}"
+  - name: "{{ grafana_db_name }}"
+    owner: "{{ grafana_db_user }}"
+postgresql_listen_addresses:
+  - "127.0.0.1"
+postgresql_user_privileges:
+  - name: "{{ sentry_db_user }}"
+    db: "{{ sentry_db_name }}"
+    priv: "ALL"
+    role_attr_flags: "SUPERUSER"
+  - name: "{{ grafana_db_user }}"
+    db: "{{ grafana_db_name }}"
+    priv: "ALL"
+    role_attr_flags: "SUPERUSER"
+postgresql_backup_enabled: false
+
+# NGINX
+nginx_install_method: package
+nginx_ssl_dir: "{{ nginx_dir }}/ssl/{{ site.server.server_name }}"
+nginx_grafana_https_site_name: "{{ grafana_domain }}-https"
+nginx_grafana_http_site_name: "{{ grafana_domain }}-http"
+nginx_graylog_https_site_name: "{{ graylog_domain }}-https"
+nginx_graylog_http_site_name: "{{ graylog_domain }}-http"
+nginx_sentry_https_site_name: "{{ sentry_domain }}-https"
+nginx_sentry_http_site_name: "{{ sentry_domain }}-http"
+nginx_access_logs:
+  - name: "timed_combined"
+    format: '''$http_x_forwarded_for - $remote_user [$time_local]  "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $request_time $upstream_response_time $gzip_ratio $request_length'''
+    options: null
+    filename: "access.log"
+nginx_sites:
+  - server:
+      name: "{{ nginx_grafana_http_site_name }}"
+      __listen: "80;\n  listen [::]:80;\n"
+      server_name: "{{ grafana_domain }}"
+      return: "301 https://$server_name$request_uri"
+      ssl:
+        enabled: false
+  - server:
+      name: "{{ nginx_grafana_https_site_name }}"
+      __listen: "443;\n  listen [::]:443;\n"
+      large_client_header_buffers: 4 16k
+      server_name: "{{ grafana_domain }}"
+      location1:
+        name: /
+        include: "uwsgi_params"
+        proxy_pass: "http://{{ grafana_address }}:{{ grafana_port }}"
+        proxy_read_timeout: "300s"
+        uwsgi_read_timeout: "300s"
+        proxy_redirect: "off"
+        proxy_set_header:
+          - Host $host
+          - X-Real-IP $remote_addr
+          - X-Forwarded-For $proxy_add_x_forwarded_for
+          - X-Forwarded-Host $server_name
+        proxy_next_upstream: "error timeout invalid_header http_500 http_502 http_503 http_504"
+      ssl:
+        enabled: true
+        cert: "fullchain.pem"
+        key: "privkey.pem"
+        src_dir: "/etc/letsencrypt/live/{{ certbot_cert_name }}"
+        conf: "{{ grafana_domain }}-ssl.conf"
+        create_symlink: true
+        remote_src: false
+        access_log_format: "{{ nginx_access_logs.0.name }}"
+  - server:
+      name: "{{ nginx_graylog_http_site_name }}"
+      __listen: "80;\n  listen [::]:80;\n"
+      server_name: "{{ graylog_domain }}"
+      return: "301 https://$server_name$request_uri"
+      ssl:
+        enabled: false
+  - server:
+      name: "{{ nginx_graylog_https_site_name }}"
+      __listen: "443;\n  listen [::]:443;\n"
+      large_client_header_buffers: 4 16k
+      server_name: "{{ graylog_domain }}"
+      location1:
+        name: /
+        include: "uwsgi_params"
+        proxy_pass: "{{ graylog_http_publish_uri }}"
+        proxy_read_timeout: "300s"
+        uwsgi_read_timeout: "300s"
+        proxy_redirect: "off"
+        proxy_set_header:
+          - Host $host
+          - X-Real-IP $remote_addr
+          - X-Forwarded-For $proxy_add_x_forwarded_for
+          - X-Forwarded-Host $server_name
+          - X-Graylog-Server-URL https://{{ graylog_domain }}
+        proxy_next_upstream: "error timeout invalid_header http_500 http_502 http_503 http_504"
+      ssl:
+        enabled: true
+        cert: "fullchain.pem"
+        key: "privkey.pem"
+        src_dir: "/etc/letsencrypt/live/{{ certbot_cert_name }}"
+        conf: "{{ graylog_domain }}-ssl.conf"
+        create_symlink: true
+        remote_src: false
+        access_log_format: "{{ nginx_access_logs.0.name }}"
+  - server:
+      name: "{{ nginx_sentry_http_site_name }}"
+      __listen: "80;\n  listen [::]:80;\n"
+      server_name: "{{ sentry_domain }}"
+      return: "301 https://$server_name$request_uri"
+      ssl:
+        enabled: false
+  - server:
+      name: "{{ nginx_sentry_https_site_name }}"
+      __listen: "443;\n  listen [::]:443;\n"
+      large_client_header_buffers: 4 16k
+      server_name: "{{ sentry_domain }}"
+      location1:
+        name: /
+        include: "uwsgi_params"
+        proxy_pass: "http://127.0.0.1:9000"
+        proxy_read_timeout: "300s"
+        uwsgi_read_timeout: "300s"
+        proxy_redirect: "off"
+        proxy_set_header:
+          - Host $host
+          - X-Real-IP $remote_addr
+          - X-Forwarded-For $proxy_add_x_forwarded_for
+          - X-Forwarded-Host $server_name
+        proxy_next_upstream: "error timeout invalid_header http_500 http_502 http_503 http_504"
+      ssl:
+        enabled: true
+        cert: "fullchain.pem"
+        key: "privkey.pem"
+        src_dir: "/etc/letsencrypt/live/{{ certbot_cert_name }}"
+        conf: "{{ sentry_domain }}-ssl.conf"
+        create_symlink: true
+        remote_src: false
+        access_log_format: "{{ nginx_access_logs.0.name }}"
+nginx_enabled_sites:
+  - "{{ nginx_grafana_https_site_name }}"
+  - "{{ nginx_grafana_http_site_name }}"
+  - "{{ nginx_graylog_https_site_name }}"
+  - "{{ nginx_graylog_http_site_name }}"
+  - "{{ nginx_sentry_https_site_name }}"
+  - "{{ nginx_sentry_http_site_name }}"
+
+# Certbot
+certbot_create_certs: true
+certbot_site_names:
+  - "{{ grafana_domain }}"
+  - "{{ graylog_domain }}"
+  - "{{ sentry_domain }}"
+certbot_cert_name: "ona-monitoring"
+certbot_mail_address: "{{ monitoring_certbot_mail_address }}"

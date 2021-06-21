@@ -85,3 +85,18 @@
 [submodule "roles/weareinteractive.pm2"]
 	path = roles/weareinteractive.pm2
 	url = git@github.com:weareinteractive/ansible-pm2.git
+[submodule "collections/ansible_collections/onaio/monitoring/roles/postgresql"]
+	path = collections/ansible_collections/onaio/monitoring/roles/postgresql
+	url = https://github.com/onaio/ansible-postgresql.git
+[submodule "collections/ansible_collections/onaio/monitoring/roles/certbot"]
+	path = collections/ansible_collections/onaio/monitoring/roles/certbot
+	url = https://github.com/onaio/ansible-certbot.git
+[submodule "collections/ansible_collections/onaio/monitoring/roles/nginx"]
+	path = collections/ansible_collections/onaio/monitoring/roles/nginx
+	url = https://github.com/onaio/ansible-nginx.git
+[submodule "collections/ansible_collections/onaio/monitoring/roles/graphite"]
+	path = collections/ansible_collections/onaio/monitoring/roles/graphite
+	url = https://github.com/onaio/ansible-graphite-api.git
+[submodule "collections/ansible_collections/onaio/monitoring/roles/java"]
+	path = collections/ansible_collections/onaio/monitoring/roles/java
+	url = https://github.com/onaio/ansible-java.git

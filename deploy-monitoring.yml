@@ -1,0 +1,19 @@
+---
+- import_playbook: collections/ansible_collections/onaio/monitoring/playbooks/postgresql.yml
+  tags:
+    - postgres
+    - postgresql
+- import_playbook: collections/ansible_collections/onaio/monitoring/playbooks/graphite.yml
+  tags:
+    - graphite
+    - graphite-api
+- import_playbook: collections/ansible_collections/onaio/monitoring/playbooks/grafana.yml
+  tags:
+    - grafana
+- import_playbook: collections/ansible_collections/onaio/monitoring/playbooks/elasticsearch.yml
+  tags:
+    - es
+    - elasticsearch
+- import_playbook: collections/ansible_collections/onaio/monitoring/playbooks/graylog.yml
+  tags:
+    - graylog
