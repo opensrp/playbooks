@@ -15,8 +15,8 @@
 
 - name: Copy the OpenSRP man config files
   template:
-    src: "templates/opensrp_local_checkout_path/configs/assets/config/{{ item }}.properties.j2"
-    dest: "{{ opensrp_local_checkout_path }}/configs/assets/config/{{ item }}.properties"
+    src: "templates/opensrp_local_checkout_path/opensrp_config_path/{{ item }}.properties.j2"
+    dest: "{{ opensrp_local_checkout_path }}/{{ opensrp_config_path }}/{{ item }}.properties"
   delegate_to: 127.0.0.1
   with_items:
     - "opensrp"
@@ -25,16 +25,16 @@
 
 - name: Copy the OpenSRP resource config file
   template:
-    src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/resources/{{ item }}.properties.j2"
-    dest: "{{ opensrp_local_checkout_path }}/src/main/resources//{{ item }}.properties"
+    src: "templates/opensrp_local_checkout_path/opensrp_resources_path/{{ item }}.properties.j2"
+    dest: "{{ opensrp_local_checkout_path }}/{{ opensrp_resources_path }}/{{ item }}.properties"
   delegate_to: 127.0.0.1
   with_items:
     - "quartz"
 
 - name: Copy the OpenSRP oauth clients config file
   template:
-    src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/resources/spring/{{ item }}.xml.j2"
-    dest: "{{ opensrp_local_checkout_path }}/src/main/resources/spring/{{ item }}.xml"
+    src: "templates/opensrp_local_checkout_path/opensrp_resources_path/spring/{{ item }}.xml.j2"
+    dest: "{{ opensrp_local_checkout_path }}/{{ opensrp_resources_path }}/spring/{{ item }}.xml"
   delegate_to: 127.0.0.1
   with_items:
     - "oauth_clients"
@@ -42,8 +42,8 @@
 - name: Replace OpenSRP Context configs
   when: opensrp_psql_as_primary_database
   template:
-    src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/META-INF/{{ item }}.xml.j2"
-    dest: "{{ opensrp_local_checkout_path }}/src/main/webapp/META-INF/{{ item }}.xml"
+    src: "templates/opensrp_local_checkout_path/opensrp_meta_inf_path/{{ item }}.xml.j2"
+    dest: "{{ opensrp_local_checkout_path }}/{{ opensrp_meta_inf_path }}/{{ item }}.xml"
   delegate_to: 127.0.0.1
   with_items:
   - "context"
@@ -51,14 +51,14 @@
 - name: Replace OpenSRP Keycloak configs
   when: opensrp_keycloak_realm is defined
   template:
-    src: "templates/opensrp_local_checkout_path/opensrp-web/src/main/WEB-INF/keycloak.json.j2"
-    dest: "{{ opensrp_local_checkout_path }}/src/main/webapp/WEB-INF/keycloak.json"
+    src: "templates/opensrp_local_checkout_path/opensrp_web_inf_path/keycloak.json.j2"
+    dest: "{{ opensrp_local_checkout_path }}/{{ opensrp_web_inf_path }}/keycloak.json"
   delegate_to: 127.0.0.1
 
 
 - name: Add OpenSRP version and build timestamp
   replace:
-    path: "{{ opensrp_local_checkout_path }}/src/main/webapp/index.html"
+    path: "{{ opensrp_local_checkout_path }}/{{ opensrp_index_html_path }}"
     after: '</form>'
     before: '</body>'
     regexp: '^(.+)$'
@@ -80,6 +80,6 @@
 
 - name: Copy the compiled WAR
   copy:
-    src: "{{ opensrp_local_checkout_path }}/target/opensrp.war"
+    src: "{{ opensrp_local_checkout_path }}/{{ opensrp_local_war_path }}"
     dest: "{{ opensrp_local_package_directory }}/{{ opensrp_version }}.war"
   delegate_to: 127.0.0.1

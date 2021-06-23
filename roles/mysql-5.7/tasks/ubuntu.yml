@@ -18,13 +18,4 @@
     update_cache: yes
   with_items:
     - { name: mysql-client-5.7, version: "{{ mysql_client_version }}" }
-    - { name: python-mysqldb, version: "{{ mysql_python_mysqldb_version }}" }
-
-- name: Install MySQL 5.7 Server
-  become: yes
-  become_user: root
-  apt:
-    name: "mysql-server-5.7={{ mysql_server_version }}"
-    state: present
-    update_cache: yes
-  when: mysql_install_server
+    - { name: "{{ mysql_python_package_debian }}", version: "{{ mysql_python_mysqldb_version }}" }
