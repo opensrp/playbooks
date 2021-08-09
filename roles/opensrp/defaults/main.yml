@@ -5,7 +5,7 @@ opensrp_resource_sub_dirs:
   - "qr-codes"
 opensrp_mysql_port: 3306
 opensrp_mysql_host: "localhost"
-opensrp_configure_mysql: true
+opensrp_configure_mysql: false
 opensrp_mysql_database: "opensrp"
 opensrp_motech_database: "motechquartz"
 opensrp_mysql_user: "opensrp"
@@ -97,6 +97,13 @@ opensrp_multimedia_parent_directory: "{{ opensrp_openmrs_tomcat_user_home }}/.Op
 # running the database migrations
 opensrp_install_only: false
 opensrp_environment: "production"
+opensrp_config_path: "configs/assets/config"
+opensrp_resources_path: "src/main/resources"
+opensrp_meta_inf_path: "src/main/webapp/META-INF"
+opensrp_web_inf_path: "src/main/webapp/WEB-INF"
+opensrp_index_html_path: "src/main/webapp/index.html"
+opensrp_local_war_path: "target/opensrp.war"
+opensrp_migrations_path: "configs/assets/migrations"
 
 # List of profiles to be activated. Only the specified profiles will
 # be made active. Read more on OpenSRP Server profiles here:
