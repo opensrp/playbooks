@@ -1,0 +1,16 @@
+---
+keycloak_admin_password: "strongpassword"
+keycloak_postgresql_password: "strongpassword"
+keycloak_postgresql_host: "localhost"
+keycloak_postgresql_user: "keycloak"
+keycloak_postgresql_database: "keycloak"
+keycloak_postgres_superuser: "{{ all_opensrp_postgres_superuser }}"
+keycloak_postgres_superuser_password: "{{ all_opensrp_postgres_superuser_password }}"
+keycloak_postgresql_connection_url: "jdbc:postgresql://{{ keycloak_postgresql_host }}:5432/{{ keycloak_postgresql_database }}"
+keycloak_http_port: 8080
+keycloak_https_port: 8443
+keycloak_certs_from_letsencrypt: true
+keycloak_nginx_max_filesize: "50M"
+keycloak_site_name: "keycloak.xxxxxxxxxx.org"
+keycloak_certbot_mail_address: "techops+{{ keycloak_site_name }}@xxxxxxxx.org"
+keycloak_nginx_upstream_url: "https://xxxxxxxxxx.org:{{ keycloak_https_port }}"
