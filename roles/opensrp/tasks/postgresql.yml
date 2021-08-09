@@ -39,9 +39,9 @@
   with_items:
     - unzip
     - python-migrate
-    - postgresql
+    - postgresql-client
     - libpq-dev
-    - python-psycopg2
+    - python3-psycopg2
     - git
   tags:
     - postgresql
@@ -69,7 +69,7 @@
   become: yes
   template:
     src: "templates/opensrp_remote_checkout_path/configs/assets/migrations/environments/opensrp_mybatis_env.properties.j2"
-    dest: "{{ opensrp_remote_checkout_path }}/configs/assets/migrations/environments/{{ opensrp_mybatis_env }}.properties"
+    dest: "{{ opensrp_remote_checkout_path }}/{{ opensrp_migrations_path }}/environments/{{ opensrp_mybatis_env }}.properties"
   tags:
     - postgresql
 
@@ -126,7 +126,7 @@
     - postgresql
 
 - name: Run the Mybatis migrations # noqa 301
-  command: "{{ opensrp_mybatis_install_dir }}/mybatis-migrations-{{ opensrp_mybatis_version }}/bin/migrate up --path={{ opensrp_remote_checkout_path }}/configs/assets/migrations --env={{ opensrp_mybatis_env }} {{ opensrp_mybatis_migration_extra_args }}" # noqa 204
+  command: "{{ opensrp_mybatis_install_dir }}/mybatis-migrations-{{ opensrp_mybatis_version }}/bin/migrate up --path={{ opensrp_remote_checkout_path }}/{{ opensrp_migrations_path }} --env={{ opensrp_mybatis_env }} {{ opensrp_mybatis_migration_extra_args }}" # noqa 204
   when: not opensrp_install_only
   tags:
     - postgresql
