@@ -6,6 +6,7 @@
         "instance_type": "m5.large",
         "owner": "",
         "project": "",
+        "team": "opensrp",
         "end_date": "-",
         "region": "eu-west-1",
         "source_ami": "ami-035966e8adab4aaad",
@@ -36,6 +37,7 @@
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
                 "ProjectList": "{{ user `project` }}",
+                "TeamList": "{{ user `team` }}",
                 "DeploymentType": "packer"
             },
             "run_tags": {
@@ -44,6 +46,7 @@
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
                 "ProjectList": "{{ user `project` }}",
+                "TeamList": "{{ user `team` }}",
                 "DeploymentType": "packer"
             },
             "run_volume_tags": {
@@ -52,6 +55,7 @@
                 "EnvironmentList": "{{ user `env` }}",
                 "EndDate": "{{ user `end_date` }}",
                 "ProjectList": "{{ user `project` }}",
+                "TeamList": "{{ user `team` }}",
                 "DeploymentType": "packer"
             }
         }
