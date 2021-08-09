@@ -85,3 +85,6 @@
 [submodule "roles/weareinteractive.pm2"]
 	path = roles/weareinteractive.pm2
 	url = git@github.com:weareinteractive/ansible-pm2.git
+[submodule "collections/ansible_collections/onaio/monitoring"]
+	path = collections/ansible_collections/onaio/monitoring
+	url = https://github.com/onaio/ansible-collection-monitoring.git
