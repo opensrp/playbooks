@@ -1,0 +1,4 @@
+---
+nfs.server={{ hostvars[inventory_hostname]['ip'] }}
+storageClass.defaultClass={{ nfs_provisioner.is_storage_class_default | default(true) }}
+nfs.path={{ nfs_provisioner.path | default('/srv/nfs/storage') }}

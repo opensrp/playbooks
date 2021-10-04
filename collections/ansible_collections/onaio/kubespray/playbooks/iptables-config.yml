@@ -1,0 +1,26 @@
+---
+- name: "Add Iptables Configuration"
+  hosts: k8s_cluster
+  tasks:
+    - name: "Forward ports"
+      iptables:
+        table: nat
+        chain: PREROUTING
+        in_interface: '{{ item.split(":")[2] }}'
+        protocol: tcp
+        destination_port: '{{ item.split(":")[1] }}'
+        jump: DNAT
+        to_destination: '{{ item.split(":")[0] }}:{{ item.split(":")[1] }}'
+        comment: 'Redirect web traffic to port {{ item.split(":")[1] }}'
+      become: yes
+      with_items: "{{ portIpMap }}"
+
+    - name: "Re-route response to main interface"
+      iptables:
+        table: nat
+        chain: POSTROUTING
+        out_interface: '{{ k8sInterface }}'
+        jump: MASQUERADE
+        comment: 'Re-route response to main interface'
+      check_mode: yes
+      become: yes
