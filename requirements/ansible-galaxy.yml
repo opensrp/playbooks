@@ -6,6 +6,9 @@ collections:
   - name: devsec.hardening
     version: 7.2.0
 
+  - name: kubernetes.core
+    version: 2.2.0
+
 roles:
   - src: https://github.com/onaio/postgresql.git
     name: ANXS.postgresql
