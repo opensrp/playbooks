@@ -6,21 +6,20 @@
       iptables:
         table: nat
         chain: PREROUTING
-        in_interface: '{{ item.split(":")[2] }}'
+        in_interface: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['interface'] }}"
         protocol: tcp
         destination_port: '{{ item.split(":")[1] }}'
         jump: DNAT
         to_destination: '{{ item.split(":")[0] }}:{{ item.split(":")[1] }}'
         comment: 'Redirect web traffic to port {{ item.split(":")[1] }}'
       become: yes
-      with_items: "{{ portIpMap }}"
+      with_items: "{{ port_ip_map }}"
 
     - name: "Re-route response to main interface"
       iptables:
         table: nat
         chain: POSTROUTING
-        out_interface: '{{ k8sInterface }}'
+        out_interface: "{{ k8s_interface }}"
         jump: MASQUERADE
         comment: 'Re-route response to main interface'
-      check_mode: yes
       become: yes

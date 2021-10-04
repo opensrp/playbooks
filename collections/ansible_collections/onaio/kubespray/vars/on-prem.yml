@@ -1,4 +1,6 @@
 ---
+k8s_interface: "{{ kubespray_k8s_interface | default('tunl0') }}"
+
 kubernetes_audit: true
 
 metrics_server_enabled: true

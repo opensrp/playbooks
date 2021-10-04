@@ -2,10 +2,6 @@
 - name: "Setup Kubernetes Services"
   hosts: kube_control_plane
   pre_tasks:
-    - name: Load in kubespray vars
-      include_vars:
-        file: "../vars/{{ kubespray_setup_type }}.yml" # e.g. "on-prem"
-
   # Required for kubernetes.core.k8s module
     - name: Install openshift python package
       pip:

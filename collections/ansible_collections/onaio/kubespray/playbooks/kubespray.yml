@@ -1,12 +1,16 @@
 ---
-- name: "Setup NFS Server(s)"
+- hosts: all
+  gather_facts: false
   become: true
-  hosts: nfs-servers
-  roles:
-    - role: ../roles/nfs
-      when: setup_nfs | bool
-  tags:
-    - nfs-setup
+  collections:
+    - onaio.kubespray
+  tasks:
+    - name: Load in kubespray vars
+      tags: always
+      include_vars:
+        file: "../vars/{{ kubespray_setup_type }}.yml"
+    - name: Setup Ansible
+      setup:
 
 - name: "Get Facts"
   import_playbook: ../external/kubespray/facts.yml
