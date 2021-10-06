@@ -17,4 +17,4 @@ spec:
     solvers:
     - http01:
         ingress:
-          class: nginx
+          class: {{ acme_cluster_issuer.ingress_class }}

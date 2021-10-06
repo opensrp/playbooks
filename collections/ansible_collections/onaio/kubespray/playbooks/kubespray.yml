@@ -12,6 +12,32 @@
     - name: Setup Ansible
       setup:
 
+- name: "Setup NFS Server(s)"
+  become: true
+  hosts: nfs-servers
+  roles:
+    - role: ../roles/nfs
+      when: setup_nfs | bool
+  tags:
+    - nfs-setup
+    - setup-nfs-server
+    - post-cluster-setup
+
+- name: "Setup NFS Clients(s)"
+  become: true
+  hosts: nfs-clients
+  tasks:
+    - name: Install nfs commons.
+      apt:
+        name:
+          - nfs-common
+        state: present
+      when: setup_nfs | bool
+  tags:
+    - nfs-setup
+    - setup-nfs-client
+    - post-cluster-setup
+
 - name: "Get Facts"
   import_playbook: ../external/kubespray/facts.yml
   tags:

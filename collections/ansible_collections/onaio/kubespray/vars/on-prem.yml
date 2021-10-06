@@ -6,23 +6,19 @@ kubernetes_audit: true
 metrics_server_enabled: true
 
 helm_enabled: true
-helm_version: "v3.6.3"
 
 etcd_deployment_type: host
 container_manager: containerd
+
+## metallb config
 
 # needed for metallb to work
 kube_proxy_strict_arp: true
 
 metallb_enabled: true
 metallb_speaker_enabled: true
-metallb_version: "{{ kubespray_metallb_version | default('v0.10.2') }}"
 metallb_protocol: "layer2"
 metallb_port: "7472"
-metallb_limits_cpu: "{{ kubespray_metallb_limits_cpu | default('100m') }}"
-metallb_limits_mem: "{{ kubespray_metallb_limits_mem | default('100Mi') }}"
-# metallb_ip_range is a set or range of ips that metallb can use to assign to services of type Loadbalancer. At the moment ingress is the only service of type Loadbalancer. These ips should not be used anywhere else.
-metallb_ip_range: "{{ kubespray_metallb_ip_range }}"
 
 # metallb_controller_tolerations is needed to ensure the least downtime if the node holding the metallb controller goes down.
 metallb_controller_tolerations:
@@ -33,6 +29,8 @@ metallb_controller_tolerations:
   - key: "node.kubernetes.io/not-ready"
     operator: "Exists"
     effect: "NoExecute"
+
+## end metallb config
 
 setup_nfs: true
 nfs_exports:
@@ -58,4 +56,3 @@ acme_cluster_issuer:
   email: '{{ kubespray_acme_cluster_issuer.email }}'
   server: "{{ kubespray_acme_cluster_issuer.server | default('https://acme-v02.api.letsencrypt.org/directory') }}"
   ingress_class: "{{ kubespray_acme_cluster_issuer.ingress_class | default('nginx') }}"
-
