@@ -99,11 +99,11 @@ kubespray_k8s_interface: tunl0
 
 ### Run the k8s post cluster setup play
 This will setup the following:
-   - nfs servers & clients
-   - cert-manager & cluster issuer
-   - nfs provisioner
-   - ingress nginx controller with service type load balancer
-   - additional iptables to make cluster accessible publicly using layer2 metallb. (check the above 2 steps) 
+- nfs servers & clients
+- cert-manager & cluster issuer
+- nfs provisioner
+- ingress nginx controller with service type load balancer
+- additional iptables to make cluster accessible publicly using layer2 metallb. (check the above 2 steps) 
 
 ````shell
 ansible-playbook -i inventories/<project>/kubernetes/<cluster-name> kubernetes.yml -t post-cluster-setup --extra-vars "ansible_ssh_user=ubuntu"
