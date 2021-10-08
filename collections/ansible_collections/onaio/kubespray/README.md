@@ -76,14 +76,15 @@ ansible-playbook -i inventories/<project>/kubernetes/<cluster-name> --become --b
 Ansible will now execute the playbook, this can take up to 20 minutes.
 
 ## Actions after cluster setup using kubespray collection
+
 The cluster uses metallb (layer2 type) as the load balancer, to make the cluster accessible to the public one has to run the following play `kubernetes.yml` with tag `post-cluster-setup` but before that we need to know the following:
 
-   - The interface used by kubernetes network. (use `ifconfig`)
+- The interface used by kubernetes network. (use `ifconfig`)
+- The external ip of ingress controller service.
 
-   - The external ip of ingress controller service.
-     ````shell
-     kubectl -n ingress-nginx get svc ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[].ip}'
-     ````
+```shell
+kubectl -n ingress-nginx get svc ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[].ip}'
+```
 
 ### Update the following values in all.yml of your inventory accordingly
 ````yaml
@@ -98,15 +99,17 @@ kubespray_k8s_interface: tunl0
 ````
 
 ### Run the k8s post cluster setup play
-This will setup the following:
-- nfs servers & clients
-- cert-manager & cluster issuer
-- nfs provisioner
-- ingress nginx controller with service type load balancer
-- additional iptables to make cluster accessible publicly using layer2 metallb. (check the above 2 steps) 
 
-````shell
+This will setup the following:
+
+  - nfs servers & clients
+  - cert-manager & cluster issuer
+  - nfs provisioner
+  - ingress nginx controller with service type load balancer
+  - additional iptables to make cluster accessible publicly using layer2 metallb. (check the above 2 steps)
+
+```shell
 ansible-playbook -i inventories/<project>/kubernetes/<cluster-name> kubernetes.yml -t post-cluster-setup --extra-vars "ansible_ssh_user=ubuntu"  -e "reset_confirmation=no"
-````
+```
 
 At this point you can start installing the applications to the cluster.
