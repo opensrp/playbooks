@@ -1,25 +1,20 @@
 ---
 - name: "Add Iptables Configuration"
   hosts: k8s_cluster
+  become: yes
   tasks:
-    - name: "Forward ports"
-      iptables:
-        table: nat
-        chain: PREROUTING
-        in_interface: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['interface'] }}"
-        protocol: tcp
-        destination_port: '{{ item.split(":")[1] }}'
-        jump: DNAT
-        to_destination: '{{ item.split(":")[0] }}:{{ item.split(":")[1] }}'
-        comment: 'Redirect web traffic to port {{ item.split(":")[1] }}'
-      become: yes
-      with_items: "{{ port_ip_map }}"
-
-    - name: "Re-route response to main interface"
-      iptables:
-        table: nat
-        chain: POSTROUTING
-        out_interface: "{{ k8s_interface }}"
-        jump: MASQUERADE
-        comment: 'Re-route response to main interface'
-      become: yes
+    - name: Create scripts directory if it does not exist
+      file:
+        path: $HOME/deployment/scripts
+        state: directory
+        mode: u=rw,g=r,o=r
+    - name: Copy routing iptables script
+      template:
+        src: ../templates/routing-iptables.sh.j2
+        dest: $HOME/deployment/scripts/routing-iptables.sh
+        mode: '+rx'
+    - name: Creates cronjob entry for routing table script
+      cron:
+        name: "a job for routing table script"
+        special_time: reboot
+        job: "$HOME/deployment/scripts/routing-iptables.sh"

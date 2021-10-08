@@ -32,6 +32,8 @@ metallb_controller_tolerations:
 
 ## end metallb config
 
+#nfs:
+#  server: "{{ hostvars['nodeX]['ip'] }}"
 setup_nfs: true
 nfs_exports:
   - "/srv/nfs/storage *(rw,sync,no_root_squash,no_subtree_check,no_all_squash,insecure)"

@@ -18,7 +18,8 @@ git clone --recursive git@github.com:opensrp/playbooks.git && cd playbooks
 
 Install dependencies from `requirements.txt`
 ```shell
-sudo pip3 install -r collections/ansible_collections/onaio/kubespray/external/kubespray/requirements.txt
+pip3 install -r collections/ansible_collections/onaio/kubespray/external/kubespray/requirements.txt
+pip3 install -r requirements/kubernetes.pip
 ```
 
 ### Install ansible collections and roles
@@ -101,7 +102,7 @@ This will setup the following:
    - nfs servers & clients
    - cert-manager & cluster issuer
    - nfs provisioner
-   - ingress nginx controller
+   - ingress nginx controller with service type load balancer
    - additional iptables to make cluster accessible publicly using layer2 metallb. (check the above 2 steps) 
 
 ````shell
