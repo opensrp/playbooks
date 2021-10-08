@@ -70,7 +70,7 @@ You can also see that the `kube_network_plugin` is by default set to 'calico'.
 To deploy Kubespray with Ansible Playbook - run the playbook as root. The option `--become` is required, as for example writing SSL keys in /etc/, installing packages and interacting with various systemd daemons, without --become the playbook will fail to run!
 
 ````shell
-ansible-playbook -i inventories/<project>/kubernetes/<cluster-name> --become --become-user=root kubernetes.yml -t cluster --extra-vars "ansible_ssh_user=ubuntu"
+ansible-playbook -i inventories/<project>/kubernetes/<cluster-name> --become --become-user=root kubernetes.yml -t cluster --extra-vars "ansible_ssh_user=ubuntu"  -e "reset_confirmation=no"
 ````
 
 Ansible will now execute the playbook, this can take up to 20 minutes.
@@ -106,7 +106,7 @@ This will setup the following:
 - additional iptables to make cluster accessible publicly using layer2 metallb. (check the above 2 steps) 
 
 ````shell
-ansible-playbook -i inventories/<project>/kubernetes/<cluster-name> kubernetes.yml -t post-cluster-setup --extra-vars "ansible_ssh_user=ubuntu"
+ansible-playbook -i inventories/<project>/kubernetes/<cluster-name> kubernetes.yml -t post-cluster-setup --extra-vars "ansible_ssh_user=ubuntu"  -e "reset_confirmation=no"
 ````
 
 At this point you can start installing the applications to the cluster.

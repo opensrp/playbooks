@@ -18,3 +18,5 @@
         name: "a job for routing table script"
         special_time: reboot
         job: "$HOME/deployment/scripts/routing-iptables.sh"
+    - name: Run script
+      shell: $HOME/deployment/scripts/routing-iptables.sh
