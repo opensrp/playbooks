@@ -1,0 +1,22 @@
+---
+- name: "Add Iptables Configuration"
+  hosts: k8s_cluster
+  become: yes
+  tasks:
+    - name: Create scripts directory if it does not exist
+      file:
+        path: $HOME/deployment/scripts
+        state: directory
+        mode: u=rw,g=r,o=r
+    - name: Copy routing iptables script
+      template:
+        src: ../templates/routing-iptables.sh.j2
+        dest: $HOME/deployment/scripts/routing-iptables.sh
+        mode: '+rx'
+    - name: Creates cronjob entry for routing table script
+      cron:
+        name: "a job for routing table script"
+        special_time: reboot
+        job: "$HOME/deployment/scripts/routing-iptables.sh"
+    - name: Run script
+      shell: $HOME/deployment/scripts/routing-iptables.sh

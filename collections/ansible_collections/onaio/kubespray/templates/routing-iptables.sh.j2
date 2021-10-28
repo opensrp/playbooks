@@ -1,0 +1,20 @@
+#!/bin/bash
+PATH=/usr/sbin:/sbin:/usr/bin:/bin
+machineInterface="{{  hostvars[inventory_hostname]['ansible_default_ipv4']['interface'] }}"
+k8sInterface="{{ k8s_interface }}"
+portIpRoutes="{% for item in port_ip_map %}{{ item }}{% if not loop.last %}, {% endif %}{% endfor %}"
+
+for val in ${portIpRoutes//,/ }
+do
+ ipPorts=(${val//:/ })
+ dnatRule=" -t nat -A PREROUTING -i $machineInterface -p tcp -m tcp --dport ${ipPorts[1]} -j DNAT --to-destination ${val}"
+ if [[ $(iptables -S -t nat | grep -c -- "${dnatRule:8}") == 0 ]]; then
+   eval "$(which iptables)$dnatRule"
+ fi
+done
+
+rerouteRule=" -t nat -A POSTROUTING -o $k8sInterface -j MASQUERADE"
+if [[ $(iptables -S -t nat | grep -c -- "${rerouteRule:8}") == 0 ]]; then
+  eval "$(which iptables)$rerouteRule"
+fi
+exit 0

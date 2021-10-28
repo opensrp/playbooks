@@ -1,0 +1,60 @@
+---
+k8s_interface: "{{ kubespray_k8s_interface | default('tunl0') }}"
+
+kubernetes_audit: true
+
+metrics_server_enabled: true
+
+helm_enabled: true
+
+etcd_deployment_type: host
+container_manager: containerd
+
+## metallb config
+
+# needed for metallb to work
+kube_proxy_strict_arp: true
+
+metallb_enabled: true
+metallb_speaker_enabled: true
+metallb_protocol: "layer2"
+metallb_port: "7472"
+
+# metallb_controller_tolerations is needed to ensure the least downtime if the node holding the metallb controller goes down.
+metallb_controller_tolerations:
+  - key: "node.kubernetes.io/unreachable"
+    operator: "Exists"
+    effect: "NoExecute"
+    tolerationSeconds: 2
+  - key: "node.kubernetes.io/not-ready"
+    operator: "Exists"
+    effect: "NoExecute"
+
+## end metallb config
+
+#nfs:
+#  server: "{{ hostvars['nodeX]['ip'] }}"
+setup_nfs: true
+nfs_exports:
+  - "/srv/nfs/storage *(rw,sync,no_root_squash,no_subtree_check,no_all_squash,insecure)"
+nfs_provisioner:
+  namespace: "nfs-provisioner"
+  chart_version: "{{ kubespray_nfs_provisioner.chart_version }}"
+  path: "/srv/nfs/storage"
+  is_storage_class_default: "true"
+  chart_repo_url: "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
+  chart_ref: "nfs-subdir-external-provisioner"
+  release_name: "nfs-provisioner"
+
+ingress_nginx:
+  namespace: "ingress-nginx"
+  chart_version: "{{ kubespray_ingress_nginx_controller.chart_version }}"
+  chart_repo_url: "https://kubernetes.github.io/ingress-nginx"
+  chart_ref: "ingress-nginx"
+  release_name: "ingress-nginx"
+
+acme_cluster_issuer:
+  name: "{{ kubespray_acme_cluster_issuer.name | default('lets-encrypt-production') }}"
+  email: '{{ kubespray_acme_cluster_issuer.email }}'
+  server: "{{ kubespray_acme_cluster_issuer.server | default('https://acme-v02.api.letsencrypt.org/directory') }}"
+  ingress_class: "{{ kubespray_acme_cluster_issuer.ingress_class | default('nginx') }}"

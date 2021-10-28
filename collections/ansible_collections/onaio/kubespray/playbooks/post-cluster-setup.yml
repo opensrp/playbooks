@@ -1,0 +1,87 @@
+---
+- name: "Setup Kubernetes Services"
+  hosts: kube_control_plane
+  pre_tasks:
+    - name: Install pip3
+      become: true
+      apt:
+        name:
+          - python3-pip
+          - python
+        state: present
+# Required for kubernetes.core.k8s module
+    - name: Install openshift python package
+      pip:
+        name: openshift
+  tasks:
+    - name: Install Cert manager & ClusterIssuer
+      block:
+          - name: Download cert-manager manifest to the cluster.
+            get_url:
+              url: "https://github.com/jetstack/cert-manager/releases/download/{{ cert_manager.version }}/cert-manager.yaml"
+              dest: /tmp/cert-manager.yaml
+              mode: '0664'
+
+          - name: Apply cert-mananger manifest to the cluster.
+            become: true
+            become_user: root
+            kubernetes.core.k8s:
+              state: present
+              src: /tmp/cert-manager.yaml
+
+          - name: Create Cluster Issuer
+            become: true
+            become_user: root
+            kubernetes.core.k8s:
+              state: present
+              template: ../templates/cluster-issuer.yml.j2
+            tags:
+              - create-cluster-issuer
+      run_once: true
+      tags:
+        - setup-cert-manager
+
+# Helm is installed by kubespray
+
+    - name: Deploy Helm Releases
+      become: true
+      become_user: root
+      block:
+        - name: Add chart repositories
+          kubernetes.core.helm_repository:
+             name: "{{ item.chart_name }}"
+             repo_url: "{{ item.repo_url }}"
+          with_items:
+            - { repo_url: "{{ nfs_provisioner.chart_repo_url }}", chart_name: "{{ nfs_provisioner.chart_ref }}" }
+            - { repo_url: "{{ ingress_nginx.chart_repo_url }}", chart_name: "{{ ingress_nginx.chart_ref }}" }
+          tags:
+            - add-helm-charts-repositories
+
+        - name: Helm Install Ingress Nginx
+          kubernetes.core.helm:
+            release_name: "{{ ingress_nginx.release_name }}"
+            release_namespace: "{{ ingress_nginx.namespace }}"
+            create_namespace: yes
+            update_repo_cache: yes
+            chart_repo_url: "{{ ingress_nginx.chart_repo_url }}"
+            chart_ref: "{{ ingress_nginx.chart_ref }}"
+            state: present
+          tags:
+            - helm-install-nfs-provisioner
+
+        - name: Helm Install Nfs Provisioner
+          kubernetes.core.helm:
+            release_name: "{{ nfs_provisioner.release_name }}"
+            release_namespace: "{{ nfs_provisioner.namespace }}"
+            create_namespace: yes
+            update_repo_cache: yes
+            chart_repo_url: "{{ nfs_provisioner.chart_repo_url }}"
+            chart_ref: "{{ nfs_provisioner.chart_ref }}"
+            values: "{{ lookup('template', '../templates/nfs-provisioner-values.yml.j2') | from_yaml }}"
+            state: present
+          tags:
+            - helm-install-nfs-provisioner
+
+      run_once: true
+      tags:
+        - deploy-helm-releases

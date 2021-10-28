@@ -1,0 +1,91 @@
+---
+- hosts: all
+  gather_facts: false
+  become: true
+  collections:
+    - onaio.kubespray
+  tasks:
+    - name: Load in kubespray vars
+      tags: always
+      include_vars:
+        file: "../vars/{{ kubespray_setup_type }}.yml"
+    - name: Setup Ansible
+      setup:
+
+- name: "Setup NFS Server(s)"
+  become: true
+  hosts: nfs-servers
+  roles:
+    - role: ../roles/nfs
+      when: setup_nfs | bool
+  tags:
+    - nfs-setup
+    - setup-nfs-server
+    - post-cluster-setup
+
+- name: "Setup NFS Clients(s)"
+  become: true
+  hosts: nfs-clients
+  tasks:
+    - name: Install nfs commons.
+      apt:
+        name:
+          - nfs-common
+        state: present
+      when: setup_nfs | bool
+  tags:
+    - nfs-setup
+    - setup-nfs-client
+    - post-cluster-setup
+
+- name: "Get Facts"
+  import_playbook: ../external/kubespray/facts.yml
+  tags:
+    - kubespray
+    - get-facts
+
+- name: "Setup Cluster"
+  import_playbook: ../external/kubespray/cluster.yml
+  tags:
+    - kubespray
+    - cluster
+
+- import_playbook: post-cluster-setup.yml
+  tags:
+    - post-cluster-setup
+    - service-setup
+
+- import_playbook: iptables-config.yml
+  tags:
+    - post-cluster-setup
+    - iptables-config
+
+- name: "Upgrade Cluster"
+  import_playbook: ../external/kubespray/upgrade-cluster.yml
+  tags:
+    - kubespray
+    - upgrade-cluster
+
+- name: "Scale Cluster"
+  import_playbook: ../external/kubespray/scale.yml
+  tags:
+    - kubespray
+    - scale
+
+- name: "Recover Control Plane"
+  import_playbook: ../external/kubespray/recover-control-plane.yml
+  tags:
+    - kubespray
+    - recover-control-plane
+
+- name: "Remove Node Cluster"
+  import_playbook: ../external/kubespray/remove-node.yml
+  tags:
+    - kubespray
+    - remove-node
+
+- name: "Reset Cluster"
+  import_playbook: ../external/kubespray/reset.yml
+  tags:
+    - kubespray
+    - reset

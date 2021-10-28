@@ -1,0 +1,6 @@
+---
+nfs:
+  server: {{ nfs.server }}
+  path: {{ nfs_provisioner.path | default('/srv/nfs/storage') }}
+storageClass:
+  defaultClass: {{ nfs_provisioner.is_storage_class_default | default(true) }}
