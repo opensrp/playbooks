@@ -88,9 +88,3 @@
 [submodule "collections/ansible_collections/onaio/monitoring"]
 	path = collections/ansible_collections/onaio/monitoring
 	url = https://github.com/onaio/ansible-collection-monitoring.git
-[submodule "collections/ansible_collections/onaio/kubespray/external/kubespray"]
-	path = collections/ansible_collections/onaio/kubespray/external/kubespray
-	url = git@github.com:kubernetes-sigs/kubespray.git
-[submodule "collections/ansible_collections/onaio/kubespray/roles/nfs"]
-	path = collections/ansible_collections/onaio/kubespray/roles/nfs
-	url = git@github.com:geerlingguy/ansible-role-nfs.git
