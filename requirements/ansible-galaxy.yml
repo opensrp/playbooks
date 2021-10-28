@@ -75,7 +75,7 @@ roles:
 
   - src: Asymmetrik.nifi
 
-  - src: Graylog2.graylog-ansible-role
+  - src: graylog2.graylog
     version: 3.2.0
 
   - src: elastic.elasticsearch
