@@ -56,7 +56,7 @@
   roles:
     - role: elastic.elasticsearch
     - role: certbot
-      when: es_use_certbot == true
+      when: es_use_certbot
     - role: nginx
       when: es_use_nginx is not defined or es_use_nginx
   post_tasks:
@@ -90,7 +90,7 @@
       tags:
         - rapidpro
     - role: certbot
-      when: rapidpro_use_certbot == true
+      when: rapidpro_use_certbot
       tags:
         - certbot
     - role: nginx
