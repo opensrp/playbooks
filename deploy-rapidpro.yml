@@ -28,40 +28,20 @@
 - hosts: rapidpro-rabbitmq-servers
   gather_facts: true
   become: true
-  vars:
-    slack_deployed_app_name: "RabbitMQ"
-    slack_deployed_app_version: "latest"
-    slack_deployed_domain: "{{ rabbitmq_slack_deployed_domain }}"
-  pre_tasks:
-    - include_tasks: tasks/slack-start.yml
-      when: slack_notifications
   roles:
     - rabbitmq
-  post_tasks:
-    - include_tasks: tasks/slack-end.yml
-      when: slack_notifications
   tags:
     - rapidpro-rabbitmq
 
 - hosts: rapidpro-elasticsearch-servers
   gather_facts: true
   become: true
-  vars:
-    slack_deployed_app_name: "elasticsearch"
-    slack_deployed_app_version: "{{ es_version }}"
-    slack_deployed_domain: "{{ es_slack_deployed_domain }}"
-  pre_tasks:
-    - include_tasks: tasks/slack-start.yml
-      when: slack_notifications
   roles:
     - role: elastic.elasticsearch
     - role: certbot
       when: es_use_certbot
     - role: nginx
       when: es_use_nginx is not defined or es_use_nginx
-  post_tasks:
-    - include_tasks: tasks/slack-end.yml
-      when: slack_notifications
   tags:
     - rapidpro-elasticsearch
 
@@ -71,13 +51,8 @@
   serial: 1 # Runs playbook one server at at time (to achieve a rolling update)
   max_fail_percentage: 0
   vars:
-    slack_deployed_app_name: "rapidpro"
-    slack_deployed_app_version: "{{ rapidpro_version }}"
-    slack_deployed_domain: "{{ rapidpro_slack_deployed_domain }}"
     rapidpro_openjdk_version: 8 # Due to https://github.com/elastic/logstash/issues/9316
   pre_tasks:
-    - include_tasks: tasks/slack-start.yml
-      when: slack_notifications
     - name: Install libgdal-dev
       apt:
         pkg: [libgdal-dev]
@@ -111,9 +86,6 @@
       logstash_system_groups: ["adm"]
       tags:
         - logstash
-  post_tasks:
-    - include_tasks: tasks/slack-end.yml
-      when: slack_notifications
   tags:
     - rapidpro
     - pgbouncer
@@ -125,17 +97,7 @@
 - hosts: rapidpro-indexer-servers
   gather_facts: true
   become: true
-  vars:
-    slack_deployed_app_name: "rapidpro-indexer"
-    slack_deployed_app_version: "{{ rapidpro_indexer_version }}"
-    slack_deployed_domain: "{{ rapidpro_indexer_slack_deployed_domain }}"
-  pre_tasks:
-    - include_tasks: tasks/slack-start.yml
-      when: slack_notifications
   roles:
     - role: rapidpro-indexer
-  post_tasks:
-    - include_tasks: tasks/slack-end.yml
-      when: slack_notifications
   tags:
     - rapidpro-indexer
