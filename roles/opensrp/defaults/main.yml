@@ -290,3 +290,35 @@ opensrp_rabbitmq_routingkey: "rabbitmq.routingkey"
 opensrp_rabbitmq_reply_timeout: 60000
 opensrp_rabbitmq_concurrent_consumers: 1
 opensrp_rabbitmq_max_concurrent_consumers: 1
+
+#Sentry Configuration
+opensrp_sentry_dsn: ""
+opensrp_sentry_release: "{{ opensrp_version }}"
+opensrp_sentry_environment: "production"
+opensrp_sentry_tags: {}
+opensrp_sentry_minimum_event_level: "error"
+opensrp_sentry_minimum_breadcrumb_level: "info"
+
+#Health Endpoint Configuration
+opensrp_health_endpoint_openmrs_connectionTimeout: ""
+opensrp_health_endpoint_openmrs_readTimeout: ""
+opensrp_health_endpoint_keycloak_connectionTimeout: ""
+opensrp_health_endpoint_keycloak_readTimeout: ""
+opensrp_health_endpoint_postgres_queryTimeout: ""
+
+# Run case triggered plan generation every 5 minutes
+opensrp_schedule_plan_generate_cron: "0 0/5 * * * *"
+
+
+#Metrics Endpoint Configuration
+opensrp_metrics_tags: {}
+opensrp_metrics_health_check_updater_cron: "0 0/1 * * * *"
+opensrp_metrics_additional_ip_allowed: ""
+opensrp_metrics_include: "all"
+opensrp_metrics_exclude: ""
+opensrp_metrics_permitAll: "false"
+
+# For load testing you might want to increase
+opensrp_thread_pool_core_size: 50
+opensrp_thread_pool_max_size: 100
+opensrp_thread_pool_queue_capacity: 250
