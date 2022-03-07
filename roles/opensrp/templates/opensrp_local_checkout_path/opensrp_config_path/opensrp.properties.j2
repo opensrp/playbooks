@@ -157,3 +157,32 @@ rabbitmq.routingkey={{ opensrp_rabbitmq_routingkey }}
 rabbitmq.reply.timeout={{ opensrp_rabbitmq_reply_timeout }}
 rabbitmq.concurrent.consumers={{ opensrp_rabbitmq_concurrent_consumers }}
 rabbitmq.max.concurrent.consumers={{ opensrp_rabbitmq_max_concurrent_consumers }}
+
+#Sentry Configuration
+sentry.dsn={{ opensrp_sentry_dsn }}
+sentry.release={{ opensrp_sentry_release }}
+sentry.environment={{ opensrp_sentry_environment }}
+sentry.tags={{ opensrp_sentry_tags | to_json }}
+sentry.minimumEventLevel={{ opensrp_sentry_minimum_event_level }}
+sentry.minimumBreadcrumbLevel={{ opensrp_sentry_minimum_breadcrumb_level }}
+health.endpoint.openmrs.connectionTimeout={{ opensrp_health_endpoint_openmrs_connectionTimeout }}
+health.endpoint.openmrs.readTimeout={{ opensrp_health_endpoint_openmrs_readTimeout }}
+health.endpoint.postgres.queryTimeout={{ opensrp_health_endpoint_postgres_queryTimeout }}
+health.endpoint.keycloak.connectionTimeout={{ opensrp_health_endpoint_keycloak_connectionTimeout }}
+health.endpoint.keycloak.readTimeout={{ opensrp_health_endpoint_keycloak_readTimeout }}
+
+# Run case triggered plan generation every 5 minutes
+schedule.plan.generate.cron={{ opensrp_schedule_plan_generate_cron }}
+
+#Metrics Endpoint Configuration
+metrics.tags={{ opensrp_metrics_tags | to_json }}
+metrics.health_check_updater.cron={{ opensrp_metrics_health_check_updater_cron }}
+metrics.additional_ip_allowed={{ opensrp_metrics_additional_ip_allowed }}
+metrics.include={{ opensrp_metrics_include }}
+metrics.exclude={{ opensrp_metrics_exclude }}
+metrics.permitAll={{ opensrp_metrics_permitAll }}
+
+# For load testing you might want to increase
+thread.pool.core.size={{ opensrp_thread_pool_core_size }}
+thread.pool.max.size={{ opensrp_thread_pool_max_size }}
+thread.pool.queue.capacity={{ opensrp_thread_pool_queue_capacity }}
