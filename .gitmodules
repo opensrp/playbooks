@@ -91,3 +91,15 @@
 [submodule "collections/ansible_collections/onaio/kubespray"]
 	path = collections/ansible_collections/onaio/kubespray
 	url = https://github.com/onaio/ansible-collection-kubespray.git
+[submodule "roles/rapidpro"]
+	path = roles/rapidpro
+	url = git@github.com:onaio/ansible-rapidpro.git
+[submodule "roles/pgbouncer"]
+	path = roles/pgbouncer
+	url = git@github.com:onaio/ansible-pgbouncer.git
+[submodule "roles/onaio.django"]
+	path = roles/onaio.django
+	url = git@github.com:onaio/ansible-django.git
+[submodule "roles/rapidpro-indexer"]
+	path = roles/rapidpro-indexer
+	url = git@github.com:onaio/ansible-rapidpro-indexer.git

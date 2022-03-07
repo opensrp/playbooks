@@ -1,0 +1,103 @@
+---
+- hosts: rapidpro-postgresql-servers
+  gather_facts: False
+  pre_tasks:
+    - include_tasks: tasks/python3-ubuntu.yml
+    - name: Setup Ansible
+      setup:
+  roles:
+    - common
+
+- hosts: rapidpro-app-servers
+  become: true
+  become_user: "root"
+  roles:
+    - linux-config
+  tags:
+    - linux-config
+
+- hosts: rapidpro-postgresql-servers
+  become: true
+  become_user: "root"
+  roles:
+    - postgresql
+  tags:
+    - rapidpro-postgresql
+    - rapidpro-postgres
+
+- hosts: rapidpro-rabbitmq-servers
+  gather_facts: true
+  become: true
+  roles:
+    - rabbitmq
+  tags:
+    - rapidpro-rabbitmq
+
+- hosts: rapidpro-elasticsearch-servers
+  gather_facts: true
+  become: true
+  roles:
+    - role: elastic.elasticsearch
+    - role: certbot
+      when: es_use_certbot
+    - role: nginx
+      when: es_use_nginx is not defined or es_use_nginx
+  tags:
+    - rapidpro-elasticsearch
+
+- hosts: rapidpro-app-servers
+  gather_facts: true
+  become: true
+  serial: 1 # Runs playbook one server at at time (to achieve a rolling update)
+  max_fail_percentage: 0
+  vars:
+    rapidpro_openjdk_version: 8 # Due to https://github.com/elastic/logstash/issues/9316
+  pre_tasks:
+    - name: Install libgdal-dev
+      apt:
+        pkg: [libgdal-dev]
+        state: present
+  roles:
+    - role: pgbouncer
+      tags:
+        - pgbouncer
+    - role: rapidpro
+      tags:
+        - rapidpro
+    - role: certbot
+      when: rapidpro_use_certbot
+      tags:
+        - certbot
+    - role: nginx
+      tags:
+        - nginx
+    - role: openjdk
+      openjdk_version: "{{ rapidpro_openjdk_version }}"
+      tags:
+        - java
+        - logstash
+    - role: onaio.logstash
+      openjdk_version: "{{ rapidpro_openjdk_version }}"
+      clear_logstash_config: true
+      logstash_plugins: "{{ rapidpro_logstash_plugins }}"
+      logstash_custom_outputs: "{{ rapidpro_logstash_custom_outputs }}"
+      logstash_custom_inputs: "{{ rapidpro_logstash_custom_inputs }}"
+      config_logstash: true
+      logstash_system_groups: ["adm"]
+      tags:
+        - logstash
+  tags:
+    - rapidpro
+    - pgbouncer
+    - nginx
+    - java
+    - logstash
+    - certbot
+
+- hosts: rapidpro-indexer-servers
+  gather_facts: true
+  become: true
+  roles:
+    - role: rapidpro-indexer
+  tags:
+    - rapidpro-indexer

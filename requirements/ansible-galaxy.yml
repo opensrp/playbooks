@@ -20,6 +20,9 @@ roles:
   - src: geerlingguy.java
     version: 1.10.0
 
+  - src: DavidWittman.redis
+    version: 1.2.8
+
   - src: https://github.com/onaio/ansible-redis.git
     name: onaio.redis
     version: 8dfde8fbda8d72b0899f4d38e60f80dd7360ac2b
@@ -86,3 +89,36 @@ roles:
 
   - src: geerlingguy.mysql
     version: 3.3.1
+
+  - src: ANXS.hostname
+    version: v1.0.1
+
+  - src: ANXS.apt
+
+  - src: https://github.com/ANXS/build-essential.git
+    name: ANXS.build-essential
+    version: b403a08f4ed2e3eb4c8763c5c8faba0888271bcd
+    scm: git
+
+  - src: ANXS.perl
+    version: v1.1.0
+
+  - src: ANXS.monit
+
+  - src: Stouts.backup
+
+  - src: https://github.com/onaio/ansible-courier.git
+    name: onaio.courier
+    scm: git
+    version: b606d64f464447348250e1d70d609e75cd63162a
+
+  - src: https://github.com/onaio/ansible-mailroom.git
+    name: onaio.mailroom
+    scm: git
+    version: 0baa9a193fb0d91fa727e42c7247161f3be5e5bf
+
+  - src: https://github.com/DavisRayM/python
+    name: DavisRayM.python
+    scm: git
+
+
