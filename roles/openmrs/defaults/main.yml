@@ -166,4 +166,5 @@ openmrs_logstash_custom_inputs:
       - '  git_version => "{{ openmrs_version }}"'
       - '}'
 
+# For new deployments it should be set to false since mysql role will be responsible for admin tasks e.g. create databases and users
 openmrs_mysql_root_user_accessible_remotely: true
