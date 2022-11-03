@@ -35,7 +35,7 @@
         - collectd
     - role: onaio.monit
       monit_setup_mode: True
-      monit_scripts: "{{ server_monitoring_monit_scripts }}"
+      monit_scripts: "{{ server_monitoring_monit_scripts }} + {{ extra_server_monitoring_monit_scripts | default([]) }}"
       tags:
         - monitoring
         - monit
