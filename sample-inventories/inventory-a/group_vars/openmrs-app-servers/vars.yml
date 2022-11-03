@@ -76,3 +76,4 @@ openmrs_auto_update_database: "true"
 openmrs_encryption_vector: "strongpassword"
 openmrs_encryption_key: "strongpassword"
 opensrp_install_swap: true
+openmrs_mysql_root_user_accessible_remotely: false

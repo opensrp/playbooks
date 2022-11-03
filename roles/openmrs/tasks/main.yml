@@ -16,6 +16,7 @@
     login_password: "{{ openmrs_mysql_root_password }}"
     name: "{{ openmrs_mysql_database }}"
     state: present
+  when: openmrs_mysql_root_user_accessible_remotely
 
 - name: Create the OpenMRS MySQL User
   mysql_user:
@@ -27,6 +28,7 @@
     host: "{{ openmrs_mysql_app_host }}"
     priv: "{{ openmrs_mysql_database }}.*:{{ openmrs_mysql_user_privilages }}"
     state: present
+  when: openmrs_mysql_root_user_accessible_remotely
 
 - name: ensure openmrs_system_user exists
   become: yes
