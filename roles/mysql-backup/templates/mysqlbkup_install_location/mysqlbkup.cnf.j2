@@ -1,12 +1,12 @@
 [mysql]
 host={{ mysql_host }}
 user={{ mysql_backup_user }}
-password={{ mysql_backup_password }}
+password="{{ mysql_backup_password }}"
 
 [mysqldump]
 host={{ mysql_host }}
 user={{ mysql_backup_user }}
-password={{ mysql_backup_password }}
+password="{{ mysql_backup_password }}"
 force
 opt
 routines
