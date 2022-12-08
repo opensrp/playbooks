@@ -1,4 +1,4 @@
-- hosts: opensrp-app-servers, opensrp-couchdb-servers, opensrp-mysql-servers, opensrp-redis-servers, opensrp-postgresql-servers, opensrp-rabbitmq-servers
+- hosts: opensrp-app-servers, opensrp-redis-servers, opensrp-postgresql-servers, opensrp-rabbitmq-servers
   gather_facts: False
   pre_tasks:
     - include_tasks: tasks/python3-ubuntu.yml
@@ -6,20 +6,6 @@
       setup:
   roles:
     - common
-
-- hosts: opensrp-couchdb-servers
-  serial: 1 # Runs playbook one server at at time (to achieve a rolling update)
-  max_fail_percentage: 0
-  roles:
-    - couchdb
-  tags:
-    - opensrp-couchdb
-
-- hosts: opensrp-mysql-servers
-  roles:
-    - mysql-5.7
-  tags:
-    - opensrp-mysql
 
 - hosts: opensrp-redis-servers
   become: true
