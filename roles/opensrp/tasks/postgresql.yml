@@ -38,7 +38,7 @@
     state: present
   with_items:
     - unzip
-    - python-migrate
+    - python3-migrate
     - postgresql-client
     - libpq-dev
     - python3-psycopg2
