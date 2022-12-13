@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6]
+        python-version: ["3.x"]
         terraform-version: ["0.14.3"]
         terraform-os-arch: ["linux_amd64"]
         packer-version: ["1.4.2"]
