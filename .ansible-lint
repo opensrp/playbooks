@@ -25,3 +25,4 @@ exclude_paths:
   - roles/onaio.graphite-api
   - roles/onaio.influxdb
   - roles/rabbitmq
+  - collections/ansible_collections/onaio/monitoring

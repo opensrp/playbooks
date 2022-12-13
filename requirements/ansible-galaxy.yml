@@ -4,7 +4,7 @@ collections:
     version: 1.1.0
 
   - name: devsec.hardening
-    version: 7.2.0
+    version: 7.16.0
 
 roles:
   - src: https://github.com/onaio/postgresql.git
@@ -14,7 +14,7 @@ roles:
 
   - src: https://github.com/onaio/ansible-nginx.git
     name: onaio.nginx
-    version: 1afc5fe43d39f0d4b373b30861126bcf57adea48
+#    version: f86f712d2287f3eed9c45ab6f0f535ac825e3e72
     scm: git
 
   - src: geerlingguy.java
@@ -48,7 +48,6 @@ roles:
 
   - src: https://github.com/onaio/ansible-java.git
     name: onaio.java
-    version: f0b9b4c1e4388f5f5ea99b7643bdae2c4f9e9cbc
     scm: git
 
   - src: https://github.com/onaio/ansible-role-tomcat.git
@@ -105,7 +104,9 @@ roles:
 
   - src: ANXS.monit
 
-  - src: Stouts.backup
+  - src: https://github.com/onaio/ansible-backup.git
+    name: Stouts.backup
+    scm: git
 
   - src: https://github.com/onaio/ansible-courier.git
     name: onaio.courier
