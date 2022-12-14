@@ -4,8 +4,6 @@
   max_fail_percentage: 0  # Don't continue deploying on other hosts if playbook fails on one
   gather_facts: true
   become: true
-  vars_files:
-  - "vars/reveal_web.yml"
   roles:
     - role: onaio.logstash
       tags:
@@ -52,6 +50,9 @@
         react_git_version: "{{ reveal_react_git_version }}"
         react_git_key: "{{ reveal_react_git_key }}"
         react_app_settings: "{{ reveal_react_app_settings }}"
+        react_build_cmds:
+          - cmd: build
+            path: "{{ react_local_app_path }}"
       tags:
         - install
         - react
@@ -69,6 +70,7 @@
         express_git_key: "{{ reveal_express_git_key }}"
         express_app_settings: "{{ reveal_express_app_settings }}"
         express_app_path: "{{ reveal_express_app_path }}"
+        express_node_version: 16.x
       tags:
         - install
         - express
