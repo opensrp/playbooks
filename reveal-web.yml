@@ -4,6 +4,8 @@
   max_fail_percentage: 0  # Don't continue deploying on other hosts if playbook fails on one
   gather_facts: true
   become: true
+  vars_files:
+  - "vars/reveal_web.yml"
   roles:
     - role: onaio.logstash
       tags:
