@@ -70,7 +70,7 @@
         express_git_key: "{{ reveal_express_git_key }}"
         express_app_settings: "{{ reveal_express_app_settings }}"
         express_app_path: "{{ reveal_express_app_path }}"
-        express_node_version: 16.x
+        express_node_version: "{{ reveal_express_node_version }}"
       tags:
         - install
         - express
