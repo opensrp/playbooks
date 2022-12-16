@@ -52,6 +52,9 @@
         react_git_version: "{{ reveal_react_git_version }}"
         react_git_key: "{{ reveal_react_git_key }}"
         react_app_settings: "{{ reveal_react_app_settings }}"
+        react_build_cmds: "{{ reveal_react_build_cmds }}"
+        react_node_version: "{{ reveal_react_node_version | default(omit) }}"
+        react_remote_js_build: "{{ reveal_react_remote_js_build }}"
       tags:
         - install
         - react
@@ -69,6 +72,7 @@
         express_git_key: "{{ reveal_express_git_key }}"
         express_app_settings: "{{ reveal_express_app_settings }}"
         express_app_path: "{{ reveal_express_app_path }}"
+        express_node_version: "{{ reveal_express_node_version }}"
       tags:
         - install
         - express
