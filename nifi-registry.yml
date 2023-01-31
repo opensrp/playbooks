@@ -1,0 +1,32 @@
+---
+- hosts: nifi-registry
+  become: yes
+  roles:
+    - role: angstwad.docker_ubuntu
+    - role: onaio.nifi-registry
+    - role: certbot
+      vars:
+        certbot_create_certs: "{{ nifi_registry_certbot_create_certs }}"
+        certbot_site_names:
+          - "{{ nifi_registry_server_name }}"
+        certbot_mail_address: "{{ nifi_certbot_mail_address }}"
+      when: nifi_use_certbot
+      tags:
+        - nginx
+        - certificates
+    - role: nginx
+      vars:
+        nginx_install_method: package
+        enable_ssl: " {{ nifi_enable_ssl }}"
+        nginx_basic_auth_files:
+          - path: "{{ nifi_registry_basic_auth_file }}"
+            users:
+              - username: "{{ nifi_registry_basic_auth_name }}"
+                password: "{{ nifi_registry_password }}"
+                state: "present"
+        apt_default_packages:
+          - ca-certificates
+          - python-passlib
+          - python3-passlib
+      tags:
+        - nginx
