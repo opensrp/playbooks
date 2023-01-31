@@ -70,7 +70,6 @@
                 state: "present"
         apt_default_packages:
           - ca-certificates
-          - python-passlib
           - python3-passlib
       tags:
         - nginx
